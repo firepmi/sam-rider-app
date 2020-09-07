@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "132928962247",
+    "firebase_url": "https://samwilldoit.firebaseio.com",
+    "project_id": "samwilldoit",
+    "storage_bucket": "samwilldoit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132928962247:android:9d30c0eadb3e67685008e2",
+        "android_client_info": {
+          "package_name": "com.manicao.sam_rider_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132928962247-kg43fh1s7t2jsus44mrks0tin8grcoji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrz-t4YxgsE6jswYREFwlhjbDp7T2dtRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132928962247-kg43fh1s7t2jsus44mrks0tin8grcoji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132928962247-6rppt785d9vn5q8g54f02tk57qlf07mm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.uberrider"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

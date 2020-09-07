@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>132928962247-0k3srfa11fj4d26il3ck79o3lqm2s2g7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.132928962247-0k3srfa11fj4d26il3ck79o3lqm2s2g7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMklJjwW56fbZ9r_FWXFjrfvSslO52uAw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>132928962247</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.manicao.samRiderApp</string>
+	<key>PROJECT_ID</key>
+	<string>samwilldoit</string>
+	<key>STORAGE_BUCKET</key>
+	<string>samwilldoit.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:132928962247:ios:cbab93c0a52331065008e2</string>
+	<key>DATABASE_URL</key>
+	<string>https://samwilldoit.firebaseio.com</string>
+</dict>
+</plist>
