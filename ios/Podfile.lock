@@ -107,11 +107,10 @@ DEPENDENCIES:
   - location (from `.symlinks/plugins/location/ios`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
-    - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
     - FirebaseInstallations
@@ -123,6 +122,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+  trunk:
+    - FirebaseCore
 
 EXTERNAL SOURCES:
   firebase_auth:

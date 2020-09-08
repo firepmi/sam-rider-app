@@ -250,6 +250,7 @@ void _onLoginClick(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => MyHomePage()));
   }, (msg) {
+    print(msg);
     LoadgingDialog.hideLoadingDialog(context);
     MsgDialog.showMsgDialog(context, "Login", msg);
   });

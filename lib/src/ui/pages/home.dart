@@ -215,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Marker marker = Marker(
             markerId: MarkerId('from_address'),
             position: LatLng(location.latitude, location.longitude),
-            infoWindow: InfoWindow(title: 'Minha localização'),
+            infoWindow: InfoWindow(title: 'My location'),
           );
           if (mounted) {
             setState(() {

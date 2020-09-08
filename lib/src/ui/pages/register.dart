@@ -159,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (isValid) {
       //print(isValid);
       // create user
-      //loadgin dialog
+      //loading dialog
       LoadgingDialog.showLoadingDialog(context, "Loading...");
       return authBloc.signUp(_emailController.text, _passController.text,
           _phoneController.text, _nameController.text, () {
@@ -167,6 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyHomePage()));
       }, (msg) {
+        print(msg);
         //show msg dialog
         LoadgingDialog.hideLoadingDialog(context);
         MsgDialog.showMsgDialog(context, "SignUp", msg);

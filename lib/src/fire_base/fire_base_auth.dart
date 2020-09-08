@@ -13,6 +13,7 @@ class FireAuth {
       _createUser(user.uid, name, phone, onSuccess, onRegisterError);
       print(user);
     }).catchError((err) {
+      print(err);
       _onSignupError(err.code, onRegisterError);
     });
   }
@@ -42,6 +43,7 @@ class FireAuth {
       print("on SignIn in success");
       onSuccess();
     }).catchError((err) {
+      print(err);
       onSignInError("Signin fail, please try again");
     });
   }
