@@ -23,10 +23,10 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
   Completer<GoogleMapController> _completer = Completer();
   MapUtil mapUtil = MapUtil();
-  Location _locationService = Location();
+  Location _locationService = new Location();
   LatLng currentLocation;
   LatLng _center = LatLng(-8.913025, 13.202462);
-  PermissionStatus _permission = PermissionStatus.DENIED;
+  PermissionStatus _permission = PermissionStatus.denied;
   List<Marker> _markers = List();
   List<Polyline> routes = new List();
   bool done = false;
@@ -199,33 +199,59 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   initPlatformState() async {
-    await _locationService.changeSettings(
-        accuracy: LocationAccuracy.HIGH, interval: 1000);
+    // await _locationService.changeSettings(
+    //     accuracy: LocationAccuracy.high, interval: 1000);
 
-    LocationData location;
+    // LocationData location;
     // Platform messages may fail, so we use a try/catch PlatformException.
+    // _locationService.serviceEnabled().then((serviceStatus) {
+    //   requestPermissions(serviceStatus);
+    //   return null;
+    // });
+    _locationService.requestPermission().then((value) {
+      print(value);
+      if (value == null) {
+        _locationService.requestPermission().then((value2) {
+          _permission = value2;
+          if (_permission == PermissionStatus.granted) {
+            getLocation();
+          }
+        });
+      }
+      _permission = value;
+      if (_permission == PermissionStatus.granted) {
+        getLocation();
+      }
+      return null;
+    });
+  }
+
+  getLocation() async {
+    LocationData location;
+    location = await _locationService.getLocation();
+    Marker marker = Marker(
+      markerId: MarkerId('from_address'),
+      position: LatLng(location.latitude, location.longitude),
+      infoWindow: InfoWindow(title: 'My location'),
+    );
+    if (mounted) {
+      setState(() {
+        currentLocation = LatLng(location.latitude, location.longitude);
+        _center = LatLng(currentLocation.latitude, currentLocation.longitude);
+        _markers.add(marker);
+        done = true;
+      });
+    }
+  }
+
+  requestPermissions(serviceStatus) async {
     try {
-      bool serviceStatus = await _locationService.serviceEnabled();
       print("Service status: $serviceStatus");
       if (serviceStatus) {
         _permission = await _locationService.requestPermission();
         print("Permission: $_permission");
-        if (_permission == PermissionStatus.GRANTED) {
-          location = await _locationService.getLocation();
-          Marker marker = Marker(
-            markerId: MarkerId('from_address'),
-            position: LatLng(location.latitude, location.longitude),
-            infoWindow: InfoWindow(title: 'My location'),
-          );
-          if (mounted) {
-            setState(() {
-              currentLocation = LatLng(location.latitude, location.longitude);
-              _center =
-                  LatLng(currentLocation.latitude, currentLocation.longitude);
-              _markers.add(marker);
-              done = true;
-            });
-          }
+        if (_permission == PermissionStatus.granted) {
+          getLocation();
         }
       } else {
         bool serviceStatusResult = await _locationService.requestService();
