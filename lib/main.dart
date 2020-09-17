@@ -4,11 +4,13 @@ import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
 import 'package:sam_rider_app/src/ui/pages/free_rides.dart';
 import 'package:sam_rider_app/src/ui/pages/help.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
+import 'package:sam_rider_app/src/ui/pages/intro.dart';
 import 'package:sam_rider_app/src/ui/pages/login.dart';
 import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
+import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
 
 void main() {
@@ -24,7 +26,9 @@ void main() {
         initialRoute: './',
         routes: {
           '/home': (context) => MyHomePage(title: 'SAM Rider'),
-          '/': (context) => LoginPage(),
+          '/': (context) => WelcomePage(),
+          '/intro': (context) => IntroPage(),
+          '/login': (context) => LoginPage(),
           '/payment': (context) => PaymentPage(),
           '/add_payment': (context) => AddPaymentMethodPage(),
           '/add_card': (context) => AddCardPage(),
@@ -48,6 +52,6 @@ class MyApp extends InheritedWidget {
   }
 
   static MyApp of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(MyApp);
+    return context.dependOnInheritedWidgetOfExactType<MyApp>();
   }
 }
