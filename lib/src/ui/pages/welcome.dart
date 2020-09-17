@@ -29,24 +29,44 @@ class WelcomePage extends StatelessWidget {
     );
 
     final nextBtn = InkWell(
-      onTap: () => Navigator.pushNamed(context, 'login'),
+      onTap: () => Navigator.pushNamed(context, '/intro'),
       child: Container(
         height: 60.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7.0),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black),
           color: Colors.transparent,
         ),
-        child: Center(
-          child: Text(
-            'Welcome',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 20.0,
-              color: Colors.black,
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Text(
+                'Welcome',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
             ),
-          ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.black),
+                  color: Colors.transparent,
+                ),
+                child: Icon(
+                  Icons.arrow_right_alt,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
