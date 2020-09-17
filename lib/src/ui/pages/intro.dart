@@ -115,7 +115,7 @@ class IntroScreenState extends State<IntroPage> {
 
   void onDonePress() {
     // Back to the first tab
-    Navigator.pushNamed(context, '/login');
+    Navigator.pushNamed(context, '/signup');
   }
 
   void onTabChangeCompleted(index) {

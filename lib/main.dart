@@ -8,6 +8,7 @@ import 'package:sam_rider_app/src/ui/pages/intro.dart';
 import 'package:sam_rider_app/src/ui/pages/login.dart';
 import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
+import 'package:sam_rider_app/src/ui/pages/register.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
@@ -29,6 +30,7 @@ void main() {
           '/': (context) => WelcomePage(),
           '/intro': (context) => IntroPage(),
           '/login': (context) => LoginPage(),
+          '/signup': (context) => RegisterPage(),
           '/payment': (context) => PaymentPage(),
           '/add_payment': (context) => AddPaymentMethodPage(),
           '/add_card': (context) => AddCardPage(),

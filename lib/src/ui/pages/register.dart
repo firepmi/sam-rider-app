@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
 import 'package:sam_rider_app/src/ui/widgets/loading_dialog.dart';
 import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -37,11 +38,16 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 100,
               ),
-              Text("Signup with Uber in simple steps",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+              Container(
+                height: 100.0,
+                width: 200.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AvailableImages.appLogo,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 80, 0, 10),
                 child: StreamBuilder(
@@ -114,16 +120,34 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelStyle: TextStyle(fontSize: 20))),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 50),
+                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: SizedBox(
                   width: double.infinity,
                   height: 52,
                   child: RawMaterialButton(
-                    fillColor: Colors.black,
+                    fillColor: Color.fromRGBO(255, 184, 0, 1),
                     elevation: 5.0,
                     onPressed: () => _onSignupClicked(),
                     child: Text(
                       "Signup",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(26))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 50),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: RawMaterialButton(
+                    fillColor: Color.fromRGBO(59, 89, 152, 1),
+                    elevation: 5.0,
+                    onPressed: () => _onSignupClicked(),
+                    child: Text(
+                      "Signup with Facebook",
                       style: TextStyle(color: Colors.white),
                     ),
                     shape: RoundedRectangleBorder(
