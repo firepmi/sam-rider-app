@@ -157,17 +157,25 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                child: RichText(
-                  text: TextSpan(
-                      text: "Already a User ? ",
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already a User?',
                       style: TextStyle(color: Colors.grey, fontSize: 16),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: "Login now",
-                            style: TextStyle(color: Colors.blue, fontSize: 16))
-                      ]),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: Text(
+                        'Login now',
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      ),
+                    )
+                  ],
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -188,8 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return authBloc.signUp(_emailController.text, _passController.text,
           _phoneController.text, _nameController.text, () {
         LoadgingDialog.hideLoadingDialog(context);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        Navigator.pushNamed(context, '/home');
       }, (msg) {
         print(msg);
         //show msg dialog

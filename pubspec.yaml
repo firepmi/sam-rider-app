@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_maps_flutter: ^0.5.20+2
+  google_maps_flutter: ^0.5.27+3
   firebase_auth: ^0.11.1+12
   firebase_database: ^3.0.5
   http: ^0.12.0+2
