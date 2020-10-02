@@ -6,13 +6,10 @@ import 'dart:convert';
 
 import 'package:sam_rider_app/src/model/step_res.dart';
 
-String dfsdfadf =
-    "https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&sensor=false&mode=driving&key=AIzaSyDPaFRwkTfLGUgDovW6ZrldT9e77mYR7sU";
-
 class PlaceService {
   static Future<List<PlaceItemRes>> searchPlace(String keyWord) async {
     String url =
-        "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyDPaFRwkTfLGUgDovW6ZrldT9e77mYR7sU&language=pt&query=" +
+        "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyBR0k0EDDYcFHQf_UvFSEGDu4tBfZfhWzo&language=pt&query=" +
             Uri.encodeQueryComponent(keyWord);
 
     print("search >>: " + url);
@@ -43,7 +40,7 @@ class PlaceService {
         output +
         "?origin=" +
         parameters +
-        "&key=AIzaSyDPaFRwkTfLGUgDovW6ZrldT9e77mYR7sU";
+        "&key=AIzaSyBR0k0EDDYcFHQf_UvFSEGDu4tBfZfhWzo";
     final JsonDecoder _decoder = JsonDecoder();
     return http.get(url).then((http.Response response) {
       String res = response.body;
