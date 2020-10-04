@@ -5,9 +5,9 @@ import 'package:google_maps_webservice/directions.dart' as APIDirections;
 
 class MapUtil {
   final directions = APIDirections.GoogleMapsDirections(
-      apiKey: 'AIzaSyDMklJjwW56fbZ9r_FWXFjrfvSslO52uAw');
+      apiKey: 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg');
   final geolocation = APIGeolocation.GoogleMapsGeolocation(
-      apiKey: 'AIzaSyDMklJjwW56fbZ9r_FWXFjrfvSslO52uAw');
+      apiKey: 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg');
 
   Future<LatLng> getCurrentLocation() async {
     LatLng currentLocation;
@@ -18,6 +18,7 @@ class MapUtil {
           new LatLng(resLocation.location.lat, resLocation.location.lng);
       //print("Actual: ${resLocation.location.lat}, ${resLocation.location.lng}");
     } else {
+      print("Get current location error:");
       print(resLocation.errorMessage);
     }
     return currentLocation;
@@ -39,6 +40,7 @@ class MapUtil {
         }
       }
     } else {
+      print("direction error:");
       print(resDirections.errorMessage);
     }
     //directions.dispose();

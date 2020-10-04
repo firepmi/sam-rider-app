@@ -184,12 +184,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onSignupClicked() {
-    //print("teste");
     var isValid = authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _phoneController.text);
     print(isValid);
     if (isValid) {
-      //print(isValid);
       // create user
       //loading dialog
       LoadgingDialog.showLoadingDialog(context, "Loading...");

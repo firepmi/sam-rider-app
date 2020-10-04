@@ -20,6 +20,8 @@ dependencies:
   google_maps_webservice: ^0.0.14
   location: ^3.0.0
   intro_slider: ^2.3.3
+  flip_panel: ^1.0.1
+  google_map_location_picker: ^3.3.5
 
   cupertino_icons: ^0.1.3
 

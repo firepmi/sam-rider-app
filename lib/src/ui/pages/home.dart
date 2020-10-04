@@ -2,6 +2,7 @@ import 'dart:async';
 // ignore: avoid_web_libraries_in_flutter
 // import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   MapUtil mapUtil = MapUtil();
   Location _locationService = new Location();
   LatLng currentLocation;
-  LatLng _center = LatLng(-8.913025, 13.202462);
+  LatLng _center = LatLng(45.1975844, -122.9598339);
   PermissionStatus _permission = PermissionStatus.denied;
   List<Marker> _markers = List();
   List<Polyline> routes = new List();
@@ -122,13 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void onPlaceSelected(PlaceItemRes place, bool fromAddress) {
+  void onPlaceSelected(LocationResult place, bool fromAddress) {
     var mkId = fromAddress ? "from_address" : "to_address";
+    print("place selected $mkId");
     _addMarker(mkId, place);
     addPolyline();
   }
 
-  void _addMarker(String mkId, PlaceItemRes place) async {
+  void _addMarker(String mkId, LocationResult place) async {
     // remove old
     _markers.remove(mkId);
     //_mapController.clearMarkers();
@@ -136,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Marker marker = Marker(
       markerId: MarkerId(mkId),
       draggable: true,
-      position: LatLng(place.lat, place.lng),
+      position: place.latLng, //LatLng(place.lat, place.lng),
       infoWindow: InfoWindow(title: mkId),
     );
 
@@ -162,6 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
       infoWindow: InfoWindow(title: 'My Location'),
     );
     setState(() {
+      print("set current location");
       _markers.add(marker);
     });
   }

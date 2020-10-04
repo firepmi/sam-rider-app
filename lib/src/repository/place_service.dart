@@ -9,7 +9,7 @@ import 'package:sam_rider_app/src/model/step_res.dart';
 class PlaceService {
   static Future<List<PlaceItemRes>> searchPlace(String keyWord) async {
     String url =
-        "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyBR0k0EDDYcFHQf_UvFSEGDu4tBfZfhWzo&language=pt&query=" +
+        "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg&language=pt&query=" +
             Uri.encodeQueryComponent(keyWord);
 
     print("search >>: " + url);
@@ -40,7 +40,7 @@ class PlaceService {
         output +
         "?origin=" +
         parameters +
-        "&key=AIzaSyBR0k0EDDYcFHQf_UvFSEGDu4tBfZfhWzo";
+        "&key=AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg";
     final JsonDecoder _decoder = JsonDecoder();
     return http.get(url).then((http.Response response) {
       String res = response.body;
