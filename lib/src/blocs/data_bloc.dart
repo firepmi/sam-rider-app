@@ -9,4 +9,8 @@ class DataBloc {
     _fireData.request(
         type, startLat, startLon, endLat, endLon, onSuccess, onError);
   }
+
+  void getUserProfile(Function(dynamic) onSuccess) {
+    _fireData.getUserProfile(onSuccess);
+  }
 }

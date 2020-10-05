@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 
 class HomeMenuDrawer extends StatefulWidget {
   HomeMenuDrawer({Key key}) : super(key: key);
@@ -7,13 +8,26 @@ class HomeMenuDrawer extends StatefulWidget {
 }
 
 class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
+  DataBloc dataBloc = DataBloc();
+  String name = "Welcome! Customer";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dataBloc.getUserProfile((data) {
+      setState(() {
+        name = data["name"];
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.black),
-          accountName: Text("Márcio Quimbundo"),
+          accountName: Text(name),
           accountEmail: Row(
             children: <Widget>[
               Text("5.0"),

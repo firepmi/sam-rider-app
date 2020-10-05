@@ -160,6 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onPlaceSelected(LocationResult place, bool fromAddress) {
+    if (place == null) {
+      return;
+    }
     var mkId = fromAddress ? "from_address" : "to_address";
     if (fromAddress) {
       fromLocation = place;

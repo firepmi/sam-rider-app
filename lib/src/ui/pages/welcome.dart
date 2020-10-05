@@ -1,32 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final logo = Container(
-      height: 100.0,
-      width: 200.0,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AvailableImages.appLogo,
-          fit: BoxFit.cover,
-        ),
+    final logo = Padding(
+      padding: EdgeInsets.only(
+        bottom: 80,
       ),
-    );
-
-    final appName = Column(
-      children: <Widget>[
-        Text(
-          AppConfig.appName,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 30.0,
+      child: Container(
+        height: 100.0,
+        width: 200.0,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AvailableImages.appLogo,
+            fit: BoxFit.cover,
           ),
         ),
-      ],
+      ),
     );
 
     final nextBtn = InkWell(
@@ -36,7 +29,7 @@ class WelcomePage extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: Colors.white),
           color: Colors.transparent,
         ),
         child: Stack(
@@ -47,7 +40,7 @@ class WelcomePage extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20.0,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -58,12 +51,12 @@ class WelcomePage extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: Colors.white),
                   color: Colors.transparent,
                 ),
                 child: Icon(
                   Icons.arrow_right_alt,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             )
@@ -82,8 +75,25 @@ class WelcomePage extends StatelessWidget {
         children: <Widget>[nextBtn],
       ),
     );
+
+    final digits = [
+      'Swift Asset Movement',
+      'Safe Asset Movement',
+      'Swift Asset Management',
+      'Safe Asset Management',
+      'Sam Can Do It!',
+      'Sam Will Bring It',
+      'Sam is for Contractors',
+      'Sam is for Busy Moms & Dads',
+      'Sam is for Everybody',
+    ];
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AvailableImages.bgWelcome,
+          fit: BoxFit.cover,
+        )),
         child: Stack(
           children: <Widget>[
             Container(
@@ -91,7 +101,29 @@ class WelcomePage extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(
-                children: <Widget>[logo, appName, buttons],
+                children: <Widget>[
+                  logo,
+                  FlipPanel.builder(
+                    itemBuilder: (context, index) => Container(
+                      color: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      width: 300,
+                      child: Center(
+                        child: Text(
+                          '${digits[index]}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    itemsCount: digits.length,
+                    period: const Duration(milliseconds: 1000),
+                    loop: -1,
+                  ),
+                  buttons,
+                ],
               ),
             ),
           ],

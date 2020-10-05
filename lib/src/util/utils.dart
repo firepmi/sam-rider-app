@@ -28,4 +28,5 @@ class AvailableImages {
 
   static const homePage = const AssetImage('assets/images/home_page.png');
   static const appLogo = const AssetImage('assets/images/sam_logo.png');
+  static const bgWelcome = const AssetImage('assets/images/bg_welcome.png');
 }

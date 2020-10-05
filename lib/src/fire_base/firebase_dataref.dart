@@ -58,6 +58,15 @@ class FireDataRef {
     });
   }
 
+  void getUserProfile(Function(dynamic) onSuccess) {
+    var user = FirebaseAuth.instance.currentUser;
+    var ref =
+        FirebaseDatabase.instance.reference().child("users").child(user.uid);
+    ref.once().then((DataSnapshot data) {
+      onSuccess(data.value);
+    });
+  }
+
   void signIn(String email, String pass, Function onSuccess,
       Function(String) onSignInError) {
     _firebaseAuth
