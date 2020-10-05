@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
@@ -29,7 +30,7 @@ class WelcomePage extends StatelessWidget {
     );
 
     final nextBtn = InkWell(
-      onTap: () => Navigator.pushNamed(context, '/intro'),
+      onTap: () => {moveToNext(context)},
       child: Container(
         height: 60.0,
         width: MediaQuery.of(context).size.width,
@@ -97,5 +98,13 @@ class WelcomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void moveToNext(BuildContext context) {
+    if (FirebaseAuth.instance.currentUser == null) {
+      Navigator.pushNamed(context, '/intro');
+    } else {
+      Navigator.pushNamed(context, '/home');
+    }
   }
 }

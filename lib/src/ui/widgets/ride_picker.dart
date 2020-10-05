@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sam_rider_app/src/model/place_item_res.dart';
-import 'package:sam_rider_app/src/ui/pages/ride_picker_page.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 
 class RidePicker extends StatefulWidget {
   final Function(LocationResult, bool) onSelected;
-  RidePicker(this.onSelected);
+  final LatLng _center = LatLng(45.515978, -122.683730);
+  RidePicker(_center, this.onSelected);
 
   _RidePickerState createState() => _RidePickerState();
 }
@@ -37,7 +36,7 @@ class _RidePickerState extends State<RidePicker> {
               onPressed: () async {
                 fromLocation = await showLocationPicker(
                   context, apiKey,
-                  // initialCenter: LatLng(31.1975844, 29.9598339),
+                  initialCenter: widget._center,
                   automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',
                   myLocationButtonEnabled: true,

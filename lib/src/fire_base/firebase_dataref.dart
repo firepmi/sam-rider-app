@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class FireAuth {
+class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   void signUp(String email, String pass, String name, String phone,
       Function onSuccess, Function(String) onRegisterError) {
     _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: pass)
-        .then((user) {
+        .then((credentials) {
       //
-      _createUser(user.uid, name, phone, onSuccess, onRegisterError);
-      print(user);
+      _createUser(
+          credentials.user.uid, name, phone, onSuccess, onRegisterError);
+      print(credentials);
     }).catchError((err) {
       print(err);
-      _onSignupError(err.code, onRegisterError);
+      _onSignUpError(err.code, onRegisterError);
     });
   }
 
@@ -30,8 +31,30 @@ class FireAuth {
       // success
       onSuccess();
     }).catchError((err) {
-      //TODO
-      onRegisterError("Signup Fail, please try again");
+      onRegisterError(err.toString());
+    });
+  }
+
+  void request(String type, double startLat, double startLon, double endLat,
+      double endLon, Function onSuccess, Function(String) onError) {
+    var user = FirebaseAuth.instance.currentUser;
+    var date = DateTime.now();
+    var request = {
+      "start_lat": startLat,
+      "start_lon": startLon,
+      "end_lat": endLat,
+      "end_lon": endLon,
+      "type": type,
+      "request_date": date.millisecondsSinceEpoch,
+      "state": "awaiting"
+    };
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+
+    ref.child(user.uid).set(request).then((data) {
+      // success
+      onSuccess();
+    }).catchError((err) {
+      onError(err.toString());
     });
   }
 
@@ -44,11 +67,11 @@ class FireAuth {
       onSuccess();
     }).catchError((err) {
       print(err);
-      onSignInError("Signin fail, please try again");
+      onSignInError("SignIn fail, please try again");
     });
   }
 
-  void _onSignupError(String code, Function(String) onRegisterError) {
+  void _onSignUpError(String code, Function(String) onRegisterError) {
     switch (code) {
       case "ERROR_INVALID_EMAIL":
       case "ERROR_INVALID_CREDENTIAL":

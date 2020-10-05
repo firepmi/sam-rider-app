@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:sam_rider_app/src/fire_base/fire_base_auth.dart';
+import 'package:sam_rider_app/src/fire_base/firebase_dataref.dart';
 
 class AuthBloc {
-  var _fireAuth = FireAuth();
+  var _fireAuth = FireDataRef();
   StreamController _nameController = StreamController();
   StreamController _emailController = StreamController();
   StreamController _passController = StreamController();

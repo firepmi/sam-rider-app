@@ -42,6 +42,7 @@ class MapUtil {
     } else {
       print("direction error:");
       print(resDirections.errorMessage);
+      print(resDirections);
     }
     //directions.dispose();
     return locationsSteps;

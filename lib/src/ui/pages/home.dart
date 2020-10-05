@@ -1,14 +1,16 @@
 import 'dart:async';
+
 // ignore: avoid_web_libraries_in_flutter
 // import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:flutter/services.dart';
-import 'package:sam_rider_app/src/model/place_item_res.dart';
+import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 import 'package:sam_rider_app/src/ui/widgets/functionalButton.dart';
 import 'package:sam_rider_app/src/ui/widgets/home_menu_drawer.dart';
+import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/ui/widgets/ride_picker.dart';
 import 'package:sam_rider_app/src/util/map_util.dart';
 
@@ -32,7 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Polyline> routes = new List();
   bool done = false;
   String error;
-
+  DataBloc dataBloc = DataBloc();
+  LocationResult fromLocation, toLocation;
+  double cameraZoom = 13;
+  var state = "select";
   @override
   void initState() {
     super.initState();
@@ -41,6 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    CameraPosition initialCameraPosition =
+        CameraPosition(zoom: cameraZoom, target: _center);
+
+    if (currentLocation != null && state == "running") {
+      print("use current location on widget build");
+      initialCameraPosition = CameraPosition(
+        target: LatLng(currentLocation.latitude, currentLocation.longitude),
+        zoom: cameraZoom,
+      );
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -56,10 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           GoogleMap(
             mapType: MapType.normal,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 13.0,
-            ),
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+            initialCameraPosition: initialCameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _completer.complete(controller);
             },
@@ -87,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: RidePicker(onPlaceSelected),
+                  child: RidePicker(_center, onPlaceSelected),
                 )
               ],
             ),
@@ -102,17 +116,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   FunctionalButton(
                     icon: Icons.work,
                     title: "Work",
-                    onPressed: () {},
+                    onPressed: () {
+                      request("work");
+                    },
                   ),
                   FunctionalButton(
                     icon: Icons.home,
                     title: "Home",
-                    onPressed: () {},
+                    onPressed: () {
+                      request("home");
+                    },
                   ),
                   FunctionalButton(
                     icon: Icons.timer,
                     title: "Zinc Gym",
-                    onPressed: () {},
+                    onPressed: () {
+                      request("gym");
+                    },
                   ),
                 ],
               ),
@@ -123,14 +143,46 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void request(String type) {
+    if (fromLocation == null || toLocation == null) {
+      MsgDialog.showMsgDialog(context, "Request",
+          "Please select the starting place and the end place");
+      return;
+    }
+    dataBloc.request(
+        type,
+        fromLocation.latLng.latitude,
+        fromLocation.latLng.longitude,
+        toLocation.latLng.latitude,
+        toLocation.latLng.longitude, () {
+      print("request posted");
+    }, (error) => {MsgDialog.showMsgDialog(context, "Request", error)});
+  }
+
   void onPlaceSelected(LocationResult place, bool fromAddress) {
     var mkId = fromAddress ? "from_address" : "to_address";
+    if (fromAddress) {
+      fromLocation = place;
+    } else {
+      toLocation = place;
+    }
     print("place selected $mkId");
+    _center = place.latLng;
     _addMarker(mkId, place);
     addPolyline();
+    moveCamera(_center);
+  }
+
+  void moveCamera(LatLng nPos) async {
+    final GoogleMapController controller = await _completer.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(zoom: cameraZoom, target: nPos)));
   }
 
   void _addMarker(String mkId, LocationResult place) async {
+    if (place == null) {
+      return;
+    }
     // remove old
     _markers.remove(mkId);
     //_mapController.clearMarkers();
@@ -142,17 +194,19 @@ class _MyHomePageState extends State<MyHomePage> {
       infoWindow: InfoWindow(title: mkId),
     );
 
-    setState(() {
-      if (mkId == "from_address") {
-        _markers[0] = (marker);
-        List mmmm = _markers;
-        print(mmmm);
-      } else if (mkId == "to_address") {
-        _markers.add(marker);
-        List mmmm = _markers;
-        print(mmmm);
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (mkId == "from_address") {
+          _markers[0] = (marker);
+          List mmmm = _markers;
+          print(mmmm);
+        } else if (mkId == "to_address") {
+          _markers.add(marker);
+          List mmmm = _markers;
+          print(mmmm);
+        }
+      });
+    }
   }
 
   getCurrentLocation() async {
@@ -163,10 +217,12 @@ class _MyHomePageState extends State<MyHomePage> {
       position: _center,
       infoWindow: InfoWindow(title: 'My Location'),
     );
-    setState(() {
-      print("set current location");
-      _markers.add(marker);
-    });
+    if (mounted) {
+      setState(() {
+        print("set current location");
+        _markers.add(marker);
+      });
+    }
   }
 
   addPolyline() async {
@@ -194,9 +250,11 @@ class _MyHomePageState extends State<MyHomePage> {
           points: path,
         );
 
-        setState(() {
-          routes.add(polyline);
-        });
+        if (mounted) {
+          setState(() {
+            routes.add(polyline);
+          });
+        }
       });
     }
   }
@@ -245,6 +303,14 @@ class _MyHomePageState extends State<MyHomePage> {
         done = true;
       });
     }
+
+    _locationService.onLocationChanged.listen((LocationData cLoc) {
+      currentLocation = LatLng(cLoc.latitude, cLoc.longitude);
+      _center = currentLocation;
+      if (fromLocation == null && toLocation == null) {
+        moveCamera(_center);
+      }
+    });
   }
 
   requestPermissions(serviceStatus) async {
