@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class RidePicker extends StatefulWidget {
   final Function(LocationResult, bool) onSelected;
-  final LatLng _center = LatLng(45.515978, -122.683730);
-  RidePicker(_center, this.onSelected);
+  final LatLng _center;
+  RidePicker(this._center, this.onSelected);
 
   _RidePickerState createState() => _RidePickerState();
 }
 
 class _RidePickerState extends State<RidePicker> {
-  // PlaceItemRes fromAddress;
-  // PlaceItemRes toAddress;
-  String apiKey = "AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg";
   LocationResult fromLocation;
   LocationResult toLocation;
   @override
@@ -34,8 +32,10 @@ class _RidePickerState extends State<RidePicker> {
             height: 50,
             child: FlatButton(
               onPressed: () async {
+                print("from location init location:");
+                print(widget._center);
                 fromLocation = await showLocationPicker(
-                  context, apiKey,
+                  context, AppConfig.apiKey,
                   initialCenter: widget._center,
                   automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',
@@ -115,10 +115,12 @@ class _RidePickerState extends State<RidePicker> {
             height: 50,
             child: FlatButton(
               onPressed: () async {
+                print("to location init location:");
+                print(fromLocation.latLng);
                 toLocation = await showLocationPicker(
-                  context, apiKey,
+                  context, AppConfig.apiKey,
                   initialCenter: fromLocation == null
-                      ? LatLng(45.521563018025006, -122.67743289470673)
+                      ? widget._center
                       : fromLocation.latLng,
                   automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',

@@ -15,9 +15,10 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
     // TODO: implement initState
     super.initState();
     dataBloc.getUserProfile((data) {
-      setState(() {
-        name = data["name"];
-      });
+      name = data["name"];
+      if (mounted) {
+        setState(() => null);
+      }
     });
   }
 
@@ -46,6 +47,9 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
               fit: BoxFit.cover,
             ),
           ),
+          onDetailsPressed: () {
+            Navigator.pushNamed(context, '/profile');
+          },
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           linkMenuDrawer('Payment', () {

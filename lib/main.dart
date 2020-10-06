@@ -15,6 +15,8 @@ import 'package:sam_rider_app/src/ui/pages/settings.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
 
+import 'src/ui/pages/profile.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -41,6 +43,7 @@ void main() async {
           '/free_rides': (context) => FreeRidesPage(),
           '/help': (context) => HelpPage(),
           '/settings': (context) => SettingsPage(),
+          '/profile': (context) => ProfilePage(),
         },
       )));
 }

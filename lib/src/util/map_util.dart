@@ -2,12 +2,13 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/geolocation.dart' as APIGeolocation;
 import 'package:google_maps_webservice/directions.dart' as APIDirections;
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class MapUtil {
-  final directions = APIDirections.GoogleMapsDirections(
-      apiKey: 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg');
-  final geolocation = APIGeolocation.GoogleMapsGeolocation(
-      apiKey: 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg');
+  final directions =
+      APIDirections.GoogleMapsDirections(apiKey: AppConfig.apiKey);
+  final geolocation =
+      APIGeolocation.GoogleMapsGeolocation(apiKey: AppConfig.apiKey);
 
   Future<LatLng> getCurrentLocation() async {
     LatLng currentLocation;

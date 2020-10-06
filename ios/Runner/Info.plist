@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to your camera to upload your profile image.</string>
 	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
 	<string>SAM Drivers want know your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -30,6 +32,8 @@
 	<string>SAM Drivers want know your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>SAM Drivers want know your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to your picture to upload your profile image.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

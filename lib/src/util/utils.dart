@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConfig {
   static const appName = "Sam Will Do It";
+  static const apiKey = 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg';
 }
 
 class AvailableFonts {
