@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -65,6 +69,32 @@ class FireDataRef {
     ref.once().then((DataSnapshot data) {
       onSuccess(data.value);
     });
+  }
+
+  void uploadImage(Uint8List data, Function onSuccess) async {
+    var user = FirebaseAuth.instance.currentUser;
+    final StorageReference storageReference =
+        FirebaseStorage().ref().child("profile").child(user.uid + ".jpg");
+
+    final StorageUploadTask uploadTask = storageReference.putData(data);
+
+    final StreamSubscription<StorageTaskEvent> streamSubscription =
+        uploadTask.events.listen((event) {
+      // You can use this to notify yourself or your user in any kind of way.
+      // For example: you could use the uploadTask.events stream in a StreamBuilder instead
+      // to show your user what the current status is. In that case, you would not need to cancel any
+      // subscription as StreamBuilder handles this automatically.
+
+      // Here, every StorageTaskEvent concerning the upload is printed to the logs.
+      print('EVENT ${event.type}');
+      if (event.type == StorageTaskEventType.success) {
+        onSuccess();
+      }
+    });
+
+// Cancel your subscription when done.
+    await uploadTask.onComplete;
+    streamSubscription.cancel();
   }
 
   void signIn(String email, String pass, Function onSuccess,

@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 
@@ -18,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   File _image;
   final picker = ImagePicker();
+  var profileUrl = "";
 
   void onProfileUpdate() async {
     showDialog(
@@ -57,6 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       Navigator.pop(context, "camera");
     });
+    uploadProfileImage();
   }
 
   void onGallery() async {
@@ -68,6 +72,16 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     setState(() {
       Navigator.pop(context, "gallery");
+    });
+    uploadProfileImage();
+  }
+
+  void uploadProfileImage() {
+    dataBloc.uploadProfile(_image.readAsBytesSync(), () {
+      print("image upload completed");
+      Fluttertoast.showToast(
+          msg: "Profile image uploaded successfully.",
+          toastLength: Toast.LENGTH_LONG);
     });
   }
 
@@ -81,6 +95,16 @@ class _ProfilePageState extends State<ProfilePage> {
         name = data["name"];
         phone = data["phone"];
       });
+    });
+    getProfileImage();
+  }
+
+  void getProfileImage() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final ref = FirebaseStorage.instance.ref().child("profile").child(user.uid);
+    profileUrl = await ref.getDownloadURL();
+    setState(() {
+      print("get image from firebase storage");
     });
   }
 
@@ -129,10 +153,14 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CircleAvatar(
                 child: ClipOval(
                   child: _image == null
-                      ? Image.asset(
-                          "assets/images/default_profile.png",
+                      ? FadeInImage.assetNetwork(
+                          image: profileUrl,
+                          placeholder: 'assets/images/default_profile.png',
+                          // "assets/images/default_profile.png",
                           width: 120,
                           height: 120,
+                          placeholderCacheWidth: 120,
+                          placeholderCacheHeight: 120,
                           fit: BoxFit.cover,
                         )
                       : Image.file(

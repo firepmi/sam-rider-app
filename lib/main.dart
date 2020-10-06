@@ -9,9 +9,11 @@ import 'package:sam_rider_app/src/ui/pages/intro.dart';
 import 'package:sam_rider_app/src/ui/pages/login.dart';
 import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
+import 'package:sam_rider_app/src/ui/pages/privacy.dart';
 import 'package:sam_rider_app/src/ui/pages/register.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
+import 'package:sam_rider_app/src/ui/pages/termsofservice.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
 
@@ -44,6 +46,8 @@ void main() async {
           '/help': (context) => HelpPage(),
           '/settings': (context) => SettingsPage(),
           '/profile': (context) => ProfilePage(),
+          '/privacy': (context) => PrivacyPage(),
+          '/termsofservice': (context) => TermsOfServicePage(),
         },
       )));
 }

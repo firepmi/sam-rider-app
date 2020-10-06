@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 
@@ -10,6 +12,7 @@ class HomeMenuDrawer extends StatefulWidget {
 class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
   DataBloc dataBloc = DataBloc();
   String name = "Welcome! Customer";
+  var profileUrl = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -20,6 +23,18 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
         setState(() => null);
       }
     });
+    getProfileImage();
+  }
+
+  void getProfileImage() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final ref = FirebaseStorage.instance.ref().child("profile").child(user.uid);
+    profileUrl = await ref.getDownloadURL();
+    if (mounted) {
+      setState(() {
+        print("get image from firebase storage");
+      });
+    }
   }
 
   @override
@@ -40,13 +55,21 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
             ],
           ),
           currentAccountPicture: ClipOval(
-            child: Image.asset(
-              "assets/images/user_profile.jpg",
-              width: 10,
-              height: 10,
-              fit: BoxFit.cover,
-            ),
-          ),
+              child:
+                  // Image.asset(
+                  //   "assets/images/default_profile.png",
+                  //   width: 10,
+                  //   height: 10,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  FadeInImage.assetNetwork(
+            image: profileUrl,
+            placeholder: 'assets/images/default_profile.png',
+            // "assets/images/default_profile.png",
+            width: 10,
+            height: 10,
+            fit: BoxFit.cover,
+          )),
           onDetailsPressed: () {
             Navigator.pushNamed(context, '/profile');
           },
@@ -66,6 +89,16 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           }),
           linkMenuDrawer('Settings', () {
             Navigator.pushNamed(context, '/settings');
+          }),
+          linkMenuDrawer('Privacy of policy', () {
+            Navigator.pushNamed(context, '/privacy');
+          }),
+          linkMenuDrawer('Terms of service', () {
+            Navigator.pushNamed(context, '/termsofservice');
+          }),
+          linkMenuDrawer('Logout', () async {
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushNamed(context, '/login');
           }),
         ]),
       ],

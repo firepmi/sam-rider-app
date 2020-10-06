@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:sam_rider_app/src/fire_base/firebase_dataref.dart';
 
@@ -12,5 +13,9 @@ class DataBloc {
 
   void getUserProfile(Function(dynamic) onSuccess) {
     _fireData.getUserProfile(onSuccess);
+  }
+
+  void uploadProfile(Uint8List data, Function onSuccess) {
+    _fireData.uploadImage(data, onSuccess);
   }
 }
