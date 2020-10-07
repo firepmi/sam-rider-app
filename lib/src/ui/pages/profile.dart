@@ -237,21 +237,27 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Divider(),
-            Container(
-              padding:
-                  EdgeInsets.only(left: 40, right: 40, bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Log Out",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  ),
-                  Icon(
-                    Icons.logout,
-                    color: Colors.grey,
-                  ),
-                ],
+            GestureDetector(
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Container(
+                padding:
+                    EdgeInsets.only(left: 40, right: 40, bottom: 15, top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Log Out",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                    Icon(
+                      Icons.logout,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
               ),
             ),
             Divider(),
