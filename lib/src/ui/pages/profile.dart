@@ -101,8 +101,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void getProfileImage() async {
     final user = FirebaseAuth.instance.currentUser;
-    final ref = FirebaseStorage.instance.ref().child("profile").child(user.uid);
-    profileUrl = await ref.getDownloadURL();
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child("profile")
+        .child(user.uid + ".jpg");
+    profileUrl = (await ref.getDownloadURL()).toString();
     setState(() {
       print("get image from firebase storage");
     });

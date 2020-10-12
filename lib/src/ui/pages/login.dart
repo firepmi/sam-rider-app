@@ -43,11 +43,11 @@ class _LoginViewState extends State<LoginView> {
                 height: 100,
               ),
               Container(
-                height: 100.0,
+                height: 130.0,
                 width: 200.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AvailableImages.appLogo,
+                    image: AvailableImages.appLogo1,
                     fit: BoxFit.cover,
                   ),
                 ),

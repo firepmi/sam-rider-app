@@ -11,7 +11,7 @@ class WelcomePage extends StatelessWidget {
         bottom: 80,
       ),
       child: Container(
-        height: 100.0,
+        height: 200.0,
         width: 200.0,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -89,11 +89,12 @@ class WelcomePage extends StatelessWidget {
     ];
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AvailableImages.bgWelcome,
-          fit: BoxFit.cover,
-        )),
+        color: Color.fromRGBO(34, 178, 76, 1),
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //   image: AvailableImages.bgWelcome,
+        //   fit: BoxFit.cover,
+        // )),
         child: Stack(
           children: <Widget>[
             Container(
