@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:intro_slider/scrollbar_behavior_enum.dart';
-import 'package:sam_rider_app/src/util/utils.dart';
 
 class IntroPage extends StatefulWidget {
   IntroPage({Key key}) : super(key: key);
@@ -23,14 +21,14 @@ class IntroScreenState extends State<IntroPage> {
 
     slides.add(
       new Slide(
-        title: "Select a Restaurant",
+        title: "Help with everyday\nlife at your fingertips.",
         styleTitle: TextStyle(
             color: Color(0xff3da4ab),
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
         description:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+            "Get started >",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -41,14 +39,14 @@ class IntroScreenState extends State<IntroPage> {
     );
     slides.add(
       new Slide(
-        title: "Choose Your Food",
+        title: "Find trusted help for everything \non your to-do list",
         styleTitle: TextStyle(
             color: Color(0xff3da4ab),
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
         description:
-            "Ye indulgence unreserved connection alteration appearance",
+            "",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -59,14 +57,14 @@ class IntroScreenState extends State<IntroPage> {
     );
     slides.add(
       new Slide(
-        title: "Secure Payment",
+        title: "See reviewers and prices of 140,00+\nbackground checked Drivers",
         styleTitle: TextStyle(
             color: Color(0xff3da4ab),
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. \nYet timed being songs marry one defer men our. Although finished blessing do of",
+            "",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -152,16 +150,9 @@ class IntroScreenState extends State<IntroPage> {
         width: double.infinity,
         height: double.infinity,
         child: Container(
-          margin: EdgeInsets.only(bottom: 60.0, top: 60.0),
+          margin: EdgeInsets.only(bottom: 60.0, top: 160.0),
           child: ListView(
-            children: <Widget>[
-              GestureDetector(
-                  child: Image.asset(
-                currentSlide.pathImage,
-                width: 200.0,
-                height: 200.0,
-                fit: BoxFit.contain,
-              )),
+            children: <Widget>[              
               Container(
                 child: Text(
                   currentSlide.title,
@@ -178,8 +169,15 @@ class IntroScreenState extends State<IntroPage> {
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
-                margin: EdgeInsets.only(top: 20.0, left: 30, right: 30),
+                margin: EdgeInsets.only(top: 20.0, left: 30, right: 30, bottom: 50),
               ),
+              GestureDetector(
+                  child: Image.asset(
+                currentSlide.pathImage,
+                width: 200.0,
+                height: 200.0,
+                fit: BoxFit.contain,
+              )),
             ],
           ),
         ),
