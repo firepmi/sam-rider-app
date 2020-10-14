@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
 import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
+import 'package:sam_rider_app/src/ui/pages/driver_list.dart';
+import 'package:sam_rider_app/src/ui/pages/driver_profile.dart';
 import 'package:sam_rider_app/src/ui/pages/free_rides.dart';
 import 'package:sam_rider_app/src/ui/pages/help.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
@@ -11,6 +13,7 @@ import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
 import 'package:sam_rider_app/src/ui/pages/privacy.dart';
 import 'package:sam_rider_app/src/ui/pages/register.dart';
+import 'package:sam_rider_app/src/ui/pages/select_drivers.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
 import 'package:sam_rider_app/src/ui/pages/termsofservice.dart';
@@ -48,6 +51,9 @@ void main() async {
           '/profile': (context) => ProfilePage(),
           '/privacy': (context) => PrivacyPage(),
           '/termsofservice': (context) => TermsOfServicePage(),
+          '/select_drivers': (context) => SelectDriversPage(),
+          '/driver_profile': (context) => DriverProfilePage(),
+          '/driver_list': (context) => DriverListPage(),
         },
       )));
 }

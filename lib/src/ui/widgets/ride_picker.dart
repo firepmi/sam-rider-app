@@ -49,14 +49,6 @@ class _RidePickerState extends State<RidePicker> {
                   print("refresh ui");
                   widget.onSelected(fromLocation, true);
                 });
-//                 Navigator.of(context).push(MaterialPageRoute(
-//                     builder: (context) => RidePickerPage(
-//                             fromAddress == null ? "" : fromAddress.name,
-//                             (place, isFrom) {
-//                           widget.onSelected(place, isFrom);
-//                           fromAddress = place;
-//                           setState(() {});
-//                         }, true)));
               },
               child: SizedBox(
                 width: double.infinity,
@@ -92,7 +84,7 @@ class _RidePickerState extends State<RidePicker> {
                       child: Text(
                         fromLocation == null
                             ? "Pickup location"
-                            : fromLocation.address,
+                            : (fromLocation.address ?? "Address not found"),
                         // fromAddress == null
                         //     ? "pickup location"
                         //     : fromAddress.name,
@@ -126,22 +118,11 @@ class _RidePickerState extends State<RidePicker> {
 //                      mapStylePath: 'assets/mapStyle.json',
                   myLocationButtonEnabled: true,
                   layersButtonEnabled: true,
-                  // countries: ['AE', 'NG']
-
-//                      resultCardAlignment: Alignment.bottomCenter,
                 );
                 setState(() {
                   print("refresh ui");
                   widget.onSelected(toLocation, false);
                 });
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) =>
-                //         RidePickerPage(toAddress == null ? '' : toAddress.name,
-                //             (place, isFrom) {
-                //           widget.onSelected(place, isFrom);
-                //           toAddress = place;
-                //           setState(() {});
-                //         }, false)));
               },
               child: SizedBox(
                 width: double.infinity,

@@ -29,7 +29,7 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
   void getProfileImage() async {
     final user = FirebaseAuth.instance.currentUser;
     final ref = FirebaseStorage.instance.ref().child("profile").child(user.uid);
-    profileUrl = await ref.getDownloadURL();
+    profileUrl = (await ref.getDownloadURL()).toString();
     if (mounted) {
       setState(() {
         print("get image from firebase storage");
@@ -55,21 +55,22 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
             ],
           ),
           currentAccountPicture: ClipOval(
-              child:
-                  // Image.asset(
-                  //   "assets/images/default_profile.png",
-                  //   width: 10,
-                  //   height: 10,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  FadeInImage.assetNetwork(
-            image: profileUrl,
-            placeholder: 'assets/images/default_profile.png',
-            // "assets/images/default_profile.png",
-            width: 10,
-            height: 10,
-            fit: BoxFit.cover,
-          )),
+            child: profileUrl == ""
+                ? FadeInImage.assetNetwork(
+                    image: profileUrl,
+                    placeholder: 'assets/images/default_profile.png',
+                    // "assets/images/default_profile.png",
+                    width: 10,
+                    height: 10,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    "assets/images/default_profile.png",
+                    width: 10,
+                    height: 10,
+                    fit: BoxFit.cover,
+                  ),
+          ),
           onDetailsPressed: () {
             Navigator.pushNamed(context, '/profile');
           },

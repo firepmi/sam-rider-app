@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -39,18 +40,28 @@ class FireDataRef {
     });
   }
 
-  void request(String type, double startLat, double startLon, double endLat,
-      double endLon, Function onSuccess, Function(String) onError) {
+  void request(
+      List<LatLng> path,
+      double startLat,
+      double startLon,
+      double endLat,
+      double endLon,
+      Function onSuccess,
+      Function(String) onError) {
     var user = FirebaseAuth.instance.currentUser;
     var date = DateTime.now();
+    var pathStr = "";
+    path.forEach((element) {
+      pathStr += "${element.latitude},${element.longitude}";
+    });
     var request = {
       "start_lat": startLat,
       "start_lon": startLon,
       "end_lat": endLat,
       "end_lon": endLon,
-      "type": type,
       "request_date": date.millisecondsSinceEpoch,
-      "state": "awaiting"
+      "state": "awaiting",
+      "path": pathStr
     };
     var ref = FirebaseDatabase.instance.reference().child("requests");
 

@@ -87,7 +87,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     email = FirebaseAuth.instance.currentUser.email;
     dataBloc.getUserProfile((data) {
@@ -127,28 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 40,
             ),
-            // CircleAvatar(
-            //   child: ClipOval(
-            //     child: Image.asset(
-            //       "assets/images/user_profile.jpg",
-            //     ),
-            //   ),
-            //   radius: 80,
-            // ),
-            // CircleAvatar(
-            //   backgroundImage: AssetImage(
-            //     "assets/images/user_profile.jpg",
-            //   ),
-            //   radius: 80,
-            // ),
-            // ClipOval(
-            //   child: Image.asset(
-            //     "assets/images/user_profile.jpg",
-            //     width: 80,
-            //     height: 80,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
             GestureDetector(
               onTap: () {
                 onProfileUpdate();

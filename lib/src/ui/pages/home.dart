@@ -38,10 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
   LocationResult fromLocation, toLocation;
   double cameraZoom = 13;
   var state = "select";
+  List<LatLng> path = List();
+  BitmapDescriptor destinationPinIcon;
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    setCustomMapPin();
+  }
+
+  void setCustomMapPin() async {
+    destinationPinIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 25),
+        'assets/images/destination_icon.png');
   }
 
   @override
@@ -117,21 +126,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: Icons.work,
                     title: "Work",
                     onPressed: () {
-                      request("work");
+                      // request("work");
                     },
                   ),
                   FunctionalButton(
                     icon: Icons.home,
                     title: "Home",
                     onPressed: () {
-                      request("home");
+                      // request("home");
                     },
                   ),
                   FunctionalButton(
                     icon: Icons.timer,
                     title: "Zinc Gym",
                     onPressed: () {
-                      request("gym");
+                      // request("gym");
                     },
                   ),
                 ],
@@ -143,19 +152,48 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void request(String type) {
+  void request() {
     if (fromLocation == null || toLocation == null) {
-      MsgDialog.showMsgDialog(context, "Request",
-          "Please select the starting place and the end place");
+      // MsgDialog.showMsgDialog(context, "Request",
+      //     "Please select the starting place and the end place");
       return;
     }
+    if (path == null || path.length < 2) {
+      // MsgDialog.showMsgDialog(context, "Request", "Path not found");
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Request"),
+                content: Text("Path not found"),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop("cancel");
+                    },
+                    child: Text("Select Again"),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      onRequest();
+                      Navigator.of(context).pop("go");
+                    },
+                    child: Text("Go anyway"),
+                  ),
+                ],
+              ));
+      return;
+    }
+    onRequest();
+  }
+
+  void onRequest() {
     dataBloc.request(
-        type,
+        path,
         fromLocation.latLng.latitude,
         fromLocation.latLng.longitude,
         toLocation.latLng.latitude,
         toLocation.latLng.longitude, () {
-      print("request posted");
+      Navigator.pushNamed(context, '/select_drivers', arguments: path);
     }, (error) => {MsgDialog.showMsgDialog(context, "Request", error)});
   }
 
@@ -190,20 +228,27 @@ class _MyHomePageState extends State<MyHomePage> {
     _markers.remove(mkId);
     //_mapController.clearMarkers();
 
-    Marker marker = Marker(
-      markerId: MarkerId(mkId),
-      draggable: true,
-      position: place.latLng, //LatLng(place.lat, place.lng),
-      infoWindow: InfoWindow(title: mkId),
-    );
-
     if (mounted) {
       setState(() {
         if (mkId == "from_address") {
+          Marker marker = Marker(
+            markerId: MarkerId(mkId),
+            draggable: true,
+            position: place.latLng, //LatLng(place.lat, place.lng),
+            infoWindow: InfoWindow(title: mkId),
+          );
           _markers[0] = (marker);
           List mmmm = _markers;
           print(mmmm);
         } else if (mkId == "to_address") {
+          Marker marker = Marker(
+            markerId: MarkerId(mkId),
+            draggable: true,
+            position: place.latLng, //LatLng(place.lat, place.lng),
+            infoWindow: InfoWindow(title: mkId),
+            icon: destinationPinIcon,
+            anchor: const Offset(0.1, 1),
+          );
           _markers.add(marker);
           List mmmm = _markers;
           print(mmmm);
@@ -238,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
               LatLng(_markers[1].position.latitude,
                   _markers[1].position.longitude))
           .then((locations) {
-        List<LatLng> path = new List();
+        path = new List();
 
         locations.forEach((location) {
           path.add(new LatLng(location.latitude, location.longitude));
@@ -254,8 +299,10 @@ class _MyHomePageState extends State<MyHomePage> {
         );
 
         if (mounted) {
+          routes.add(polyline);
+          request();
           setState(() {
-            routes.add(polyline);
+            print("add polyline");
           });
         }
       });

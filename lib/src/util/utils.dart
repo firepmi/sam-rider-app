@@ -9,6 +9,10 @@ class AvailableFonts {
   static const primaryFont = "Quicksand";
 }
 
+class AppColors {
+  static const main = Color.fromRGBO(81, 175, 51, 1);
+}
+
 class AvailableImages {
   static const emptyState = {
     'assetImage': AssetImage('assets/images/empty.png'),
