@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
-import 'package:sam_rider_app/src/ui/widgets/exhibition_%20bottom_sheet.dart';
 import 'package:sam_rider_app/src/ui/widgets/loading_dialog.dart';
 import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
@@ -20,10 +19,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   AuthBloc authBloc = AuthBloc();
 
-  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
   @override
   void initState() {
     super.initState();

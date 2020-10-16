@@ -27,8 +27,7 @@ class IntroScreenState extends State<IntroPage> {
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
-        description:
-            "Get started >",
+        description: "Get started >",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -45,8 +44,7 @@ class IntroScreenState extends State<IntroPage> {
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
-        description:
-            "",
+        description: "",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -57,14 +55,13 @@ class IntroScreenState extends State<IntroPage> {
     );
     slides.add(
       new Slide(
-        title: "See reviewers and prices of 140,00+\nbackground checked Drivers",
+        title: "See reviews and prices of 140,00+\nbackground checked Drivers",
         styleTitle: TextStyle(
             color: Color(0xff3da4ab),
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'RobotoMono'),
-        description:
-            "",
+        description: "",
         styleDescription: TextStyle(
             color: Color(0xfffe9c8f),
             fontSize: 18.0,
@@ -150,9 +147,9 @@ class IntroScreenState extends State<IntroPage> {
         width: double.infinity,
         height: double.infinity,
         child: Container(
-          margin: EdgeInsets.only(bottom: 60.0, top: 160.0),
+          margin: EdgeInsets.only(bottom: 60.0, top: 140.0),
           child: ListView(
-            children: <Widget>[              
+            children: <Widget>[
               Container(
                 child: Text(
                   currentSlide.title,
@@ -169,13 +166,14 @@ class IntroScreenState extends State<IntroPage> {
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
-                margin: EdgeInsets.only(top: 20.0, left: 30, right: 30, bottom: 50),
+                margin:
+                    EdgeInsets.only(top: 20.0, left: 30, right: 30, bottom: 40),
               ),
               GestureDetector(
                   child: Image.asset(
                 currentSlide.pathImage,
-                width: 200.0,
-                height: 200.0,
+                width: 300.0,
+                height: 300.0,
                 fit: BoxFit.contain,
               )),
             ],

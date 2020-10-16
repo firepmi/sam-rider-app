@@ -15,7 +15,6 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
   var profileUrl = "";
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dataBloc.getUserProfile((data) {
       name = data["name"];
@@ -28,7 +27,10 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
 
   void getProfileImage() async {
     final user = FirebaseAuth.instance.currentUser;
-    final ref = FirebaseStorage.instance.ref().child("profile").child(user.uid);
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child("profile")
+        .child(user.uid + ".jpg");
     profileUrl = (await ref.getDownloadURL()).toString();
     if (mounted) {
       setState(() {
@@ -55,7 +57,7 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
             ],
           ),
           currentAccountPicture: ClipOval(
-            child: profileUrl == ""
+            child: profileUrl != ""
                 ? FadeInImage.assetNetwork(
                     image: profileUrl,
                     placeholder: 'assets/images/default_profile.png',

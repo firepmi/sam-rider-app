@@ -6,18 +6,21 @@ import 'package:sam_rider_app/src/ui/pages/driver_list.dart';
 import 'package:sam_rider_app/src/ui/pages/driver_profile.dart';
 import 'package:sam_rider_app/src/ui/pages/free_rides.dart';
 import 'package:sam_rider_app/src/ui/pages/help.dart';
-import 'package:sam_rider_app/src/ui/pages/home.dart';
+import 'package:sam_rider_app/src/ui/pages/job_location_pick.dart';
 import 'package:sam_rider_app/src/ui/pages/intro.dart';
 import 'package:sam_rider_app/src/ui/pages/login.dart';
 import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
 import 'package:sam_rider_app/src/ui/pages/privacy.dart';
 import 'package:sam_rider_app/src/ui/pages/register.dart';
-import 'package:sam_rider_app/src/ui/pages/select_drivers.dart';
+import 'package:sam_rider_app/src/ui/pages/select_car_size.dart';
+import 'package:sam_rider_app/src/ui/pages/select_duration.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
+import 'package:sam_rider_app/src/ui/pages/select_weight.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
 import 'package:sam_rider_app/src/ui/pages/termsofservice.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
+import 'package:sam_rider_app/src/ui/pages/home.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
 
 import 'src/ui/pages/profile.dart';
@@ -35,7 +38,8 @@ void main() async {
         ),
         initialRoute: './',
         routes: {
-          '/home': (context) => MyHomePage(title: 'SAM Rider'),
+          '/home': (context) => HomePage(),
+          '/joblocation': (context) => JobLocationPickPage(),
           '/': (context) => WelcomePage(),
           '/intro': (context) => IntroPage(),
           '/login': (context) => LoginPage(),
@@ -51,9 +55,11 @@ void main() async {
           '/profile': (context) => ProfilePage(),
           '/privacy': (context) => PrivacyPage(),
           '/termsofservice': (context) => TermsOfServicePage(),
-          '/select_drivers': (context) => SelectDriversPage(),
+          '/select_duration': (context) => SelectDurationPage(),
           '/driver_profile': (context) => DriverProfilePage(),
           '/driver_list': (context) => DriverListPage(),
+          '/select_car_size': (context) => SelectCarSizePage(),
+          '/select_weight': (context) => SelectWeightPage(),
         },
       )));
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:sam_rider_app/src/ui/pages/select_drivers.dart';
+import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
 class DriverListPage extends StatefulWidget {
@@ -9,7 +9,6 @@ class DriverListPage extends StatefulWidget {
 }
 
 class _DriverListPageState extends State<DriverListPage> {
-  PriceOptional price = PriceOptional.l25;
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   double _fontSize = 14;
   List _items;
@@ -22,18 +21,46 @@ class _DriverListPageState extends State<DriverListPage> {
 
   void setTag() {
     _items = List();
-    switch (price) {
-      case PriceOptional.l25:
-        _items.add("Less than 25\$/hr");
+    switch (Globals.duration) {
+      case PriceOptional.small:
+        _items.add("Small - Est. 1 hr");
         break;
-      case PriceOptional.l50:
-        _items.add("25\$/hr to 50\$/hr");
+      case PriceOptional.medium:
+        _items.add("Medium - Est. 2-3 hrs");
         break;
-      case PriceOptional.l75:
-        _items.add("50\$/hr to 75\$/hr");
+      case PriceOptional.large:
+        _items.add("Large - Est. 4+ hrs");
         break;
-      case PriceOptional.g75:
-        _items.add("Higher than 75\$/hr");
+    }
+    switch (Globals.carSize) {
+      case CarSizeOptional.motorScooter:
+        _items.add("Motor Scooter");
+        break;
+      case CarSizeOptional.autoMobile:
+        _items.add("Automobile");
+        break;
+      case CarSizeOptional.suv:
+        _items.add("SUV");
+        break;
+      case CarSizeOptional.pickup:
+        _items.add("Pickup");
+        break;
+      case CarSizeOptional.van:
+        _items.add("VAN");
+        break;
+      case CarSizeOptional.truck:
+        _items.add("Truck");
+        break;
+    }
+    switch (Globals.weight) {
+      case WeightOptional.pound1to5:
+        _items.add("1 - 5 pounds");
+        break;
+      case WeightOptional.pound6to49:
+        _items.add("6 - 49 pounds");
+        break;
+      case WeightOptional.pound50more:
+        _items.add("50+ pounds");
         break;
     }
   }
@@ -153,7 +180,6 @@ class _DriverListPageState extends State<DriverListPage> {
 
   @override
   Widget build(BuildContext context) {
-    price = ModalRoute.of(context).settings.arguments;
     setTag();
     return Scaffold(
         appBar: AppBar(

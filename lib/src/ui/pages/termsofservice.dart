@@ -1,5 +1,5 @@
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 
 class TermsOfServicePage extends StatefulWidget {
   @override
@@ -7,18 +7,20 @@ class TermsOfServicePage extends StatefulWidget {
 }
 
 class _TermsOfServicePageState extends State<TermsOfServicePage> {
-  bool _isLoading = true;
-  PDFDocument document;
+  PdfController termController;
 
   @override
   void initState() {
+    termController = PdfController(
+      document: PdfDocument.openAsset('assets/pdf/termsofservice.pdf'),
+    );
     super.initState();
-    loadDocument();
   }
 
-  loadDocument() async {
-    document = await PDFDocument.fromAsset('assets/pdf/termsofservice.pdf');
-    setState(() => _isLoading = false);
+  @override
+  void dispose() {
+    termController.dispose();
+    super.dispose();
   }
 
   @override
@@ -27,15 +29,12 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
       appBar: AppBar(
         backgroundColor: Colors.white70,
         title: Text(
-          "Profile",
+          "Terms of Service",
           style: TextStyle(color: Colors.black),
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Center(
-          child: _isLoading
-              ? Center(child: CircularProgressIndicator())
-              : PDFViewer(document: document)),
+      body: PdfView(controller: termController),
     );
   }
 }

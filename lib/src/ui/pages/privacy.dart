@@ -1,5 +1,5 @@
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 
 class PrivacyPage extends StatefulWidget {
   @override
@@ -7,18 +7,19 @@ class PrivacyPage extends StatefulWidget {
 }
 
 class _PrivacyPageState extends State<PrivacyPage> {
-  bool _isLoading = true;
-  PDFDocument document;
-
+  PdfController privacyController;
   @override
   void initState() {
+    privacyController = PdfController(
+      document: PdfDocument.openAsset('assets/pdf/privacy.pdf'),
+    );
     super.initState();
-    loadDocument();
   }
 
-  loadDocument() async {
-    document = await PDFDocument.fromAsset('assets/pdf/privacy.pdf');
-    setState(() => _isLoading = false);
+  @override
+  void dispose() {
+    privacyController.dispose();
+    super.dispose();
   }
 
   @override
@@ -27,15 +28,12 @@ class _PrivacyPageState extends State<PrivacyPage> {
       appBar: AppBar(
         backgroundColor: Colors.white70,
         title: Text(
-          "Profile",
+          "Privacy Policy",
           style: TextStyle(color: Colors.black),
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Center(
-          child: _isLoading
-              ? Center(child: CircularProgressIndicator())
-              : PDFViewer(document: document)),
+      body: PdfView(controller: privacyController),
     );
   }
 }

@@ -133,16 +133,23 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CircleAvatar(
                 child: ClipOval(
                   child: _image == null
-                      ? FadeInImage.assetNetwork(
-                          image: profileUrl,
-                          placeholder: 'assets/images/default_profile.png',
-                          // "assets/images/default_profile.png",
-                          width: 120,
-                          height: 120,
-                          placeholderCacheWidth: 120,
-                          placeholderCacheHeight: 120,
-                          fit: BoxFit.cover,
-                        )
+                      ? (profileUrl != ""
+                          ? FadeInImage.assetNetwork(
+                              image: profileUrl,
+                              placeholder: 'assets/images/default_profile.png',
+                              // "assets/images/default_profile.png",
+                              width: 120,
+                              height: 120,
+                              placeholderCacheWidth: 120,
+                              placeholderCacheHeight: 120,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/default_profile.png',
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ))
                       : Image.file(
                           _image,
                           width: 120,

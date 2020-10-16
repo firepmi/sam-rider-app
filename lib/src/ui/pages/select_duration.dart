@@ -2,18 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
-enum PriceOptional { l25, l50, l75, g75 }
-
-class SelectDriversPage extends StatefulWidget {
+class SelectDurationPage extends StatefulWidget {
   @override
-  _SelectDriversPageState createState() => _SelectDriversPageState();
+  _SelectDurationPageState createState() => _SelectDurationPageState();
 }
 
-class _SelectDriversPageState extends State<SelectDriversPage> {
+class _SelectDurationPageState extends State<SelectDurationPage> {
   List<LatLng> path = List();
-  PriceOptional _price = PriceOptional.l25;
+  PriceOptional _price = PriceOptional.small;
 
   double getDistance() {
     if (path == null || path.length < 2) return 0;
@@ -40,10 +39,20 @@ class _SelectDriversPageState extends State<SelectDriversPage> {
     return deg * (pi / 180);
   }
 
+  String getButtonTitle() {
+    switch (_price) {
+      case PriceOptional.small:
+        return "Small + \$10";
+      case PriceOptional.medium:
+        return "Medium + \$30";
+      case PriceOptional.large:
+        return "Large + \$50";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    path = ModalRoute.of(context).settings.arguments;
-    var distance = getDistance();
+    // var distance = getDistance();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -65,29 +74,13 @@ class _SelectDriversPageState extends State<SelectDriversPage> {
             ),
           ),
           Divider(),
-          Container(
-            padding: EdgeInsets.only(left: 40, right: 40, bottom: 15, top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Estimated Distance",
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
-                ),
-                Text(
-                  "${distance.toStringAsFixed(2)} km",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-          ),
           Padding(
             padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
             child: Column(
               children: <Widget>[
                 RadioListTile<PriceOptional>(
-                  title: const Text('Less than 25\$/hr'),
-                  value: PriceOptional.l25,
+                  title: const Text('Small - Est. 1 hr'),
+                  value: PriceOptional.small,
                   groupValue: _price,
                   onChanged: (PriceOptional value) {
                     setState(() {
@@ -96,8 +89,8 @@ class _SelectDriversPageState extends State<SelectDriversPage> {
                   },
                 ),
                 RadioListTile<PriceOptional>(
-                  title: const Text('25\$/hr to 50\$/hr'),
-                  value: PriceOptional.l50,
+                  title: const Text('Medium - Est. 2-3 hrs'),
+                  value: PriceOptional.medium,
                   groupValue: _price,
                   onChanged: (PriceOptional value) {
                     setState(() {
@@ -106,18 +99,8 @@ class _SelectDriversPageState extends State<SelectDriversPage> {
                   },
                 ),
                 RadioListTile<PriceOptional>(
-                  title: const Text('50\$/hr to 75\$/hr'),
-                  value: PriceOptional.l75,
-                  groupValue: _price,
-                  onChanged: (PriceOptional value) {
-                    setState(() {
-                      _price = value;
-                    });
-                  },
-                ),
-                RadioListTile<PriceOptional>(
-                  title: const Text('Higher than 75\$/hr'),
-                  value: PriceOptional.g75,
+                  title: const Text('Large - Est. 4+ hrs'),
+                  value: PriceOptional.large,
                   groupValue: _price,
                   onChanged: (PriceOptional value) {
                     setState(() {
@@ -135,12 +118,11 @@ class _SelectDriversPageState extends State<SelectDriversPage> {
                   borderRadius: BorderRadius.circular(0.0),
                   side: BorderSide(color: AppColors.main)),
               onPressed: () {
-                Navigator.pushNamed(context, '/driver_list', arguments: _price);
+                Navigator.pushNamed(context, '/select_car_size');
               },
               color: AppColors.main,
               textColor: Colors.white,
-              child: Text("See Drivers and prices",
-                  style: TextStyle(fontSize: 16)),
+              child: Text(getButtonTitle(), style: TextStyle(fontSize: 16)),
             ),
           ),
         ],

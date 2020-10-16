@@ -1,6 +1,5 @@
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:sam_rider_app/src/ui/pages/home.dart';
 import 'package:sam_rider_app/src/ui/widgets/loading_dialog.dart';
 import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
