@@ -167,7 +167,7 @@ class _RidePickerState extends State<RidePicker> {
                       padding: EdgeInsets.only(left: 40.0, right: 50.0),
                       child: Text(
                         fromLocation == null
-                            ? "Pickup location"
+                            ? "Where should Sam Go"
                             : (fromLocation.address ?? "Address not found"),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

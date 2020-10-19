@@ -10,16 +10,22 @@ class SelectWeightPage extends StatefulWidget {
 
 class _SelectWeightPageState extends State<SelectWeightPage> {
   List<LatLng> path = List();
-  WeightOptional _weight = WeightOptional.pound1to5;
+  WeightOptional _weight = WeightOptional.option1;
 
   String getButtonTitle() {
     switch (_weight) {
-      case WeightOptional.pound1to5:
-        return "5 pounds + \$5";
-      case WeightOptional.pound6to49:
-        return "30 pounds + \$30";
-      case WeightOptional.pound50more:
-        return "50 pounds + \$50";
+      case WeightOptional.option1:
+        return "Automobile + \$0";
+      case WeightOptional.option2:
+        return "SUV + \$7";
+      case WeightOptional.option3:
+        return "Pickup + \$25";
+      case WeightOptional.option4:
+        return "Truck + \$50";
+      case WeightOptional.option5:
+        return "Trailer + \$50";
+      case WeightOptional.option6:
+        return "Box Truck + \$75";
     }
     return "Please select weight option";
   }
@@ -52,8 +58,8 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
             child: Column(
               children: <Widget>[
                 RadioListTile<WeightOptional>(
-                  title: const Text('1 - 5 pounds'),
-                  value: WeightOptional.pound1to5,
+                  title: const Text('1 Small item'),
+                  value: WeightOptional.option1,
                   groupValue: _weight,
                   onChanged: (WeightOptional value) {
                     setState(() {
@@ -62,8 +68,8 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                   },
                 ),
                 RadioListTile<WeightOptional>(
-                  title: const Text('6 - 49 pounds'),
-                  value: WeightOptional.pound6to49,
+                  title: const Text('Multiple small items in car'),
+                  value: WeightOptional.option2,
                   groupValue: _weight,
                   onChanged: (WeightOptional value) {
                     setState(() {
@@ -72,8 +78,38 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                   },
                 ),
                 RadioListTile<WeightOptional>(
-                  title: const Text('50+ pounds'),
-                  value: WeightOptional.pound50more,
+                  title: const Text('Large item in car'),
+                  value: WeightOptional.option3,
+                  groupValue: _weight,
+                  onChanged: (WeightOptional value) {
+                    setState(() {
+                      _weight = value;
+                    });
+                  },
+                ),
+                RadioListTile<WeightOptional>(
+                  title: const Text('Truck Loading'),
+                  value: WeightOptional.option4,
+                  groupValue: _weight,
+                  onChanged: (WeightOptional value) {
+                    setState(() {
+                      _weight = value;
+                    });
+                  },
+                ),
+                RadioListTile<WeightOptional>(
+                  title: const Text('Trailer Loading'),
+                  value: WeightOptional.option5,
+                  groupValue: _weight,
+                  onChanged: (WeightOptional value) {
+                    setState(() {
+                      _weight = value;
+                    });
+                  },
+                ),
+                RadioListTile<WeightOptional>(
+                  title: const Text('Box Truck Loading'),
+                  value: WeightOptional.option6,
                   groupValue: _weight,
                   onChanged: (WeightOptional value) {
                     setState(() {

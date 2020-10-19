@@ -21,20 +21,10 @@ class _DriverListPageState extends State<DriverListPage> {
 
   void setTag() {
     _items = List();
-    switch (Globals.duration) {
-      case PriceOptional.small:
-        _items.add("Small - Est. 1 hr");
-        break;
-      case PriceOptional.medium:
-        _items.add("Medium - Est. 2-3 hrs");
-        break;
-      case PriceOptional.large:
-        _items.add("Large - Est. 4+ hrs");
-        break;
-    }
+
     switch (Globals.carSize) {
-      case CarSizeOptional.motorScooter:
-        _items.add("Motor Scooter");
+      case CarSizeOptional.trailer:
+        _items.add("Truck & Trailer");
         break;
       case CarSizeOptional.autoMobile:
         _items.add("Automobile");
@@ -53,14 +43,23 @@ class _DriverListPageState extends State<DriverListPage> {
         break;
     }
     switch (Globals.weight) {
-      case WeightOptional.pound1to5:
-        _items.add("1 - 5 pounds");
+      case WeightOptional.option1:
+        _items.add("1 smll item");
         break;
-      case WeightOptional.pound6to49:
-        _items.add("6 - 49 pounds");
+      case WeightOptional.option2:
+        _items.add("Multiple small items in car");
         break;
-      case WeightOptional.pound50more:
-        _items.add("50+ pounds");
+      case WeightOptional.option3:
+        _items.add("Large items in car");
+        break;
+      case WeightOptional.option4:
+        _items.add("Truck loading");
+        break;
+      case WeightOptional.option5:
+        _items.add("Trailer loading:");
+        break;
+      case WeightOptional.option6:
+        _items.add("Box truck loading");
         break;
     }
   }

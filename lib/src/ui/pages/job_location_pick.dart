@@ -150,7 +150,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
     //     toLocation.latLng.longitude, () {
     //   Navigator.pushNamed(context, '/select_drivers', arguments: path);
     // }, (error) => {MsgDialog.showMsgDialog(context, "Request", error)});
-    Navigator.pushNamed(context, '/select_duration');
+    Navigator.pushNamed(context, '/select_car_size');
   }
 
   void onPlaceSelected(LocationResult place, bool fromAddress) {

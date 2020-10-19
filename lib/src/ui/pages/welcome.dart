@@ -137,7 +137,7 @@ class WelcomePage extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser == null) {
       Navigator.pushNamed(context, '/intro');
     } else {
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, '/joblocation');
     }
   }
 }

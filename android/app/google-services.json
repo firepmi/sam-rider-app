@@ -1,41 +1,77 @@
 {
   "project_info": {
-    "project_number": "132928962247",
-    "firebase_url": "https://samwilldoit.firebaseio.com",
-    "project_id": "samwilldoit",
-    "storage_bucket": "samwilldoit.appspot.com"
+    "project_number": "978311598679",
+    "firebase_url": "https://samwilldoit-cdd44.firebaseio.com",
+    "project_id": "samwilldoit-cdd44",
+    "storage_bucket": "samwilldoit-cdd44.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132928962247:android:9d30c0eadb3e67685008e2",
+        "mobilesdk_app_id": "1:978311598679:android:bfc2d75d4539e4d2d4c912",
         "android_client_info": {
-          "package_name": "com.manicao.sam_rider_app"
+          "package_name": "com.maniaco.sam_rider_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "132928962247-kg43fh1s7t2jsus44mrks0tin8grcoji.apps.googleusercontent.com",
+          "client_id": "978311598679-tis4utjmfv9mqd744fqf7s6mguv439je.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDrz-t4YxgsE6jswYREFwlhjbDp7T2dtRg"
+          "current_key": "AIzaSyD76oY_YH1lS_uVwiwwW2sN8irtWupEv6I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "132928962247-kg43fh1s7t2jsus44mrks0tin8grcoji.apps.googleusercontent.com",
+              "client_id": "978311598679-tis4utjmfv9mqd744fqf7s6mguv439je.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "132928962247-6rppt785d9vn5q8g54f02tk57qlf07mm.apps.googleusercontent.com",
+              "client_id": "978311598679-tk8pqkm7sssst2f9ijorm92lp11gv4rd.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.app.uberrider"
+                "bundle_id": "com.maniaco.samRiderApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978311598679:android:e9b7c85a6db963a0d4c912",
+        "android_client_info": {
+          "package_name": "com.manicao.sam_rider_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978311598679-tis4utjmfv9mqd744fqf7s6mguv439je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD76oY_YH1lS_uVwiwwW2sN8irtWupEv6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978311598679-tis4utjmfv9mqd744fqf7s6mguv439je.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "978311598679-tk8pqkm7sssst2f9ijorm92lp11gv4rd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maniaco.samRiderApp"
               }
             }
           ]

@@ -13,24 +13,24 @@ class SelectCarSizePage extends StatefulWidget {
 
 class _SelectCarSizePageState extends State<SelectCarSizePage> {
   List<LatLng> path = List();
-  CarSizeOptional _car = CarSizeOptional.motorScooter;
+  CarSizeOptional _car = CarSizeOptional.autoMobile;
   var titles = [
-    "MOTOR SCOOTER",
     "AUTOMOBILE",
     "SUV",
     "PICKUP",
     "VAN",
+    "TRUCK & TRAILER",
     "TRUCK",
   ];
   var icons = [
-    'assets/svg/motorscooter.svg',
     'assets/svg/automobile.svg',
     'assets/svg/suv.svg',
     'assets/svg/pickup.svg',
     'assets/svg/van.svg',
+    'assets/svg/trailer.svg',
     'assets/svg/truck.svg',
   ];
-  var prices = [5, 10, 20, 25, 30, 50];
+  var prices = [0, 5, 7, 25, 50, 75];
   @override
   void initState() {
     super.initState();
@@ -52,13 +52,14 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
               SvgPicture.asset(
                 icons[car.index],
                 color: Globals.carSize == car ? Colors.blue : Colors.grey,
-                width: 100,
-                height: 100,
+                width: 80,
+                height: 80,
               ),
               Text(
                 titles[car.index],
                 style: TextStyle(
-                    color: Globals.carSize == car ? Colors.blue : Colors.grey),
+                    color: Globals.carSize == car ? Colors.blue : Colors.grey,
+                    fontSize: 12),
               )
             ],
           ),
@@ -87,7 +88,7 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
             child: Padding(
               padding: EdgeInsets.only(top: 30, bottom: 30),
               child: Text(
-                "What isize vehicle does this job require?",
+                "What kind of vehicle does this job require?",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
