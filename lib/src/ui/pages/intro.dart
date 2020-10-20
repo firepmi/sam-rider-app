@@ -70,24 +70,6 @@ class IntroScreenState extends State<IntroPage> {
         pathImage: "assets/images/img_intro3.png",
       ),
     );
-    slides.add(
-      new Slide(
-        title: "Get 24/7 Support",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description:
-            "Praesent luctus accumsan malesuada. spendisse rutrum pretium consequat.\nPellentesque accumsan euismod tortor aliquam facilisis. In facilisis lacus leo, sit amet laoreet lectus facilisis quis.\nSed tristique dictum mi, sit amet dignissim erat malesuada et.",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 18.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
-        pathImage: "assets/images/img_intro5.png",
-      ),
-    );
   }
 
   void onDonePress() {

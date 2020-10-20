@@ -8,6 +8,7 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/ui/widgets/home_menu_drawer.dart';
 import 'package:sam_rider_app/src/ui/widgets/ride_picker.dart';
 import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/map_util.dart';
@@ -63,47 +64,77 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
         zoom: cameraZoom,
       );
     }
-    return Stack(
-      children: <Widget>[
-        GoogleMap(
-          mapType: MapType.normal,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
-          initialCameraPosition: initialCameraPosition,
-          onMapCreated: (GoogleMapController controller) {
-            _completer.complete(controller);
-          },
-          markers: Set<Marker>.of(_markers),
-          polylines: Set<Polyline>.of(routes),
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        bottomSheet: Container(
+          height: 300,
+          decoration: BoxDecoration(color: Colors.black),
+          child: Column(),
         ),
-        Positioned(
-          left: 0,
-          top: 0,
-          right: 0,
-          child: Column(
-            children: <Widget>[
-              AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                leading: FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
+        drawer: Drawer(
+          child: HomeMenuDrawer(),
+        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white70,
+        //   title: Text(
+        //     "Job Location",
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        //   iconTheme: IconThemeData(color: Colors.black),
+        //   leading: FlatButton(
+        //     onPressed: () {
+        //
+        //     },
+        //     child: Icon(
+        //       Icons.menu,
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
+        body: Stack(
+          children: <Widget>[
+            GoogleMap(
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              initialCameraPosition: initialCameraPosition,
+              onMapCreated: (GoogleMapController controller) {
+                _completer.complete(controller);
+              },
+              markers: Set<Marker>.of(_markers),
+              polylines: Set<Polyline>.of(routes),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              right: 0,
+              child: Column(
+                children: <Widget>[
+                  AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0.0,
+                    leading: FlatButton(
+                      onPressed: () {
+                        // Navigator.pop(context);
+                        _scaffoldKey.currentState.openDrawer();
+                      },
+                      child: Icon(
+                        Icons.menu,
+                        // Icons.arrow_back_ios,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                    child: RidePicker(_center, onPlaceSelected),
+                  )
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                child: RidePicker(_center, onPlaceSelected),
-              )
-            ],
-          ),
-        ),
-      ],
-    );
+            ),
+          ],
+        ));
   }
 
   void request() {
@@ -278,6 +309,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
     //   requestPermissions(serviceStatus);
     //   return null;
     // });
+
     _locationService.requestPermission().then((value) {
       print(value);
       if (value == null) {

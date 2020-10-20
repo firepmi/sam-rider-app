@@ -153,7 +153,7 @@ class _LoginViewState extends State<LoginView> {
     LoadgingDialog.showLoadingDialog(context, "Loading...");
     authBloc.signIn(_emailController.text, _passController.text, () {
       LoadgingDialog.hideLoadingDialog(context);
-      Navigator.pushNamed(context, '/job_location_pick');
+      Navigator.pushNamed(context, '/joblocation');
     }, (msg) {
       print(msg);
       LoadgingDialog.hideLoadingDialog(context);
