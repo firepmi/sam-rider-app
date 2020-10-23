@@ -4,7 +4,6 @@ import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
 import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
 import 'package:sam_rider_app/src/ui/pages/driver_list.dart';
 import 'package:sam_rider_app/src/ui/pages/driver_profile.dart';
-import 'package:sam_rider_app/src/ui/pages/free_rides.dart';
 import 'package:sam_rider_app/src/ui/pages/help.dart';
 import 'package:sam_rider_app/src/ui/pages/job_location_pick.dart';
 import 'package:sam_rider_app/src/ui/pages/intro.dart';
@@ -49,7 +48,6 @@ void main() async {
           '/add_card': (context) => AddCardPage(),
           '/your_trip': (context) => YourTripPage(),
           '/select_issue': (context) => SelectIssuePage(),
-          '/free_rides': (context) => FreeRidesPage(),
           '/help': (context) => HelpPage(),
           '/settings': (context) => SettingsPage(),
           '/profile': (context) => ProfilePage(),

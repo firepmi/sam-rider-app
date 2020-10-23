@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -13,46 +16,99 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  DataBloc dataBloc = DataBloc();
+  String name = "Welcome! Customer";
+  String phone = "";
+  String email = "";
+
+  var profileUrl = "";
+
   @override
   void initState() {
     super.initState();
+    email = FirebaseAuth.instance.currentUser.email;
+    dataBloc.getUserProfile((data) {
+      setState(() {
+        name = data["name"];
+        phone = data["phone"];
+      });
+    });
+    getProfileImage();
+  }
+
+  void getProfileImage() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child("profile")
+        .child(user.uid + ".jpg");
+    profileUrl = (await ref.getDownloadURL()).toString();
+    setState(() {
+      print("get image from firebase storage");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text("Account Settings"),
+          title: Text(
+            "Account Settings",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white70,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         body: ListView(
+          padding: EdgeInsets.only(left: 20, right: 20),
           children: <Widget>[
             SizedBox(
               height: 40,
             ),
-            ListTile(
-              leading: ClipOval(
-                child: Image.asset(
-                  "assets/images/user_profile.jpg",
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              title: Text("Márcio Quimbundo"),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("+244 922 88 40 32"),
-                  SizedBox(
-                    height: 1,
+            Row(
+              children: [
+                CircleAvatar(
+                  child: ClipOval(
+                    child: (profileUrl != ""
+                        ? FadeInImage.assetNetwork(
+                            image: profileUrl,
+                            placeholder: 'assets/images/default_profile.png',
+                            // "assets/images/default_profile.png",
+                            width: 80,
+                            height: 80,
+                            placeholderCacheWidth: 80,
+                            placeholderCacheHeight: 80,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/default_profile.png',
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          )),
                   ),
-                  Text("marciotquimbundo@gmail.com",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ))
-                ],
-              ),
+                  radius: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 5),
+                      Text(phone),
+                      SizedBox(height: 3),
+                      Text(email,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ))
+                    ],
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
@@ -90,37 +146,10 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
-            Divider(),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Profiles",
-                    style: TextStyle(fontSize: 22, color: Colors.grey),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Add Home",
-                      style: TextStyle(fontSize: 18, color: Colors.blue),
-                    ),
-                    subtitle: Text("Separate work and personal receips"),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Add Family Profile",
-                      style: TextStyle(fontSize: 18, color: Colors.blue),
-                    ),
-                    subtitle: Text("Pay for loved ones track their rides"),
-                  ),
-                ],
-              ),
+            SizedBox(
+              height: 20,
             ),
+            Divider(),
           ],
         ));
   }

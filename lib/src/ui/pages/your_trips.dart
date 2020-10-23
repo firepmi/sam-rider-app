@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 
-
-
 class YourTripPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,6 @@ class YourTripView extends StatefulWidget {
 }
 
 class _YourTripViewState extends State<YourTripView> {
-  
   Completer<GoogleMapController> _controller = Completer();
   Map<PolylineId, Polyline> polylines = <PolylineId, Polyline>{};
   int _polylineIdCounter = 1;
@@ -43,9 +40,7 @@ class _YourTripViewState extends State<YourTripView> {
       color: Colors.black,
       width: 5,
       points: _createTripPoints(),
-      onTap: () {
-        
-      },
+      onTap: () {},
     );
 
     setState(() {
@@ -71,18 +66,21 @@ class _YourTripViewState extends State<YourTripView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Your Trips"),
-        
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 150,
-            width: double.infinity,
-            child: GoogleMap(
-              polylines: Set<Polyline>.of(polylines.values),
+        appBar: AppBar(
+          title: Text(
+            "Your Past Jobs",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white70,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
+        body: Column(
+          children: <Widget>[
+            Container(
+              height: 150,
+              width: double.infinity,
+              child: GoogleMap(
+                polylines: Set<Polyline>.of(polylines.values),
                 mapType: MapType.normal,
                 initialCameraPosition: _cameraPosition,
                 onMapCreated: (GoogleMapController controller) {
@@ -92,32 +90,46 @@ class _YourTripViewState extends State<YourTripView> {
                   Navigator.pushNamed(context, "/select_issue");
                 },
               ),
-          ),
-          SizedBox(height: 20,),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text("Today at 1:05 AM", style: TextStyle(fontWeight: FontWeight.bold,)),
-                    Spacer(),
-                    Text("\$7.42", style: TextStyle(fontWeight: FontWeight.bold,)),
-                  ],
-                ),
-                SizedBox(height: 5,),
-                Row(
-                  children: <Widget>[
-                    Text("Infinity G Coupe"),
-                    SizedBox(width: 10,),
-                    Text("ABC123", style: TextStyle(fontWeight: FontWeight.bold,))
-                  ],
-                ),
-              ],
             ),
-          )
-        ],
-      )
-    );
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text("Today at 1:05 AM",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Spacer(),
+                      Text("\$7.42",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text("Infinity G Coupe"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("ABC123",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }

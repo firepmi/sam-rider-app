@@ -10,24 +10,74 @@ class SelectWeightPage extends StatefulWidget {
 
 class _SelectWeightPageState extends State<SelectWeightPage> {
   List<LatLng> path = List();
-  WeightOptional _weight = WeightOptional.option1;
 
-  String getButtonTitle() {
-    switch (_weight) {
-      case WeightOptional.option1:
-        return "Automobile + \$0";
-      case WeightOptional.option2:
-        return "SUV + \$7";
-      case WeightOptional.option3:
-        return "Pickup + \$25";
-      case WeightOptional.option4:
-        return "Truck + \$50";
-      case WeightOptional.option5:
-        return "Trailer + \$50";
-      case WeightOptional.option6:
-        return "Box Truck + \$75";
-    }
-    return "Please select weight option";
+  var titles = [
+    "1 Small item",
+    "Multiple small items in car",
+    "Large item in car",
+    "Truck loading",
+    "Trailer loading",
+    "Box truck loading",
+  ];
+  var images = [
+    'assets/images/weight_option1.png',
+    'assets/images/weight_option2.png',
+    'assets/images/weight_option3.png',
+    'assets/images/weight_option4.png',
+    'assets/images/weight_option5.png',
+    'assets/images/weight_option6.png',
+  ];
+  var prices = [0, 5, 7, 25, 50, 75];
+
+  List<Widget> getMenu() {
+    List<Widget> menu = [];
+    WeightOptional.values.forEach((weight) {
+      menu.add(Center(
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              Globals.weight = weight;
+            });
+          },
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Globals.weight == weight
+                        ? Colors.blue
+                        : Colors.grey[200],
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.asset(
+                    images[weight.index],
+                    // color: Globals.weight == weight ? Colors.blue : Colors.grey,
+                    width: 80,
+                    height: 80,
+                  ),
+                  Text(
+                    titles[weight.index],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Globals.weight == weight
+                            ? Colors.blue
+                            : Colors.grey,
+                        fontSize: 16),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ));
+    });
+    return menu;
   }
 
   @override
@@ -41,7 +91,8 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(
             child: Padding(
@@ -53,72 +104,14 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
             ),
           ),
           Divider(),
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
-            child: Column(
-              children: <Widget>[
-                RadioListTile<WeightOptional>(
-                  title: const Text('1 Small item'),
-                  value: WeightOptional.option1,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-                RadioListTile<WeightOptional>(
-                  title: const Text('Multiple small items in car'),
-                  value: WeightOptional.option2,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-                RadioListTile<WeightOptional>(
-                  title: const Text('Large item in car'),
-                  value: WeightOptional.option3,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-                RadioListTile<WeightOptional>(
-                  title: const Text('Truck Loading'),
-                  value: WeightOptional.option4,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-                RadioListTile<WeightOptional>(
-                  title: const Text('Trailer Loading'),
-                  value: WeightOptional.option5,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-                RadioListTile<WeightOptional>(
-                  title: const Text('Box Truck Loading'),
-                  value: WeightOptional.option6,
-                  groupValue: _weight,
-                  onChanged: (WeightOptional value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
-                ),
-              ],
-            ),
+          Expanded(
+            child: Padding(
+                padding:
+                    EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  children: getMenu(),
+                )),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
@@ -127,12 +120,13 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                   borderRadius: BorderRadius.circular(0.0),
                   side: BorderSide(color: AppColors.main)),
               onPressed: () {
-                Globals.weight = _weight;
                 Navigator.pushNamed(context, '/driver_list');
               },
               color: AppColors.main,
               textColor: Colors.white,
-              child: Text(getButtonTitle(), style: TextStyle(fontSize: 16)),
+              child: Text(
+                  "${titles[Globals.weight.index]} + \$${prices[Globals.weight.index]}",
+                  style: TextStyle(fontSize: 16)),
             ),
           ),
         ],

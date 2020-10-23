@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class HomeMenuDrawer extends StatefulWidget {
   HomeMenuDrawer({Key key}) : super(key: key);
@@ -42,9 +43,10 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(0),
       children: <Widget>[
         UserAccountsDrawerHeader(
-          decoration: BoxDecoration(color: Colors.black),
+          decoration: BoxDecoration(color: AppColors.main),
           accountName: Text(name),
           accountEmail: Row(
             children: <Widget>[
@@ -81,11 +83,8 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           linkMenuDrawer('Payment', () {
             Navigator.pushNamed(context, '/payment');
           }),
-          linkMenuDrawer('Your Trips', () {
+          linkMenuDrawer('Your Past Jobs', () {
             Navigator.pushNamed(context, '/your_trip');
-          }),
-          linkMenuDrawer('Free Rides', () {
-            Navigator.pushNamed(context, '/free_rides');
           }),
           linkMenuDrawer('Help', () {
             Navigator.pushNamed(context, '/help');

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:marquee/marquee.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -114,11 +115,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white70,
           title: Text(
             "Profile",
             style: TextStyle(color: Colors.black),
           ),
+          backgroundColor: Colors.white70,
           iconTheme: IconThemeData(color: Colors.black),
         ),
         body: ListView(
@@ -173,17 +174,29 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               padding:
                   EdgeInsets.only(left: 40, right: 40, bottom: 15, top: 15),
+              height: 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Account",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
-                  Text(
-                    email,
-                    style: TextStyle(fontSize: 20),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        email,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
                   ),
+                  // Text(
+                  //   email,
+                  //   style: TextStyle(fontSize: 16),
+                  // ),
                 ],
               ),
             ),
@@ -196,11 +209,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Text(
                     "Phone",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   Text(
                     phone,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 16),
                   ),
                 ],
               ),
@@ -214,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Text(
                     "Change Password",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   Icon(
                     Icons.keyboard_arrow_right,
@@ -237,7 +250,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Text(
                       "Log Out",
-                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     Icon(
                       Icons.logout,
