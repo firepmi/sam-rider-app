@@ -17,8 +17,12 @@ class _PaymentViewState extends State<PaymentView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Payment"),
+        title: Text(
+          "Payment",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white70,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -46,11 +50,13 @@ class _PaymentViewState extends State<PaymentView> {
               height: 20,
             ),
             GestureDetector(
-              onTap: () {Navigator.pushNamed(context, '/add_payment');},
+                onTap: () {
+                  Navigator.pushNamed(context, '/add_payment');
+                },
                 child: Text(
-              "Add Payment Method",
-              style: TextStyle(color: Colors.blue),
-            )),
+                  "Add Payment Method",
+                  style: TextStyle(color: Colors.blue),
+                )),
             Divider(),
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -67,18 +73,22 @@ class _PaymentViewState extends State<PaymentView> {
                 Text("Rewards"),
                 Spacer(),
                 Text("1"),
-                SizedBox(width: 20,)
+                SizedBox(
+                  width: 20,
+                )
               ],
             ),
             SizedBox(
               height: 20,
             ),
             GestureDetector(
-              onTap: () {print("Payment Method");},
+                onTap: () {
+                  print("Payment Method");
+                },
                 child: Text(
-              "Add Promo/Gift Code",
-              style: TextStyle(color: Colors.blue),
-            )),
+                  "Add Promo/Gift Code",
+                  style: TextStyle(color: Colors.blue),
+                )),
           ],
         ),
       ),

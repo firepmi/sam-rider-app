@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 
+import 'package:sam_rider_app/src/util/utils.dart';
+
 class HelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class _HelpViewState extends State<HelpView> {
     final Polyline polyline = Polyline(
       polylineId: polylineId,
       consumeTapEvents: true,
-      color: Colors.black,
+      color: AppColors.main,
       width: 5,
       points: _createTripPoints(),
       onTap: () {},
@@ -67,8 +69,12 @@ class _HelpViewState extends State<HelpView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text("Help"),
+          title: Text(
+            "Help",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white70,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         body: ListView(
           children: <Widget>[
@@ -86,7 +92,7 @@ class _HelpViewState extends State<HelpView> {
             ListTile(
               leading: ClipOval(
                 child: Image.asset(
-                  "assets/images/user_profile.jpg",
+                  "assets/images/default_profile.png",
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,

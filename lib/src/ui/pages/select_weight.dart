@@ -40,7 +40,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
             });
           },
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(AppConfig.size(context, 3)),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -58,8 +58,8 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                   Image.asset(
                     images[weight.index],
                     // color: Globals.weight == weight ? Colors.blue : Colors.grey,
-                    width: 80,
-                    height: 80,
+                    width: AppConfig.size(context, 28),
+                    height: AppConfig.size(context, 28),
                   ),
                   Text(
                     titles[weight.index],
@@ -68,7 +68,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                         color: Globals.weight == weight
                             ? Colors.blue
                             : Colors.grey,
-                        fontSize: 16),
+                        fontSize: AppConfig.size(context, 5)),
                   )
                 ],
               ),
@@ -96,10 +96,15 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
         children: [
           Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 30, bottom: 30),
+              padding:
+                  EdgeInsets.only(top: 30, bottom: 30, right: 20, left: 20),
               child: Text(
                 "What is the Weight Lifting Requirements for this job?",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

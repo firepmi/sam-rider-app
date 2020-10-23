@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 class AppConfig {
   static const appName = "Sam Will Do It";
   static const apiKey = 'AIzaSyB94toBjU5Ne7fz3xfjjS1PsgwaCabFKXg';
+
+  static double size(BuildContext context, double s) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    if (height / width > 812 / 375) {
+      return MediaQuery.of(context).size.width / 812 * s;
+    } else {
+      return MediaQuery.of(context).size.height / 375 * s;
+    }
+  }
 }
 
 class AvailableFonts {

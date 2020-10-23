@@ -108,7 +108,7 @@ class _SelectIssueViewState extends State<SelectIssueView> {
                   ListTile(
                     leading: ClipOval(
                       child: Image.asset(
-                        "assets/images/user_profile.jpg",
+                        "assets/images/default_profile.png",
                         width: 60,
                         height: 60,
                         fit: BoxFit.cover,
@@ -144,7 +144,9 @@ class _SelectIssueViewState extends State<SelectIssueView> {
                         width: 10,
                         height: 10,
                       )),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Text("Lenox PKwy, Atlanta, GA 30326, USA")
                     ],
                   ),
@@ -161,61 +163,100 @@ class _SelectIssueViewState extends State<SelectIssueView> {
                         width: 10,
                         height: 10,
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Text("4040 Peachtree Rd NE, Atlanta, GA 30319, USA")
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  LinearProgressIndicator(backgroundColor: Colors.black, valueColor: null,),
-                  SizedBox(height: 30,),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  LinearProgressIndicator(
+                    backgroundColor: Colors.black,
+                    valueColor: null,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I lost an item",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I lost an item",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I was incorrectly charged a cancellation fee",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I was incorrectly charged a cancellation fee",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I would like a refund",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I would like a refund",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("My driver was unprofessional",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "My driver was unprofessional",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("My vehicle wasn't what I expected",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "My vehicle wasn't what I expected",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I had an issue with receipt or payment option",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I had an issue with receipt or payment option",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I had an issue with my promo code or payment option",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I had an issue with my promo code or payment option",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("I was envolved in an acident",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "I was envolved in an acident",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("UberPOOL issues",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "UberPOOL issues",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   Divider(),
                   ListTile(
-                    onTap: (){},
-                    title: Text("Critical Safety Response Line",style: TextStyle(fontSize: 18),),
+                    onTap: () {},
+                    title: Text(
+                      "Critical Safety Response Line",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 ],
               ),

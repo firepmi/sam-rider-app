@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/util/map_util.dart';
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -22,6 +26,9 @@ class _SettingsViewState extends State<SettingsView> {
   String email = "";
 
   var profileUrl = "";
+  LatLng _center = LatLng(45.1975844, -122.9598339);
+  LocationResult homeLocation;
+  MapUtil mapUtil = MapUtil();
 
   @override
   void initState() {
@@ -34,6 +41,7 @@ class _SettingsViewState extends State<SettingsView> {
       });
     });
     getProfileImage();
+    getCurrentLocation();
   }
 
   void getProfileImage() async {
@@ -46,6 +54,21 @@ class _SettingsViewState extends State<SettingsView> {
     setState(() {
       print("get image from firebase storage");
     });
+  }
+
+  getCurrentLocation() async {
+    _center = await mapUtil.getCurrentLocation();
+  }
+
+  getHomeLocation() async {
+    homeLocation = await showLocationPicker(
+      context,
+      AppConfig.apiKey,
+      initialCenter: _center,
+      automaticallyAnimateToCurrentLocation: true,
+      myLocationButtonEnabled: true,
+      layersButtonEnabled: true,
+    );
   }
 
   @override
@@ -82,8 +105,8 @@ class _SettingsViewState extends State<SettingsView> {
                           )
                         : Image.asset(
                             'assets/images/default_profile.png',
-                            width: 40,
-                            height: 40,
+                            width: 80,
+                            height: 80,
                             fit: BoxFit.cover,
                           )),
                   ),
@@ -129,20 +152,29 @@ class _SettingsViewState extends State<SettingsView> {
                   SizedBox(
                     height: 20,
                   ),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text(
-                      "Add Home",
-                      style: TextStyle(fontSize: 18),
+                  GestureDetector(
+                    onTap: () {
+                      getHomeLocation();
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text(
+                        "Add Home",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.work),
-                    title: Text(
-                      "Add Work",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  )
+                  GestureDetector(
+                      onTap: () {
+                        getHomeLocation();
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.work),
+                        title: Text(
+                          "Add Favorite Supplier",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      )),
                 ],
               ),
             ),

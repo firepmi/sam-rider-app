@@ -92,7 +92,7 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           linkMenuDrawer('Settings', () {
             Navigator.pushNamed(context, '/settings');
           }),
-          linkMenuDrawer('Privacy of policy', () {
+          linkMenuDrawer('Privacy Policy', () {
             Navigator.pushNamed(context, '/privacy');
           }),
           linkMenuDrawer('Terms of service', () {
