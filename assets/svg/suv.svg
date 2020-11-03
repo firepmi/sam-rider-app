@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+	viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
 <path id="path514"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M52.86,50.85H31.53"/>
-<path id="path516"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M64.86,50.19c0,3.31-2.69,6-6,6s-6-2.69-6-6s2.69-6,6-6S64.86,46.87,64.86,50.19z"/>
-<path id="path518"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M32.2,50.19c0,3.31-2.69,6-6,6s-6-2.69-6-6s2.69-6,6-6S32.2,46.87,32.2,50.19z"/>
-<path id="path520"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M48.86,40.19h-4"/>
-<path id="path522"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M70.2,40.19h-4"/>
-<path id="path524"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M64.86,50.85h4c0.74,0,1.33-0.6,1.33-1.33V38.54c0-1.35-1-2.48-2.34-2.65l-8.33-1.04l-9.08-10.21
+	stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M52.86,50.85H31.53"/>
+	<path id="path516"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M64.86,50.19c0,3.31-2.69,6-6,6s-6-2.69-6-6s2.69-6,6-6S64.86,46.87,64.86,50.19z"/>
+	<path id="path518"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M32.2,50.19c0,3.31-2.69,6-6,6s-6-2.69-6-6s2.69-6,6-6S32.2,46.87,32.2,50.19z"/>
+	<path id="path520"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M48.86,40.19h-4"/>
+	<path id="path522"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M70.2,40.19h-4"/>
+	<path id="path524"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M64.86,50.85h4c0.74,0,1.33-0.6,1.33-1.33V38.54c0-1.35-1-2.48-2.34-2.65l-8.33-1.04l-9.08-10.21
 	c-1.01-1.14-2.46-1.79-3.99-1.79H17.53l-3.33,12v13.33c0,1.47,1.19,2.67,2.67,2.67h2.67"/>
-<path id="path526"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M44.86,22.85H14.2"/>
-<path id="path528"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M57.92,51.13l1.89-1.89"/>
-<path id="path530"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M25.25,51.13l1.89-1.89"/>
-<path id="path532"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M14.2,34.85h45.33"/>
-<path id="path534"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M40.86,50.85v-28"/>
-<path id="path536"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M22.2,34.85v-12"/>
-<path id="path538"
-	style="fill:none;stroke:#495053;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M14.2,44.19h-2.67c-1.47,0-2.67-1.19-2.67-2.67v-6.67c0-1.47,1.19-2.67,2.67-2.67h4"/>
+	<path id="path526"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M44.86,22.85H14.2"/>
+	<path id="path528"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M57.92,51.13l1.89-1.89"/>
+	<path id="path530"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M25.25,51.13l1.89-1.89"/>
+	<path id="path532"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M14.2,34.85h45.33"/>
+	<path id="path534"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M40.86,50.85v-28"/>
+	<path id="path536"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-linejoin:round;stroke-miterlimit:1.3333;" d="M22.2,34.85v-12"/>
+	<path id="path538"
+		stroke="#000" style="fill:none;stroke-width:2.6667;stroke-miterlimit:1.3333;" d="M14.2,44.19h-2.67c-1.47,0-2.67-1.19-2.67-2.67v-6.67c0-1.47,1.19-2.67,2.67-2.67h4"/>
 </svg>

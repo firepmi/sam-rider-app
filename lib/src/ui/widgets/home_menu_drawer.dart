@@ -89,6 +89,9 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           linkMenuDrawer('Help', () {
             Navigator.pushNamed(context, '/help');
           }),
+          linkMenuDrawer('FAQ', () {
+            Navigator.pushNamed(context, '/faq');
+          }),
           linkMenuDrawer('Settings', () {
             Navigator.pushNamed(context, '/settings');
           }),

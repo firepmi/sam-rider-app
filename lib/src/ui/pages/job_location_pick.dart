@@ -67,31 +67,9 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
-        bottomSheet: Container(
-          height: 300,
-          decoration: BoxDecoration(color: Colors.black),
-          child: Column(),
-        ),
         drawer: Drawer(
           child: HomeMenuDrawer(),
         ),
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white70,
-        //   title: Text(
-        //     "Job Location",
-        //     style: TextStyle(color: Colors.black),
-        //   ),
-        //   iconTheme: IconThemeData(color: Colors.black),
-        //   leading: FlatButton(
-        //     onPressed: () {
-        //
-        //     },
-        //     child: Icon(
-        //       Icons.menu,
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
         body: Stack(
           children: <Widget>[
             GoogleMap(
@@ -144,31 +122,31 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
       return;
     }
     print("request");
-    // if (path == null || path.length < 2) {
-    //   // MsgDialog.showMsgDialog(context, "Request", "Path not found");
-    //   showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //             title: Text("Request"),
-    //             content: Text("Path not found"),
-    //             actions: <Widget>[
-    //               FlatButton(
-    //                 onPressed: () {
-    //                   Navigator.of(context).pop("cancel");
-    //                 },
-    //                 child: Text("Select Again"),
-    //               ),
-    //               FlatButton(
-    //                 onPressed: () {
-    //                   onRequest();
-    //                   Navigator.of(context).pop("go");
-    //                 },
-    //                 child: Text("Go anyway"),
-    //               ),
-    //             ],
-    //           ));
-    //   return;
-    // }
+    if (path == null || path.length < 2) {
+      // MsgDialog.showMsgDialog(context, "Request", "Path not found");
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Request"),
+                content: Text("Path not found"),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop("cancel");
+                    },
+                    child: Text("Select Again"),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      onRequest();
+                      Navigator.of(context).pop("go");
+                    },
+                    child: Text("Go anyway"),
+                  ),
+                ],
+              ));
+      return;
+    }
     onRequest();
   }
 

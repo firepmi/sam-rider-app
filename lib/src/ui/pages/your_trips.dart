@@ -26,10 +26,10 @@ class _YourTripViewState extends State<YourTripView> {
   @override
   void initState() {
     super.initState();
-    _addtripPoly();
+    _addTripPoly();
   }
 
-  void _addtripPoly() {
+  void _addTripPoly() {
     final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
     _polylineIdCounter++;
     final PolylineId polylineId = PolylineId(polylineIdVal);

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 
+import 'package:sam_rider_app/src/util/utils.dart';
+
 class SelectIssuePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class _SelectIssueViewState extends State<SelectIssueView> {
     final Polyline polyline = Polyline(
       polylineId: polylineId,
       consumeTapEvents: true,
-      color: Colors.black,
+      color: AppColors.main,
       width: 5,
       points: _createTripPoints(),
       onTap: () {},
@@ -67,7 +69,7 @@ class _SelectIssueViewState extends State<SelectIssueView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.main,
           title: Text("Select an Issue"),
           actions: <Widget>[
             Column(

@@ -1,5 +1,5 @@
 class Globals {
-  static int stops = 1;
+  static int stops = 2;
   static PriceOptional duration = PriceOptional.small;
   static CarSizeOptional carSize = CarSizeOptional.autoMobile;
   static WeightOptional weight = WeightOptional.option1;

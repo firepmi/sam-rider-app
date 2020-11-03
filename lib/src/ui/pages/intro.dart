@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:sam_rider_app/src/util/utils.dart';
 
 class IntroPage extends StatefulWidget {
   IntroPage({Key key}) : super(key: key);
@@ -15,58 +16,41 @@ class IntroScreenState extends State<IntroPage> {
 
   Function goToTab;
 
-  @override
-  void initState() {
-    super.initState();
-
+  void initSlides(BuildContext context) {
+    var style1 = TextStyle(
+        color: Color(0xff29ba50),
+        fontSize: AppConfig.size(context, 12),
+        fontWeight: FontWeight.w900,
+        fontFamily: 'RobotoMono');
+    var style2 = TextStyle(
+        color: Color(0xfff111111),
+        fontSize: AppConfig.size(context, 12),
+        fontWeight: FontWeight.w900,
+        fontFamily: 'RobotoMono');
     slides.add(
       new Slide(
-        title: "Help with everyday\nlife at your fingertips.",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description: "Get started >",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 18.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        title: "Get help with",
+        styleTitle: style1,
+        description: "everything in life",
+        styleDescription: style2,
         pathImage: "assets/images/img_intro1.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Find trusted help for everything \non your to-do list",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description: "",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 18.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        title: "SAM is your personal",
+        styleTitle: style1,
+        description: "runner for your\nconstruction needs",
+        styleDescription: style2,
         pathImage: "assets/images/img_intro2.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "See reviews and prices of\nbackground checked Drivers",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description: "",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 18.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        title: "Read the reviews of",
+        styleTitle: style1,
+        description: "background-checked\ndrivers",
+        styleDescription: style2,
         pathImage: "assets/images/img_intro3.png",
       ),
     );
@@ -111,33 +95,35 @@ class IntroScreenState extends State<IntroPage> {
         width: double.infinity,
         height: double.infinity,
         child: Container(
-          margin: EdgeInsets.only(bottom: 60.0, top: 140.0),
+          margin: EdgeInsets.only(
+              bottom: AppConfig.size(context, 3),
+              top: AppConfig.size(context, 6)),
           child: ListView(
             children: <Widget>[
               Container(
                 child: Text(
                   currentSlide.title,
                   style: currentSlide.styleTitle,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
-                margin: EdgeInsets.only(top: 20.0, left: 30, right: 30),
+                margin: EdgeInsets.only(
+                    top: AppConfig.size(context, 3), left: 30, right: 30),
               ),
               Container(
                 child: Text(
                   currentSlide.description,
                   style: currentSlide.styleDescription,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
-                margin:
-                    EdgeInsets.only(top: 20.0, left: 30, right: 30, bottom: 40),
+                margin: EdgeInsets.only(left: 30, right: 30),
               ),
               GestureDetector(
                   child: Image.asset(
                 currentSlide.pathImage,
-                width: 300.0,
-                height: 300.0,
+                width: AppConfig.size(context, 300),
+                height: AppConfig.size(context, 300),
                 fit: BoxFit.contain,
               )),
             ],
@@ -150,6 +136,7 @@ class IntroScreenState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
+    initSlides(context);
     return new IntroSlider(
       // List slides
       slides: this.slides,

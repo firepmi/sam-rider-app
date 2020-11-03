@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
+import 'package:sam_rider_app/src/ui/pages/FAQ.dart';
 import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
 import 'package:sam_rider_app/src/ui/pages/driver_list.dart';
 import 'package:sam_rider_app/src/ui/pages/driver_profile.dart';
@@ -58,6 +59,7 @@ void main() async {
           '/driver_list': (context) => DriverListPage(),
           '/select_car_size': (context) => SelectCarSizePage(),
           '/select_weight': (context) => SelectWeightPage(),
+          '/faq': (context) => FAQPage(),
         },
       )));
 }

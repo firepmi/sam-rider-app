@@ -89,6 +89,7 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
               padding: EdgeInsets.only(top: 30, bottom: 30),
               child: Text(
                 "What kind of vehicle does this job require?",
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),

@@ -16,25 +16,26 @@ class AuthBloc {
 
   bool isValid(String name, String email, String pass, String phone) {
     if (name == null || name.length == 0) {
-      _nameController.sink.addError("Insira o seu nome");
+      _nameController.sink.addError("Enter your name");
       return false;
     }
     _nameController.sink.add("");
 
     if (phone == null || phone.length == 0) {
-      _phoneController.sink.addError("Insira o seu número de telefone");
+      _phoneController.sink.addError("Enter your phone number");
       return false;
     }
     _phoneController.sink.add("");
 
     if (email == null || email.length == 0) {
-      _emailController.sink.addError("Insira o seu e-mail");
+      _emailController.sink.addError("Enter your email");
       return false;
     }
     _emailController.sink.add("");
 
     if (pass == null || pass.length < 6) {
-      _passController.sink.addError("A password deve ter mais de 6 caracteres");
+      _passController.sink
+          .addError("Password must be longer than 6 characters");
       return false;
     }
     _passController.sink.add("");

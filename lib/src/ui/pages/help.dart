@@ -79,15 +79,13 @@ class _HelpViewState extends State<HelpView> {
         body: ListView(
           children: <Widget>[
             Container(
-              height: 80,
+              height: AppConfig.size(context, 28),
               padding: EdgeInsets.symmetric(horizontal: 20),
               color: Colors.grey.withOpacity(0.15),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Your last trip",
-                    style: TextStyle(fontSize: 18),
-                  )),
+                  child:
+                      Text("Your last trip", style: TextStyle(fontSize: 18))),
             ),
             ListTile(
               leading: ClipOval(

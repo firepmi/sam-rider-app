@@ -40,12 +40,12 @@ class _LoginViewState extends State<LoginView> {
                 height: 100,
               ),
               Container(
-                height: 130.0,
-                width: 200.0,
+                height: AppConfig.size(context, 60),
+                width: AppConfig.size(context, 200),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AvailableImages.appLogo1,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
