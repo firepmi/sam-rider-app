@@ -194,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return authBloc.signUp(_emailController.text, _passController.text,
           _phoneController.text, _nameController.text, () {
         LoadgingDialog.hideLoadingDialog(context);
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/joblocation');
       }, (msg) {
         print(msg);
         //show msg dialog

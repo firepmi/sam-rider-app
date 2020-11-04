@@ -65,16 +65,20 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void onGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _image = File(pickedFile.path);
-    } else {
-      print('No image selected.');
+    try {
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+      setState(() {
+        Navigator.pop(context, "gallery");
+      });
+      uploadProfileImage();
+    } catch (e) {
+      print(e.toString());
     }
-    setState(() {
-      Navigator.pop(context, "gallery");
-    });
-    uploadProfileImage();
   }
 
   void uploadProfileImage() {
@@ -105,7 +109,11 @@ class _ProfilePageState extends State<ProfilePage> {
         .ref()
         .child("profile")
         .child(user.uid + ".jpg");
-    profileUrl = (await ref.getDownloadURL()).toString();
+    try {
+      profileUrl = (await ref.getDownloadURL()).toString();
+    } catch (e) {
+      print(e.toString());
+    }
     setState(() {
       print("get image from firebase storage");
     });

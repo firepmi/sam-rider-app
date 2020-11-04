@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+// import 'package:native_pdf_view/native_pdf_view.dart';
 
 class TermsOfServicePage extends StatefulWidget {
   @override
@@ -7,19 +7,19 @@ class TermsOfServicePage extends StatefulWidget {
 }
 
 class _TermsOfServicePageState extends State<TermsOfServicePage> {
-  PdfController termController;
+  // PdfController termController;
 
   @override
   void initState() {
-    termController = PdfController(
-      document: PdfDocument.openAsset('assets/pdf/termsofservice.pdf'),
-    );
+    // termController = PdfController(
+    //   document: PdfDocument.openAsset('assets/pdf/termsofservice.pdf'),
+    // );
     super.initState();
   }
 
   @override
   void dispose() {
-    termController.dispose();
+    // termController.dispose();
     super.dispose();
   }
 
@@ -34,7 +34,7 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: PdfView(controller: termController),
+      // body: PdfView(controller: termController),
     );
   }
 }

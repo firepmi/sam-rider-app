@@ -32,7 +32,11 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
         .ref()
         .child("profile")
         .child(user.uid + ".jpg");
-    profileUrl = (await ref.getDownloadURL()).toString();
+    try {
+      profileUrl = (await ref.getDownloadURL()).toString();
+    } catch (e) {
+      print(e.toString());
+    }
     if (mounted) {
       setState(() {
         print("get image from firebase storage");

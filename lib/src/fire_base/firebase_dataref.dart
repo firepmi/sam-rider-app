@@ -84,28 +84,36 @@ class FireDataRef {
 
   void uploadImage(Uint8List data, Function onSuccess) async {
     var user = FirebaseAuth.instance.currentUser;
-    final StorageReference storageReference =
-        FirebaseStorage().ref().child("profile").child(user.uid + ".jpg");
 
-    final StorageUploadTask uploadTask = storageReference.putData(data);
+    final Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child("profile")
+        .child(user.uid + ".jpg");
 
-    final StreamSubscription<StorageTaskEvent> streamSubscription =
-        uploadTask.events.listen((event) {
-      // You can use this to notify yourself or your user in any kind of way.
-      // For example: you could use the uploadTask.events stream in a StreamBuilder instead
-      // to show your user what the current status is. In that case, you would not need to cancel any
-      // subscription as StreamBuilder handles this automatically.
+    try {
+      await storageReference.putData(data);
+      onSuccess();
+    } catch (e) {
+      print(e);
+    }
 
-      // Here, every StorageTaskEvent concerning the upload is printed to the logs.
-      print('EVENT ${event.type}');
-      if (event.type == StorageTaskEventType.success) {
-        onSuccess();
-      }
-    });
+    // final StreamSubscription<StorageTaskEvent> streamSubscription =
+    //     uploadTask.events.listen((event) {
+    //   // You can use this to notify yourself or your user in any kind of way.
+    //   // For example: you could use the uploadTask.events stream in a StreamBuilder instead
+    //   // to show your user what the current status is. In that case, you would not need to cancel any
+    //   // subscription as StreamBuilder handles this automatically.
+    //
+    //   // Here, every StorageTaskEvent concerning the upload is printed to the logs.
+    //   print('EVENT ${event.type}');
+    //   if (event.type == StorageTaskEventType.success) {
+    //     onSuccess();
+    //   }
+    // });
 
 // Cancel your subscription when done.
-    await uploadTask.onComplete;
-    streamSubscription.cancel();
+//     await uploadTask.onComplete;
+//     streamSubscription.cancel();
   }
 
   void signIn(String email, String pass, Function onSuccess,
@@ -113,11 +121,9 @@ class FireDataRef {
     _firebaseAuth
         .signInWithEmailAndPassword(email: email, password: pass)
         .then((user) {
-      print("on SignIn in success");
       onSuccess();
     }).catchError((err) {
-      print(err);
-      onSignInError("SignIn fail, please try again");
+      onSignInError(err.toString());
     });
   }
 
