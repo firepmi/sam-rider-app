@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 
 class PrivacyPage extends StatefulWidget {
   @override
@@ -7,18 +7,18 @@ class PrivacyPage extends StatefulWidget {
 }
 
 class _PrivacyPageState extends State<PrivacyPage> {
-  // PdfController privacyController;
+  PdfController privacyController;
   @override
   void initState() {
-    // privacyController = PdfController(
-    //   document: PdfDocument.openAsset('assets/pdf/privacy.pdf'),
-    // );
+    privacyController = PdfController(
+      document: PdfDocument.openAsset('assets/pdf/privacy.pdf'),
+    );
     super.initState();
   }
 
   @override
   void dispose() {
-    // privacyController.dispose();
+    privacyController.dispose();
     super.dispose();
   }
 
@@ -33,7 +33,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      // body: PdfView(controller: privacyController),
+      body: PdfView(controller: privacyController),
     );
   }
 }
