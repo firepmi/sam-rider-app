@@ -15,6 +15,24 @@ class AppConfig {
   }
 }
 
+class AppStyle {
+  static Widget label(BuildContext context, String text, {double size = 8}) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: AppConfig.size(context, size)),
+    );
+  }
+
+  static Widget titleLabel(BuildContext context, String text,
+      {double size = 8}) {
+    return Text(
+      text,
+      style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: AppConfig.size(context, size)),
+    );
+  }
+}
+
 class AvailableFonts {
   static const primaryFont = "Quicksand";
 }

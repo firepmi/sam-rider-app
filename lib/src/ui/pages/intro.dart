@@ -17,6 +17,7 @@ class IntroScreenState extends State<IntroPage> {
   Function goToTab;
 
   void initSlides(BuildContext context) {
+    slides = [];
     var style1 = TextStyle(
         color: Color(0xff29ba50),
         fontSize: AppConfig.size(context, 12),
@@ -137,7 +138,7 @@ class IntroScreenState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
     initSlides(context);
-    return new IntroSlider(
+    return IntroSlider(
       // List slides
       slides: this.slides,
 

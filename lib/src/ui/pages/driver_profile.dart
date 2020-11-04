@@ -263,8 +263,7 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           onPressed: () {
-                            // Navigator.pushNamed(context, '/driver_list',
-                            //     arguments: _price);
+                            Navigator.pushNamed(context, '/checkout');
                           },
                           color: AppColors.main,
                           textColor: Colors.white,
