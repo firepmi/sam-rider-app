@@ -138,8 +138,8 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      onRequest();
                       Navigator.of(context).pop("go");
+                      onRequest();
                     },
                     child: Text("Go anyway"),
                   ),
