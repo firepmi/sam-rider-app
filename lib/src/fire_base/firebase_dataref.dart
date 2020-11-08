@@ -40,6 +40,54 @@ class FireDataRef {
     });
   }
 
+  void verifyPhone(String phone, Function(String) onCodeSent,
+      Function(dynamic) onError) async {
+    await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (credential) {
+          print(credential);
+        },
+        verificationFailed: (error) {
+          onError(error);
+        },
+        codeSent: (String verificationId, int resendToken) {
+          onCodeSent(verificationId);
+          print(resendToken);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          print(verificationId);
+        });
+  }
+
+  void connectPhone(String code, String verificationId, Function onCompleted,
+      Function(dynamic) onError) async {
+    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: code);
+    try {
+      await _firebaseAuth.currentUser.linkWithCredential(phoneAuthCredential);
+      var ref = FirebaseDatabase.instance.reference().child("users");
+
+      ref
+          .child(_firebaseAuth.currentUser.uid)
+          .child("is_verified_phone")
+          .set(true)
+          .then((user) {
+        // success
+        onCompleted();
+      }).catchError((err) {
+        onError(err);
+      });
+    } catch (e) {
+      onError(e);
+    }
+    // _firebaseAuth
+    //     .signInWithCredential(phoneAuthCredential)
+    //     .then((credentials) {})
+    //     .catchError((err) {
+    //   print(err);
+    // });
+  }
+
   void request(
       List<LatLng> path,
       double startLat,
@@ -96,44 +144,42 @@ class FireDataRef {
     } catch (e) {
       print(e);
     }
-
-    // final StreamSubscription<StorageTaskEvent> streamSubscription =
-    //     uploadTask.events.listen((event) {
-    //   // You can use this to notify yourself or your user in any kind of way.
-    //   // For example: you could use the uploadTask.events stream in a StreamBuilder instead
-    //   // to show your user what the current status is. In that case, you would not need to cancel any
-    //   // subscription as StreamBuilder handles this automatically.
-    //
-    //   // Here, every StorageTaskEvent concerning the upload is printed to the logs.
-    //   print('EVENT ${event.type}');
-    //   if (event.type == StorageTaskEventType.success) {
-    //     onSuccess();
-    //   }
-    // });
-
-// Cancel your subscription when done.
-//     await uploadTask.onComplete;
-//     streamSubscription.cancel();
   }
 
-  void signIn(String email, String pass, Function onSuccess,
-      Function(String) onSignInError) {
-    _firebaseAuth
-        .signInWithEmailAndPassword(email: email, password: pass)
-        .then((user) {
-      onSuccess();
-    }).catchError((err) {
+  void signIn(String email, String pass, Function(String) onSuccess,
+      Function(String) onSignInError) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: pass);
+      checkPhoneVerification(onSuccess);
+    } catch (err) {
       onSignInError(err.toString());
-    });
+    }
+  }
+
+  void checkPhoneVerification(Function(String) onSuccess) async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    var ref =
+        FirebaseDatabase.instance.reference().child("users").child(user.uid);
+    DataSnapshot data = await ref.once();
+    Map value = data.value;
+    if (value["is_verified_phone"] != true) {
+      onSuccess(value["phone"]);
+    } else {
+      onSuccess("success");
+    }
   }
 
   void _onSignUpError(String code, Function(String) onRegisterError) {
+    print(code);
     switch (code) {
       case "ERROR_INVALID_EMAIL":
       case "ERROR_INVALID_CREDENTIAL":
         onRegisterError("Invalid Email");
         break;
       case "ERROR_EMAIL_ALREADY_IN_USE":
+      case "email-already-in-use":
         onRegisterError("Email has existed");
         break;
       case "ERROR_WEAK_PASSWORD":

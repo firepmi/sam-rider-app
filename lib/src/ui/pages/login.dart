@@ -151,9 +151,9 @@ class _LoginViewState extends State<LoginView> {
 
   void _onLoginClicked() {
     LoadgingDialog.showLoadingDialog(context, "Loading...");
-    authBloc.signIn(_emailController.text, _passController.text, () {
+    authBloc.signIn(_emailController.text, _passController.text, (result) {
       LoadgingDialog.hideLoadingDialog(context);
-      Navigator.pushNamed(context, '/joblocation');
+      onCheckVerifiedPhone(context);
     }, (msg) {
       print(msg);
       LoadgingDialog.hideLoadingDialog(context);
@@ -161,5 +161,23 @@ class _LoginViewState extends State<LoginView> {
     });
 
     return;
+  }
+
+  void onCheckVerifiedPhone(context) {
+    authBloc.checkVerifyPhone((result) {
+      if (result == "success") {
+        Navigator.pushNamed(context, '/joblocation');
+      } else {
+        onVerifyPhone(context, result);
+      }
+    });
+  }
+
+  void onVerifyPhone(context, String phone) {
+    authBloc.verifyPhone("+1$phone", (verificationId) {
+      Navigator.pushNamed(context, '/verify_phone', arguments: verificationId);
+    }, (error) {
+      MsgDialog.showMsgDialog(context, "Verify Phone Number", error.toString());
+    });
   }
 }

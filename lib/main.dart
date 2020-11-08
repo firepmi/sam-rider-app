@@ -20,6 +20,7 @@ import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
 import 'package:sam_rider_app/src/ui/pages/select_weight.dart';
 import 'package:sam_rider_app/src/ui/pages/settings.dart';
 import 'package:sam_rider_app/src/ui/pages/termsofservice.dart';
+import 'package:sam_rider_app/src/ui/pages/verify_number.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
@@ -45,6 +46,7 @@ void main() async {
           '/intro': (context) => IntroPage(),
           '/login': (context) => LoginPage(),
           '/signup': (context) => RegisterPage(),
+          '/verify_phone': (context) => VerificationPage(),
           '/payment': (context) => PaymentPage(),
           '/add_payment': (context) => AddPaymentMethodPage(),
           '/add_card': (context) => AddCardPage(),

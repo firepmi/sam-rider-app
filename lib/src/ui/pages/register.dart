@@ -127,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: RawMaterialButton(
                     fillColor: Color.fromRGBO(255, 184, 0, 1),
                     elevation: 5.0,
-                    onPressed: () => _onSignupClicked(),
+                    onPressed: () => _onSignUpClicked(),
                     child: Text(
                       "Signup",
                       style: TextStyle(color: Colors.white),
@@ -145,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: RawMaterialButton(
                     fillColor: Color.fromRGBO(59, 89, 152, 1),
                     elevation: 5.0,
-                    onPressed: () => _onSignupClicked(),
+                    onPressed: () => _onSignUpClicked(),
                     child: Text(
                       "Signup with Facebook",
                       style: TextStyle(color: Colors.white),
@@ -183,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _onSignupClicked() {
+  void _onSignUpClicked() {
     var isValid = authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _phoneController.text);
     print(isValid);
@@ -194,7 +194,8 @@ class _RegisterPageState extends State<RegisterPage> {
       return authBloc.signUp(_emailController.text, _passController.text,
           _phoneController.text, _nameController.text, () {
         LoadgingDialog.hideLoadingDialog(context);
-        Navigator.pushNamed(context, '/joblocation');
+        onVerifyPhone();
+        // Navigator.pushNamed(context, '/joblocation');
       }, (msg) {
         print(msg);
         //show msg dialog
@@ -203,5 +204,15 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
     return;
+  }
+
+  void onVerifyPhone() {
+    var phone = _phoneController.text;
+
+    authBloc.verifyPhone("+1$phone", (verificationId) {
+      Navigator.pushNamed(context, '/verify_phone', arguments: verificationId);
+    }, (error) {
+      MsgDialog.showMsgDialog(context, "Verify Phone Number", error.toString());
+    });
   }
 }

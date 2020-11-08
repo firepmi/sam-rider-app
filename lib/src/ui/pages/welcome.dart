@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
+import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
 class WelcomePage extends StatelessWidget {
+  AuthBloc authBloc = AuthBloc();
   @override
   Widget build(BuildContext context) {
     final logo = Padding(
@@ -137,7 +140,25 @@ class WelcomePage extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser == null) {
       Navigator.pushNamed(context, '/intro');
     } else {
-      Navigator.pushNamed(context, '/joblocation');
+      onCheckVerifiedPhone(context);
     }
+  }
+
+  void onCheckVerifiedPhone(context) {
+    authBloc.checkVerifyPhone((result) {
+      if (result == "success") {
+        Navigator.pushNamed(context, '/joblocation');
+      } else {
+        onVerifyPhone(context, result);
+      }
+    });
+  }
+
+  void onVerifyPhone(context, String phone) {
+    authBloc.verifyPhone("+1$phone", (verificationId) {
+      Navigator.pushNamed(context, '/verify_phone', arguments: verificationId);
+    }, (error) {
+      MsgDialog.showMsgDialog(context, "Verify Phone Number", error.toString());
+    });
   }
 }

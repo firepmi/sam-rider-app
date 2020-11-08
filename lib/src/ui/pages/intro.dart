@@ -98,7 +98,7 @@ class IntroScreenState extends State<IntroPage> {
         child: Container(
           margin: EdgeInsets.only(
               bottom: AppConfig.size(context, 3),
-              top: AppConfig.size(context, 6)),
+              top: AppConfig.size(context, 30)),
           child: ListView(
             children: <Widget>[
               Container(
@@ -120,13 +120,12 @@ class IntroScreenState extends State<IntroPage> {
                 ),
                 margin: EdgeInsets.only(left: 30, right: 30),
               ),
-              GestureDetector(
-                  child: Image.asset(
+              Image.asset(
                 currentSlide.pathImage,
                 width: AppConfig.size(context, 300),
-                height: AppConfig.size(context, 300),
+                height: AppConfig.size(context, 250),
                 fit: BoxFit.contain,
-              )),
+              ),
             ],
           ),
         ),

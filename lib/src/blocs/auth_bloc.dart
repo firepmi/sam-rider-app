@@ -47,9 +47,23 @@ class AuthBloc {
     _fireAuth.signUp(email, pass, name, phone, onSuccess, onRegisterError);
   }
 
-  void signIn(String email, String pass, Function onSuccess,
+  void signIn(String email, String pass, Function(String) onSuccess,
       Function(String) onSignInError) {
     _fireAuth.signIn(email, pass, onSuccess, onSignInError);
+  }
+
+  void checkVerifyPhone(Function(String) onResult) {
+    _fireAuth.checkPhoneVerification(onResult);
+  }
+
+  void verifyPhone(
+      String phone, Function(String) onCodeSent, Function(dynamic) onError) {
+    _fireAuth.verifyPhone(phone, onCodeSent, onError);
+  }
+
+  void connectPhone(String code, String verificationId, Function onCompleted,
+      Function onError) {
+    _fireAuth.connectPhone(code, verificationId, onCompleted, onError);
   }
 
   void dispose() {
