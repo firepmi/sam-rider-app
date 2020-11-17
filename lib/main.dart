@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
+import 'package:sam_rider_app/src/fire_base/firebase_dataref.dart';
 import 'package:sam_rider_app/src/ui/pages/checkout.dart';
 import 'package:sam_rider_app/src/ui/pages/faq.dart';
 import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
@@ -30,6 +31,8 @@ import 'src/ui/pages/profile.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FireDataRef dataRef = FireDataRef();
+  dataRef.initConfig();
   runApp(MyApp(
       AuthBloc(),
       MaterialApp(

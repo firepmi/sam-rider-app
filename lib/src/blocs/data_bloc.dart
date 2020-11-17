@@ -19,4 +19,19 @@ class DataBloc {
   void uploadProfile(Uint8List data, Function onSuccess) {
     _fireData.uploadImage(data, onSuccess);
   }
+
+  void makeOrder(dynamic data, Function onSuccess, Function(String) onError) {
+    _fireData.makeOrder(data, onSuccess, onError);
+  }
+
+  Future getProfileImage(String id) async {
+    var profileUrl = "";
+    profileUrl = await _fireData.getProfileImage(id);
+    return profileUrl;
+  }
+
+  Future getDrivers() async {
+    var value = await _fireData.getDriverList();
+    return value;
+  }
 }

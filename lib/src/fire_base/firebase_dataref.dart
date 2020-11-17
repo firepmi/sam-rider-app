@@ -3,11 +3,48 @@ import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  void initConfig() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        // _showItemDialog(message);
+      },
+      onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // _navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // _navigateToItemDetail(message);
+      },
+    );
+  }
+
+  static Future<dynamic> myBackgroundMessageHandler(
+      Map<String, dynamic> message) async {
+    if (message.containsKey('data')) {
+      // Handle data message
+      final dynamic data = message['data'];
+    }
+
+    if (message.containsKey('notification')) {
+      // Handle notification message
+      final dynamic notification = message['notification'];
+    }
+
+    // Or do other work.
+  }
 
   void signUp(String email, String pass, String name, String phone,
       Function onSuccess, Function(String) onRegisterError) {
@@ -61,7 +98,7 @@ class FireDataRef {
 
   void connectPhone(String code, String verificationId, Function onCompleted,
       Function(dynamic) onError) async {
-    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+    AuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: code);
     try {
       await _firebaseAuth.currentUser.linkWithCredential(phoneAuthCredential);
@@ -130,6 +167,26 @@ class FireDataRef {
     });
   }
 
+  Future getProfileImage(String id) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final ref =
+        FirebaseStorage.instance.ref().child("profile").child(id + ".jpg");
+    var profileUrl = "";
+    try {
+      profileUrl = (await ref.getDownloadURL()).toString();
+    } catch (e) {
+      print(e.toString());
+    }
+    return profileUrl;
+  }
+
+  Future getDriverList() async {
+    var ref = FirebaseDatabase.instance.reference().child("drivers");
+    DataSnapshot data = await ref.once();
+
+    return data;
+  }
+
   void uploadImage(Uint8List data, Function onSuccess) async {
     var user = FirebaseAuth.instance.currentUser;
 
@@ -164,10 +221,30 @@ class FireDataRef {
         FirebaseDatabase.instance.reference().child("users").child(user.uid);
     DataSnapshot data = await ref.once();
     Map value = data.value;
+    if (value == null) {
+      await FirebaseAuth.instance.signOut();
+      onSuccess("error");
+    }
     if (value["is_verified_phone"] != true) {
       onSuccess(value["phone"]);
     } else {
       onSuccess("success");
+    }
+  }
+
+  void makeOrder(
+      dynamic data, Function onSuccess, Function(String) onError) async {
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+
+    final d = DateFormat('yyyyMMddHHmmss').format(DateTime.now());
+
+    var id = d + FirebaseAuth.instance.currentUser.uid;
+
+    try {
+      await ref.child("requests").child(id).set(data);
+      onSuccess();
+    } catch (error) {
+      onError(error.toString());
     }
   }
 

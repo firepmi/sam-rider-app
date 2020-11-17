@@ -17,17 +17,17 @@ class _AddCardViewState extends State<AddCardView> {
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2019, 04),
-      lastDate: DateTime(2030)
-    );
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2019, 04),
+        lastDate: DateTime(2030));
     if (picked != null && picked != selectedDate) {
       setState(() {
-       selectedDate = picked; 
+        selectedDate = picked;
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,16 +42,28 @@ class _AddCardViewState extends State<AddCardView> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20),
           children: <Widget>[
-            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.credit_card), labelText: "Card Number")),
+            TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.credit_card),
+                    labelText: "Card Number")),
             Row(
               children: <Widget>[
-                Flexible(child: TextField(decoration: InputDecoration(hintText: "MM/YY"))),
+                Flexible(
+                    child: TextField(
+                        decoration: InputDecoration(hintText: "MM/YY"))),
                 SizedBox(width: 40),
-                Flexible(child: TextField(decoration: InputDecoration(hintText: "CVV"))),
+                Flexible(
+                    child: TextField(
+                        decoration: InputDecoration(hintText: "CVV"))),
               ],
             ),
-            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.flag), labelText: "Country")),
-            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.confirmation_number), labelText: "Zip Code")),
+            TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.flag), labelText: "Country")),
+            TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.confirmation_number),
+                    labelText: "Zip Code")),
           ],
         ),
       ),

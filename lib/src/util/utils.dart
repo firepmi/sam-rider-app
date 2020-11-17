@@ -31,6 +31,22 @@ class AppStyle {
           fontWeight: FontWeight.bold, fontSize: AppConfig.size(context, size)),
     );
   }
+
+  static Widget button(BuildContext context, String title,
+      {Function onPressed}) {
+    return Padding(
+      padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0.0),
+            side: BorderSide(color: AppColors.main)),
+        onPressed: onPressed,
+        color: AppColors.main,
+        textColor: Colors.white,
+        child: Text(title, style: TextStyle(fontSize: 16)),
+      ),
+    );
+  }
 }
 
 class AvailableFonts {

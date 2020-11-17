@@ -27,7 +27,6 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
     'assets/images/weight_option5.png',
     'assets/images/weight_option6.png',
   ];
-  var prices = [0, 5, 7, 25, 50, 75];
 
   List<Widget> getMenu() {
     List<Widget> menu = [];
@@ -130,7 +129,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
               color: AppColors.main,
               textColor: Colors.white,
               child: Text(
-                  "${titles[Globals.weight.index]} + \$${prices[Globals.weight.index]}",
+                  "${titles[Globals.weight.index]} + \$${Globals.weight_prices[Globals.weight.index]}",
                   style: TextStyle(fontSize: 16)),
             ),
           ),

@@ -151,14 +151,9 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   }
 
   void onRequest() {
-    // dataBloc.request(
-    //     stops,
-    //     fromLocation.latLng.latitude,
-    //     fromLocation.latLng.longitude,
-    //     toLocation.latLng.latitude,
-    //     toLocation.latLng.longitude, () {
-    //   Navigator.pushNamed(context, '/select_drivers', arguments: path);
-    // }, (error) => {MsgDialog.showMsgDialog(context, "Request", error)});
+    Globals.fromLocation = fromLocation;
+    Globals.toLocation = toLocation;
+    Globals.path = path;
     Navigator.pushNamed(context, '/select_car_size');
   }
 

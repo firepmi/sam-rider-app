@@ -18,25 +18,10 @@ class _SelectDurationPageState extends State<SelectDurationPage> {
     if (path == null || path.length < 2) return 0;
     var distance = 0.0;
     for (int i = 0; i < path.length - 1; i++) {
-      distance += getDistanceFromLatLonInKm(path[i].latitude, path[i].longitude,
-          path[i + 1].latitude, path[i + 1].longitude);
+      distance += Globals.getDistanceFromLatLonInMi(path[i].latitude,
+          path[i].longitude, path[i + 1].latitude, path[i + 1].longitude);
     }
     return distance;
-  }
-
-  double getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var R = 6371;
-    var dLat = deg2rad(lat2 - lat1);
-    var dlon = deg2rad(lon2 - lon1);
-    var a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * sin(dlon / 2) * sin(dlon / 2);
-    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    var d = R * c; // * 0.621371 for mi
-    return d;
-  }
-
-  double deg2rad(deg) {
-    return deg * (pi / 180);
   }
 
   String getButtonTitle() {

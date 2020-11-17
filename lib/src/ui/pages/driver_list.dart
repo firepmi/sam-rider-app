@@ -1,5 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
@@ -12,6 +14,7 @@ class _DriverListPageState extends State<DriverListPage> {
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   double _fontSize = 14;
   List _items;
+  DataBloc dataBloc = DataBloc();
   // Allows you to get a list of all the ItemTags
   void _getAllItem() {
     List<Item> lst = _tagStateKey.currentState?.getAllItem;
@@ -65,30 +68,60 @@ class _DriverListPageState extends State<DriverListPage> {
   }
 
   List<Widget> drivers = List<Widget>();
-
+  List<Map> driverData = [];
   @override
   void initState() {
     super.initState();
-    List<Map> driverData = [];
-    dynamic d = Map();
-    d["name"] = "Dejuante E.";
-    d["rate"] = 47.5;
-    d["star"] = 4.6;
-    d["reviews"] = 96;
-    d["jobs"] = 149;
-    d["aboutme"] =
-        "Hello Client, I have been driving for over 8 years now. It nothing to small or big for me.";
-    driverData.add(d);
-    d = Map();
-    d["name"] = "Andrew A.";
-    d["rate"] = 35.29;
-    d["star"] = 4.9;
-    d["reviews"] = 49;
-    d["jobs"] = 60;
-    d["aboutme"] = "Professional driver experience";
-    driverData.add(d);
+    getDrivers();
+  }
 
+  void getDrivers() async {
+    driverData = [];
+
+    DataSnapshot data = await dataBloc.getDrivers();
+    Map<String, dynamic> mapOfMaps = Map.from(data.value);
+
+    mapOfMaps.forEach((key, value) async {
+      print(key);
+      print(value);
+      value["rate"] = 47.5;
+      value["star"] = 4.6;
+      value["reviews"] = 96;
+      value["jobs"] = 149;
+      value["id"] = key;
+      value["aboutme"] =
+          "Hello Client, I have been driving for over 8 years now. It nothing to small or big for me.";
+      value["profile"] = await dataBloc.getProfileImage(key);
+      driverData.add(value);
+      refreshView();
+    });
+
+    //
+    // print(data.value);
+    //
+    // dynamic d = Map();
+    // d["name"] = "Dejuante E.";
+    // d["rate"] = 47.5;
+    // d["star"] = 4.6;
+    // d["reviews"] = 96;
+    // d["jobs"] = 149;
+    // d["aboutme"] =
+    //     "Hello Client, I have been driving for over 8 years now. It nothing to small or big for me.";
+    // driverData.add(d);
+    // d = Map();
+    // d["name"] = "Andrew A.";
+    // d["rate"] = 35.29;
+    // d["star"] = 4.9;
+    // d["reviews"] = 49;
+    // d["jobs"] = 60;
+    // d["aboutme"] = "Professional driver experience";
+    // driverData.add(d);
+  }
+
+  void refreshView() {
+    drivers = [];
     driverData.forEach((element) {
+      print(element);
       drivers.add(
         GestureDetector(
           onTap: () {
@@ -100,18 +133,20 @@ class _DriverListPageState extends State<DriverListPage> {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: element["profile"] != null
-                    ? FadeInImage.assetNetwork(
-                        image: element["profile"],
-                        placeholder: 'assets/images/default_profile.png',
-                        // "assets/images/default_profile.png",
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                    ? ClipOval(
+                        child: FadeInImage.assetNetwork(
+                          image: element["profile"],
+                          placeholder: 'assets/images/default_profile.png',
+                          // "assets/images/default_profile.png",
+                          width: AppConfig.size(context, 35),
+                          height: AppConfig.size(context, 35),
+                          fit: BoxFit.cover,
+                        ),
                       )
                     : Image.asset(
                         "assets/images/default_profile.png",
-                        width: 100,
-                        height: 100,
+                        width: AppConfig.size(context, 35),
+                        height: AppConfig.size(context, 35),
                         fit: BoxFit.cover,
                       ),
               ),
@@ -175,6 +210,7 @@ class _DriverListPageState extends State<DriverListPage> {
         ),
       );
     });
+    setState(() {});
   }
 
   @override

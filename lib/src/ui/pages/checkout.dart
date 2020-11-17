@@ -1,6 +1,9 @@
 import 'package:credit_card_input_form/constants/constanst.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 import 'package:credit_card_input_form/credit_card_input_form.dart';
 
@@ -10,10 +13,39 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  dynamic data;
+  DataBloc dataBloc = DataBloc();
+  double price = 0;
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
+    price = (Globals.weight_prices[Globals.weight.index] +
+        Globals.car_prices[Globals.carSize.index]) as double;
+    var distance = getDistance();
+    if (distance < 5)
+      price += 5;
+    else
+      price += distance;
+  }
+
+  double getDistance() {
+    if (Globals.path.length < 2) {
+      return Globals.getDistanceFromLatLonInMi(
+          Globals.fromLocation.latLng.latitude,
+          Globals.fromLocation.latLng.longitude,
+          Globals.toLocation.latLng.latitude,
+          Globals.toLocation.latLng.longitude);
+    }
+    var distance = 0.0;
+    for (int i = 0; i < Globals.path.length - 1; i++) {
+      distance += Globals.getDistanceFromLatLonInMi(
+          Globals.path[i].latitude,
+          Globals.path[i].longitude,
+          Globals.path[i + 1].latitude,
+          Globals.path[i + 1].longitude);
+    }
+    return distance;
   }
 
   final nameController = TextEditingController();
@@ -60,8 +92,42 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   final buttonTextStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
+
+  void onMakeRequest() {
+    data["weight"] = Globals.weight.index;
+    data["car_size"] = Globals.carSize.index;
+    var pathStr = "";
+    Globals.path.forEach((element) {
+      pathStr += "${element.latitude},${element.longitude}";
+    });
+    data["path"] = pathStr;
+    data["price"] = price;
+    data["client_id"] = FirebaseAuth.instance.currentUser.uid;
+
+    dataBloc.makeOrder(data, () {
+      print("completion");
+      Navigator.popUntil(context, ModalRoute.withName('/joblocation'));
+    }, (error) {
+      AlertDialog(
+        title: Text("Order Request Error"),
+        content: Text(error),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              // Navigator.of(context).pop("cancel");
+              Navigator.pop(context);
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white70,
@@ -95,6 +161,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               height: AppConfig.size(context, 20),
             ),
             AppStyle.titleLabel(context, "Billing Info:"),
+            SizedBox(height: 5),
             CreditCardInputForm(
               showResetButton: true,
               onStateChange: (currentState, cardInfo) {
@@ -115,6 +182,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               nextButtonTextStyle: buttonTextStyle,
               resetButtonTextStyle: buttonTextStyle,
             ),
+            AppStyle.button(context, "Order", onPressed: () {
+              onMakeRequest();
+            }),
           ]),
         ));
   }

@@ -82,7 +82,7 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
                 ),
               ),
             ),
-            RatingBar(
+            RatingBar.builder(
               onRatingUpdate: (value) {},
               minRating: 1,
               allowHalfRating: true,
@@ -116,7 +116,7 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
         appBar: AppBar(
           backgroundColor: Colors.white70,
           title: Text(
-            "Task Size",
+            "Driver Profile",
             style: TextStyle(color: Colors.black),
           ),
           iconTheme: IconThemeData(color: Colors.black),
@@ -263,7 +263,8 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/checkout');
+                            Navigator.pushNamed(context, '/checkout',
+                                arguments: data);
                           },
                           color: AppColors.main,
                           textColor: Colors.white,

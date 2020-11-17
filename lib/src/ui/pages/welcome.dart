@@ -5,6 +5,7 @@ import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
 import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
+// ignore: must_be_immutable
 class WelcomePage extends StatelessWidget {
   AuthBloc authBloc = AuthBloc();
   @override
@@ -140,15 +141,19 @@ class WelcomePage extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser == null) {
       Navigator.pushNamed(context, '/intro');
     } else {
+      print("check phone number");
       onCheckVerifiedPhone(context);
     }
   }
 
   void onCheckVerifiedPhone(context) {
     authBloc.checkVerifyPhone((result) {
-      if (result == "success") {
+      if (result == "error") {
+        Navigator.pushNamed(context, '/intro');
+      } else if (result == "success") {
         Navigator.pushNamed(context, '/joblocation');
       } else {
+        print("verifiy phone number");
         onVerifyPhone(context, result);
       }
     });
@@ -159,6 +164,7 @@ class WelcomePage extends StatelessWidget {
       Navigator.pushNamed(context, '/verify_phone', arguments: verificationId);
     }, (error) {
       MsgDialog.showMsgDialog(context, "Verify Phone Number", error.toString());
+      FirebaseAuth.instance.signOut();
     });
   }
 }
