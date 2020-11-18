@@ -63,10 +63,6 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   void onRequestResults(dynamic data) {
     Globals.isWaiting = false;
     Navigator.pushNamed(context, '/request_details', arguments: data);
-    // mapOfMaps.forEach((key, value) async {
-    //   print(key);
-    //   // print(value);
-    // });
   }
 
   void setCustomMapPin() async {
