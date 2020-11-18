@@ -168,7 +168,21 @@ class _LoginViewState extends State<LoginView> {
       if (result == "success") {
         Navigator.pushNamed(context, '/joblocation');
       } else {
-        onVerifyPhone(context, result);
+        // onVerifyPhone(context, result);
+        AlertDialog(
+          title: Text("Phone Verification"),
+          content: Text("Phone verification is not working on dev mode"),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                // Navigator.of(context).pop("cancel");
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/joblocation');
+              },
+              child: Text("Ok"),
+            ),
+          ],
+        );
       }
     });
   }

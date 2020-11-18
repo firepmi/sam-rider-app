@@ -153,8 +153,10 @@ class WelcomePage extends StatelessWidget {
       } else if (result == "success") {
         Navigator.pushNamed(context, '/joblocation');
       } else {
+        Navigator.pushNamed(context, '/joblocation');
         print("verifiy phone number");
-        onVerifyPhone(context, result);
+        //TODO: should be configuration APN on apple developer
+        // onVerifyPhone(context, result);
       }
     });
   }

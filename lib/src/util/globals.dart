@@ -39,6 +39,17 @@ class Globals {
   static double deg2rad(deg) {
     return deg * (pi / 180);
   }
+
+  static final carNames = [
+    "Automobile",
+    "SUV",
+    "Pickup",
+    "VAN",
+    "Truck & Trailer",
+    "Truck",
+  ];
+
+  static bool isWaiting = true;
 }
 
 enum PriceOptional { small, medium, large }

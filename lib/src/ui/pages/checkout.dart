@@ -21,7 +21,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     price = (Globals.weight_prices[Globals.weight.index] +
-        Globals.car_prices[Globals.carSize.index]) as double;
+            Globals.car_prices[Globals.carSize.index])
+        .toDouble();
     var distance = getDistance();
     if (distance < 5)
       price += 5;
@@ -98,14 +99,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
     data["car_size"] = Globals.carSize.index;
     var pathStr = "";
     Globals.path.forEach((element) {
-      pathStr += "${element.latitude},${element.longitude}";
+      pathStr += "${element.latitude},${element.longitude},";
     });
     data["path"] = pathStr;
     data["price"] = price;
     data["client_id"] = FirebaseAuth.instance.currentUser.uid;
-
+    data["status"] = "waiting";
+    data["from_lat"] = Globals.fromLocation.latLng.latitude;
+    data["from_lon"] = Globals.fromLocation.latLng.longitude;
+    data["to_lat"] = Globals.toLocation.latLng.latitude;
+    data["to_lon"] = Globals.toLocation.latLng.longitude;
     dataBloc.makeOrder(data, () {
       print("completion");
+      Globals.isWaiting = true;
       Navigator.popUntil(context, ModalRoute.withName('/joblocation'));
     }, (error) {
       AlertDialog(

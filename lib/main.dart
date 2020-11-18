@@ -15,6 +15,7 @@ import 'package:sam_rider_app/src/ui//pages/add_card.dart';
 import 'package:sam_rider_app/src/ui/pages/payment.dart';
 import 'package:sam_rider_app/src/ui/pages/privacy.dart';
 import 'package:sam_rider_app/src/ui/pages/register.dart';
+import 'package:sam_rider_app/src/ui/pages/request_details.dart';
 import 'package:sam_rider_app/src/ui/pages/select_car_size.dart';
 import 'package:sam_rider_app/src/ui/pages/select_duration.dart';
 import 'package:sam_rider_app/src/ui/pages/select_issue.dart';
@@ -65,6 +66,7 @@ void main() async {
           '/driver_list': (context) => DriverListPage(),
           '/select_car_size': (context) => SelectCarSizePage(),
           '/select_weight': (context) => SelectWeightPage(),
+          '/request_details': (context) => RequestDetailsPage(),
           '/faq': (context) => FAQPage(),
           '/checkout': (context) => CheckoutPage(),
         },

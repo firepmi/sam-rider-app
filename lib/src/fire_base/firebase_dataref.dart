@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,8 @@ class FireDataRef {
         print("onMessage: $message");
         // _showItemDialog(message);
       },
-      onBackgroundMessage: myBackgroundMessageHandler,
+      onBackgroundMessage:
+          Platform.isAndroid ? myBackgroundMessageHandler : null,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
         // _navigateToItemDetail(message);
@@ -225,7 +227,8 @@ class FireDataRef {
       await FirebaseAuth.instance.signOut();
       onSuccess("error");
     }
-    if (value["is_verified_phone"] != true) {
+    if (value["is_verified_phone"] == null ||
+        value["is_verified_phone"] != true) {
       onSuccess(value["phone"]);
     } else {
       onSuccess("success");
@@ -241,10 +244,43 @@ class FireDataRef {
     var id = d + FirebaseAuth.instance.currentUser.uid;
 
     try {
-      await ref.child("requests").child(id).set(data);
+      await ref.child(id).set(data);
       onSuccess();
     } catch (error) {
       onError(error.toString());
+    }
+  }
+
+  void getRequests(Function(dynamic) onSuccess) async {
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    try {
+      var data = await ref
+          .orderByChild("client_id")
+          .equalTo(uid)
+          // .orderByChild("status")
+          // .equalTo("waiting")
+          .once();
+      Map<String, dynamic> mapOfMaps = Map.from(data.value);
+      mapOfMaps.forEach((key, value) {
+        if (value["status"] == "waiting") {
+          value["data_id"] = key;
+          onSuccess(value);
+          return;
+        }
+      });
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void getRequestState(String id, Function(dynamic) onSuccess) async {
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+    try {
+      var status = await ref.child(id).child("status").once();
+      onSuccess(status.value);
+    } catch (error) {
+      print(error.toString());
     }
   }
 

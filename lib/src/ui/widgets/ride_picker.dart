@@ -77,7 +77,9 @@ class _RidePickerState extends State<RidePicker> {
                       child: Text(
                         toLocation == null
                             ? "Dropoff location"
-                            : toLocation.address,
+                            : (toLocation.address == null
+                                ? "Address not found"
+                                : toLocation.address),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 16,

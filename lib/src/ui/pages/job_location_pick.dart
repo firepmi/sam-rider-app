@@ -39,11 +39,34 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   var state = "select";
   List<LatLng> path = List();
   BitmapDescriptor destinationPinIcon;
+  Timer timer;
   @override
   void initState() {
     super.initState();
     initPlatformState();
     setCustomMapPin();
+  }
+
+  void checkMyRequests() {
+    if (timer == null || !timer.isActive) {
+      timer = Timer.periodic(Duration(seconds: 5), (timer) {
+        print("is Waiting : ${Globals.isWaiting}");
+        if (!Globals.isWaiting)
+          timer.cancel();
+        else {
+          dataBloc.getRequests(onRequestResults);
+        }
+      });
+    }
+  }
+
+  void onRequestResults(dynamic data) {
+    Globals.isWaiting = false;
+    Navigator.pushNamed(context, '/request_details', arguments: data);
+    // mapOfMaps.forEach((key, value) async {
+    //   print(key);
+    //   // print(value);
+    // });
   }
 
   void setCustomMapPin() async {
@@ -56,6 +79,8 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition =
         CameraPosition(zoom: cameraZoom, target: _center);
+
+    checkMyRequests();
 
     if (currentLocation != null && state == "running") {
       print("use current location on widget build");

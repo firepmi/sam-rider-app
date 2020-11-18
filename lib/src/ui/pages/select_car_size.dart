@@ -30,6 +30,14 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
     'assets/svg/trailer.svg',
     'assets/svg/truck.svg',
   ];
+  var images = [
+    'assets/images/car_option1.png',
+    'assets/images/car_option2.png',
+    'assets/images/car_option3.png',
+    'assets/images/car_option4.png',
+    'assets/images/car_option5.png',
+    'assets/images/car_option6.png',
+  ];
   var prices = [0, 5, 7, 25, 50, 75];
   @override
   void initState() {
@@ -39,32 +47,53 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
   List<Widget> getMenu() {
     List<Widget> menu = [];
     CarSizeOptional.values.forEach((car) {
-      menu.add(Center(
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              Globals.carSize = car;
-            });
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SvgPicture.asset(
-                icons[car.index],
-                color: Globals.carSize == car ? Colors.blue : Colors.grey,
-                width: 80,
-                height: 80,
-              ),
-              Text(
-                titles[car.index],
-                style: TextStyle(
-                    color: Globals.carSize == car ? Colors.blue : Colors.grey,
-                    fontSize: 12),
-              )
-            ],
+      menu.add(
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                Globals.carSize = car;
+              });
+            },
+            child: Padding(
+                padding: EdgeInsets.all(AppConfig.size(context, 3)),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Globals.carSize == car
+                              ? Colors.blue
+                              : Colors.grey[200],
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Image.asset(
+                            images[car.index],
+                            // color: Globals.weight == weight ? Colors.blue : Colors.grey,
+                            width: AppConfig.size(context, 30),
+                            height: AppConfig.size(context, 30),
+                          ),
+                        ),
+                        Text(
+                          titles[car.index],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Globals.carSize == car
+                                  ? Colors.blue
+                                  : Colors.grey,
+                              fontSize: AppConfig.size(context, 5)),
+                        )
+                      ],
+                    ))),
           ),
         ),
-      ));
+      );
     });
     return menu;
   }
@@ -100,7 +129,7 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
               padding:
                   EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
               child: GridView.count(
-                crossAxisCount: 3,
+                crossAxisCount: AppConfig.width(context) < 768 ? 2 : 3,
                 children: getMenu(),
               ),
             ),

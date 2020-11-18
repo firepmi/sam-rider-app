@@ -13,13 +13,29 @@ class AppConfig {
       return MediaQuery.of(context).size.height / 375 * s;
     }
   }
+
+  static double width(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
 }
 
 class AppStyle {
-  static Widget label(BuildContext context, String text, {double size = 8}) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: AppConfig.size(context, size)),
+  static Widget label(
+    BuildContext context,
+    String text, {
+    double size = 8,
+    double top = 0,
+    double bottom = 0,
+    double right = 0,
+    double left = 0,
+  }) {
+    return Padding(
+      padding:
+          EdgeInsets.only(top: top, bottom: bottom, right: right, left: left),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: AppConfig.size(context, size)),
+      ),
     );
   }
 

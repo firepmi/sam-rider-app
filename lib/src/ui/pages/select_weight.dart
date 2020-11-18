@@ -113,7 +113,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                 padding:
                     EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
                 child: GridView.count(
-                  crossAxisCount: 3,
+                  crossAxisCount: AppConfig.width(context) < 768 ? 2 : 3,
                   children: getMenu(),
                 )),
           ),

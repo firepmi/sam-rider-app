@@ -34,4 +34,12 @@ class DataBloc {
     var value = await _fireData.getDriverList();
     return value;
   }
+
+  void getRequests(Function(dynamic) onSuccess) async {
+    _fireData.getRequests(onSuccess);
+  }
+
+  void getRequestStatus(String id, Function(dynamic) onSuccess) {
+    _fireData.getRequestState(id, onSuccess);
+  }
 }

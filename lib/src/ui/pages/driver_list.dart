@@ -84,6 +84,7 @@ class _DriverListPageState extends State<DriverListPage> {
     mapOfMaps.forEach((key, value) async {
       print(key);
       print(value);
+      value["driver_id"] = key;
       value["rate"] = 47.5;
       value["star"] = 4.6;
       value["reviews"] = 96;

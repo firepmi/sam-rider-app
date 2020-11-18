@@ -49,6 +49,8 @@
 	<string>Please allow access to your picture to upload your profile image.</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
+		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
