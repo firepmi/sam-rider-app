@@ -90,9 +90,6 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           linkMenuDrawer('Your Past Jobs', () {
             Navigator.pushNamed(context, '/your_trip');
           }),
-          linkMenuDrawer('Help', () {
-            Navigator.pushNamed(context, '/help');
-          }),
           linkMenuDrawer('FAQ', () {
             Navigator.pushNamed(context, '/faq');
           }),
@@ -102,7 +99,7 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           linkMenuDrawer('Privacy Policy', () {
             Navigator.pushNamed(context, '/privacy');
           }),
-          linkMenuDrawer('Terms of service', () {
+          linkMenuDrawer('Terms of Service', () {
             Navigator.pushNamed(context, '/termsofservice');
           }),
           linkMenuDrawer('Logout', () async {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 import 'package:sam_rider_app/src/util/globals.dart';
@@ -39,6 +40,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
   dynamic data;
   var isDone = false;
   var isInited = false;
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
   @override
   void initState() {
     super.initState();
@@ -240,7 +242,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                     Divider(),
                     SizedBox(height: 10),
                     AppStyle.label(context,
-                        "Price: \$${data != null ? data['price'] : ''} ",
+                        "Price: \$${oCcy.format(double.parse(data != null ? data['price'] : '0'))} ",
                         top: 0, bottom: 20, left: 20, right: 20),
                     AppStyle.label(context,
                         "Car Size: ${Globals.carNames[data != null ? data['car_size'] : 0]} ",

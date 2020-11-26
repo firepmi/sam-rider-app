@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
 
 class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -160,12 +161,42 @@ class FireDataRef {
     });
   }
 
+  void updateAddress(LocationResult location, String addressId) {
+    var user = FirebaseAuth.instance.currentUser;
+    var request = {
+      "address": location.address,
+      "lat_long": "${location.latLng.latitude},${location.latLng.longitude}",
+      "place_id": location.placeId,
+    };
+    var ref = FirebaseDatabase.instance.reference().child("users");
+
+    ref.child(user.uid).child(addressId).set(request);
+  }
+
+  Future<LocationResult> getAddress(addressId) async {
+    var user = FirebaseAuth.instance.currentUser;
+    var ref = FirebaseDatabase.instance
+        .reference()
+        .child("users")
+        .child(user.uid)
+        .child(addressId);
+    DataSnapshot data = await ref.once();
+    if (data.value == null) return null;
+    List<String> latlonArr = data.value["lat_long"].split(",");
+    LatLng latLng =
+        LatLng(double.parse(latlonArr[0]), double.parse(latlonArr[1]));
+    return LocationResult(
+        latLng: latLng,
+        address: data.value["address"],
+        placeId: data.value["place_id"]);
+  }
+
   void getUserProfile(Function(dynamic) onSuccess) {
     var user = FirebaseAuth.instance.currentUser;
     var ref =
         FirebaseDatabase.instance.reference().child("users").child(user.uid);
     ref.once().then((DataSnapshot data) {
-      onSuccess(data.value);
+      if (data.value != null) onSuccess(data.value);
     });
   }
 
@@ -210,7 +241,8 @@ class FireDataRef {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: pass);
-      checkPhoneVerification(onSuccess);
+      onSuccess("success"); //TODO: enable phone verification
+      // checkPhoneVerification(onSuccess);
     } catch (err) {
       onSignInError(err.toString());
     }
@@ -226,8 +258,7 @@ class FireDataRef {
     if (value == null) {
       await FirebaseAuth.instance.signOut();
       onSuccess("error");
-    }
-    if (value["is_verified_phone"] == null ||
+    } else if (value["is_verified_phone"] == null ||
         value["is_verified_phone"] != true) {
       onSuccess(value["phone"]);
     } else {

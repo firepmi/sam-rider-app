@@ -28,6 +28,7 @@ class _SettingsViewState extends State<SettingsView> {
   var profileUrl = "";
   LatLng _center = LatLng(45.1975844, -122.9598339);
   LocationResult homeLocation;
+  LocationResult favLocation;
   MapUtil mapUtil = MapUtil();
 
   @override
@@ -42,6 +43,13 @@ class _SettingsViewState extends State<SettingsView> {
     });
     getProfileImage();
     getCurrentLocation();
+    getLocations();
+  }
+
+  void getLocations() async {
+    homeLocation = await dataBloc.getAddress("home_address");
+    favLocation = await dataBloc.getAddress("fav_address");
+    setState(() {});
   }
 
   void getProfileImage() async {
@@ -60,15 +68,34 @@ class _SettingsViewState extends State<SettingsView> {
     _center = await mapUtil.getCurrentLocation();
   }
 
-  getHomeLocation() async {
-    homeLocation = await showLocationPicker(
-      context,
-      AppConfig.apiKey,
-      initialCenter: _center,
-      automaticallyAnimateToCurrentLocation: true,
-      myLocationButtonEnabled: true,
-      layersButtonEnabled: true,
-    );
+  setHomeLocation(int index) async {
+    if (index == 0) {
+      homeLocation = await showLocationPicker(
+        context,
+        AppConfig.apiKey,
+        initialCenter: _center,
+        automaticallyAnimateToCurrentLocation: true,
+        myLocationButtonEnabled: true,
+        layersButtonEnabled: true,
+      );
+      if (homeLocation != null) {
+        dataBloc.updateAddress(homeLocation, "home_address");
+        setState(() {});
+      }
+    } else {
+      favLocation = await showLocationPicker(
+        context,
+        AppConfig.apiKey,
+        initialCenter: _center,
+        automaticallyAnimateToCurrentLocation: true,
+        myLocationButtonEnabled: true,
+        layersButtonEnabled: true,
+      );
+      if (favLocation != null) {
+        dataBloc.updateAddress(favLocation, "fav_address");
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -154,7 +181,7 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      getHomeLocation();
+                      setHomeLocation(0);
                     },
                     child: ListTile(
                       leading: Icon(Icons.home),
@@ -164,9 +191,16 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                     ),
                   ),
+                  homeLocation != null
+                      ? AppStyle.label(
+                          context,
+                          homeLocation.address,
+                          color: Colors.grey,
+                        )
+                      : Container(),
                   GestureDetector(
                       onTap: () {
-                        getHomeLocation();
+                        setHomeLocation(1);
                       },
                       child: ListTile(
                         leading: Icon(Icons.work),
@@ -175,6 +209,13 @@ class _SettingsViewState extends State<SettingsView> {
                           style: TextStyle(fontSize: 18),
                         ),
                       )),
+                  favLocation != null
+                      ? AppStyle.label(
+                          context,
+                          favLocation.address,
+                          color: Colors.grey,
+                        )
+                      : Container(),
                 ],
               ),
             ),

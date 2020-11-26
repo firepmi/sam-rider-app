@@ -26,7 +26,7 @@ import 'package:sam_rider_app/src/ui/pages/verify_number.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
 import 'src/ui/pages/profile.dart';
 
 void main() async {

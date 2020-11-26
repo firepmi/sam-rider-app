@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sam_rider_app/src/fire_base/firebase_dataref.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
 
 class DataBloc {
   var _fireData = FireDataRef();
@@ -14,6 +15,15 @@ class DataBloc {
 
   void getUserProfile(Function(dynamic) onSuccess) {
     _fireData.getUserProfile(onSuccess);
+  }
+
+  void updateAddress(LocationResult location, String addressId) {
+    _fireData.updateAddress(location, addressId);
+  }
+
+  Future getAddress(String addressId) async {
+    var address = await _fireData.getAddress(addressId);
+    return address;
   }
 
   void uploadProfile(Uint8List data, Function onSuccess) {
