@@ -196,7 +196,9 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      data["aboutme"],
+                      data["aboutme"] == null
+                          ? "No Information"
+                          : data["aboutme"],
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ),

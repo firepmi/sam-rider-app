@@ -90,8 +90,6 @@ class _DriverListPageState extends State<DriverListPage> {
       value["reviews"] = 96;
       value["jobs"] = 149;
       value["id"] = key;
-      value["aboutme"] =
-          "Hello Client, I have been driving for over 8 years now. It nothing to small or big for me.";
       value["profile"] = await dataBloc.getProfileImage(key);
       driverData.add(value);
       refreshView();
@@ -201,7 +199,9 @@ class _DriverListPageState extends State<DriverListPage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  element["aboutme"],
+                  element["aboutme"] == null
+                      ? "No Information"
+                      : element["aboutme"],
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ),

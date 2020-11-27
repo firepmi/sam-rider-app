@@ -242,7 +242,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                     Divider(),
                     SizedBox(height: 10),
                     AppStyle.label(context,
-                        "Price: \$${oCcy.format(double.parse(data != null ? data['price'] : '0'))} ",
+                        "Price: \$${oCcy.format((data != null ? data['price'] : 0).toDouble())} ",
                         top: 0, bottom: 20, left: 20, right: 20),
                     AppStyle.label(context,
                         "Car Size: ${Globals.carNames[data != null ? data['car_size'] : 0]} ",
