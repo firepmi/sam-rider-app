@@ -15,6 +15,7 @@ class _DriverListPageState extends State<DriverListPage> {
   double _fontSize = 14;
   List _items;
   DataBloc dataBloc = DataBloc();
+  var selected = false;
   // Allows you to get a list of all the ItemTags
   void _getAllItem() {
     List<Item> lst = _tagStateKey.currentState?.getAllItem;
@@ -93,6 +94,13 @@ class _DriverListPageState extends State<DriverListPage> {
       value["profile"] = await dataBloc.getProfileImage(key);
       driverData.add(value);
       refreshView();
+
+      if (!selected) {
+        print("navigator auto select driver");
+        Navigator.pushNamed(
+            context, '/driver_profile', arguments: driverData[0]);
+        selected = true;
+      }
     });
 
     //
