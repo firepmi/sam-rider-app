@@ -20,8 +20,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
-    price = (Globals.weight_prices[Globals.weight.index] +
-            Globals.car_prices[Globals.carSize.index])
+    price = (Globals.weightPrices[Globals.weight.index] +
+            Globals.carPrices[Globals.carSize.index])
         .toDouble();
     var distance = getDistance();
     if (distance < 5)

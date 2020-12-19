@@ -57,7 +57,7 @@ class _RidePickerState extends State<RidePicker> {
                             margin: EdgeInsets.only(top: 2),
                             width: 10,
                             height: 10,
-                            decoration: BoxDecoration(color: Colors.blue)),
+                            decoration: BoxDecoration(color: AppColors.main)),
                       ),
                     ),
                     Positioned(
@@ -169,7 +169,7 @@ class _RidePickerState extends State<RidePicker> {
                       padding: EdgeInsets.only(left: 40.0, right: 50.0),
                       child: Text(
                         fromLocation == null
-                            ? "Where should Sam Go"
+                            ? "Pick up location"
                             : (fromLocation.address ?? "Address not found"),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

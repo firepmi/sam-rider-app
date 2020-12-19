@@ -18,40 +18,30 @@ class IntroScreenState extends State<IntroPage> {
 
   void initSlides(BuildContext context) {
     slides = [];
-    var style1 = TextStyle(
-        color: Color(0xff29ba50),
-        fontSize: AppConfig.size(context, 12),
-        fontWeight: FontWeight.w900,
-        fontFamily: 'RobotoMono');
-    var style2 = TextStyle(
-        color: Color(0xfff111111),
-        fontSize: AppConfig.size(context, 12),
-        fontWeight: FontWeight.w900,
-        fontFamily: 'RobotoMono');
     slides.add(
       new Slide(
-        title: "Get help with",
-        styleTitle: style1,
-        description: "everything in life",
-        styleDescription: style2,
+        title: "We deliver anything",
+        styleTitle: AppStyle.introStyle1(context),
+        description: "you have in minutes",
+        styleDescription: AppStyle.introStyle2(context),
         pathImage: "assets/images/img_intro1.png",
       ),
     );
     slides.add(
       new Slide(
         title: "SAM is your personal",
-        styleTitle: style1,
-        description: "runner for your\nconstruction needs",
-        styleDescription: style2,
+        styleTitle: AppStyle.introStyle1(context),
+        description: "runner for your\npersonal business needs",
+        styleDescription: AppStyle.introStyle2(context),
         pathImage: "assets/images/img_intro2.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Read the reviews of",
-        styleTitle: style1,
-        description: "background-checked\ndrivers",
-        styleDescription: style2,
+        title: "We will shop",
+        styleTitle: AppStyle.introStyle1(context),
+        description: "for you too",
+        styleDescription: AppStyle.introStyle2(context),
         pathImage: "assets/images/img_intro3.png",
       ),
     );

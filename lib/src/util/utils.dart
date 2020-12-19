@@ -67,6 +67,22 @@ class AppStyle {
       ),
     );
   }
+
+  static TextStyle introStyle1(BuildContext context) {
+    return TextStyle(
+        color: Color(0xff29ba50),
+        fontSize: AppConfig.size(context, 12),
+        fontWeight: FontWeight.w900,
+        fontFamily: 'RobotoMono');
+  }
+
+  static TextStyle introStyle2(BuildContext context) {
+    return TextStyle(
+        color: Color(0xfff111111),
+        fontSize: AppConfig.size(context, 12),
+        fontWeight: FontWeight.w900,
+        fontFamily: 'RobotoMono');
+  }
 }
 
 class AvailableFonts {

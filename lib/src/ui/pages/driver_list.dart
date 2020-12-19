@@ -27,7 +27,7 @@ class _DriverListPageState extends State<DriverListPage> {
     _items = List();
 
     switch (Globals.carSize) {
-      case CarSizeOptional.trailer:
+      case CarSizeOptional.truck_trailer:
         _items.add("Truck & Trailer");
         break;
       case CarSizeOptional.autoMobile:
@@ -42,27 +42,21 @@ class _DriverListPageState extends State<DriverListPage> {
       case CarSizeOptional.van:
         _items.add("VAN");
         break;
-      case CarSizeOptional.truck:
-        _items.add("Truck");
-        break;
     }
     switch (Globals.weight) {
       case WeightOptional.option1:
-        _items.add("1 smll item");
+        _items.add("1 small item");
         break;
       case WeightOptional.option2:
         _items.add("Multiple small items in car");
         break;
       case WeightOptional.option3:
-        _items.add("Large items in car");
-        break;
-      case WeightOptional.option4:
         _items.add("Truck loading");
         break;
-      case WeightOptional.option5:
+      case WeightOptional.option4:
         _items.add("Trailer loading:");
         break;
-      case WeightOptional.option6:
+      case WeightOptional.option5:
         _items.add("Box truck loading");
         break;
     }
@@ -97,32 +91,11 @@ class _DriverListPageState extends State<DriverListPage> {
 
       if (!selected) {
         print("navigator auto select driver");
-        Navigator.pushNamed(
-            context, '/driver_profile', arguments: driverData[0]);
+        Navigator.pushNamed(context, '/driver_profile',
+            arguments: driverData[0]);
         selected = true;
       }
     });
-
-    //
-    // print(data.value);
-    //
-    // dynamic d = Map();
-    // d["name"] = "Dejuante E.";
-    // d["rate"] = 47.5;
-    // d["star"] = 4.6;
-    // d["reviews"] = 96;
-    // d["jobs"] = 149;
-    // d["aboutme"] =
-    //     "Hello Client, I have been driving for over 8 years now. It nothing to small or big for me.";
-    // driverData.add(d);
-    // d = Map();
-    // d["name"] = "Andrew A.";
-    // d["rate"] = 35.29;
-    // d["star"] = 4.9;
-    // d["reviews"] = 49;
-    // d["jobs"] = 60;
-    // d["aboutme"] = "Professional driver experience";
-    // driverData.add(d);
   }
 
   void refreshView() {
