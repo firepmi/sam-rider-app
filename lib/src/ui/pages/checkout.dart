@@ -6,6 +6,7 @@ import 'package:sam_rider_app/src/blocs/data_bloc.dart';
 import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 import 'package:credit_card_input_form/credit_card_input_form.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class CheckoutPage extends StatefulWidget {
   @override
@@ -16,6 +17,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
   dynamic data;
   DataBloc dataBloc = DataBloc();
   double price = 0;
+  Token _paymentToken;
+  PaymentMethod _paymentMethod;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  String _error;
+  var cardInformation;
+
+  var publishableKey =
+      "pk_live_51Hti88BEXyg0kPLy9gBfD4SjNZn860IGsafOdvEmnPmeuwQUQwhiXqDFGXN7NIeI3LItwWzbV6tuXyp90gJHtUBv00VUrNEItR";
+  //Test Key
+  // var publishableKey = "pk_test_51Hti88BEXyg0kPLyuSSuAzmzTkPWfWfh83GEvXBC27nRN1NweUI6HNKESkLTbq1HA9iPqVMYcPLwMTUuw2kzqp3J005Du7q6dH";
+  // var secretKey =
+  //     "sk_test_51Hti88BEXyg0kPLywO3GHoaVqnGwhH9M7R1p1egxjObRviUItKKxi6kNS4bt1od2WEtGYagMr9L57S3Ep9UHoRkl00X984phiA";
+
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -24,10 +38,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
             Globals.carPrices[Globals.carSize.index])
         .toDouble();
     var distance = getDistance();
+
     if (distance < 5)
       price += 5;
     else
       price += distance;
+
+    StripePayment.setOptions(StripeOptions(
+        publishableKey: publishableKey,
+        merchantId:
+            "SAM_rider${FirebaseAuth.instance.currentUser.uid}", //YOUR_MERCHANT_ID
+        androidPayMode: 'production'));
   }
 
   double getDistance() {
@@ -94,9 +115,74 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final buttonTextStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
-  void onMakeRequest() {
+  void onMakePayment(BuildContext context) {
+    if (cardInformation == null) {
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text('Incorrect card information')));
+      return;
+    }
+    String validate = cardInformation.validate;
+
+    if (validate.length != 5) {
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text('Incorrect card information')));
+      return;
+    }
+    print(int.parse(validate.split("/")[0]));
+    print(int.parse(validate.split("/")[1]));
+    StripePayment.paymentRequestWithNativePay(
+      androidPayOptions: AndroidPayPaymentRequest(
+        totalPrice: "$price",
+        currencyCode: "USD",
+      ),
+      applePayOptions: ApplePayPaymentOptions(
+        countryCode: 'US',
+        currencyCode: 'USD',
+        items: [
+          ApplePayItem(
+            label: 'SAM',
+            amount: '$price',
+          )
+        ],
+      ),
+    ).then((token) {
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text('Received ${token.tokenId}')));
+      _paymentToken = token;
+      // onMakeRequest(token.tokenId);
+    }).catchError((error) {
+      setError(error, context);
+    });
+    // StripePayment.createPaymentMethod(
+    //   PaymentMethodRequest(
+    //     card: CreditCard(
+    //       number: cardInformation.cardNumber,
+    //       expMonth: int.parse(validate.split("/")[0]),
+    //       expYear: int.parse(validate.split("/")[1]),
+    //     ),
+    //   ),
+    // ).then((paymentMethod) {
+    //   _scaffoldKey.currentState.showSnackBar(
+    //       SnackBar(content: Text('Received ${paymentMethod.id}')));
+    //   setState(() {
+    //     _paymentMethod = paymentMethod;
+    //   });
+    //   onMakeRequest(paymentMethod.id);
+    // }).catchError((error) {
+    //   setError(error, context);
+    // });
+  }
+
+  void setError(dynamic error, BuildContext context) {
+    var err = Text(error.toString());
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: err));
+    // Scaffold.of(context).showSnackBar(SnackBar(content: err));
+  }
+
+  void onMakeRequest(paymentId) {
     data["weight"] = Globals.weight.index;
     data["car_size"] = Globals.carSize.index;
+    data["stripe_id"] = paymentId;
     var pathStr = "";
     Globals.path.forEach((element) {
       pathStr += "${element.latitude},${element.longitude},";
@@ -135,6 +221,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     data = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.white70,
           title: Text(
@@ -172,7 +259,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               showResetButton: true,
               onStateChange: (currentState, cardInfo) {
                 print(currentState);
-                print(cardInfo);
+                cardInformation = cardInfo;
               },
               customCaptions: customCaptions,
               // cardCVV: '222',
@@ -189,7 +276,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               resetButtonTextStyle: buttonTextStyle,
             ),
             AppStyle.button(context, "Order", onPressed: () {
-              onMakeRequest();
+              onMakePayment(context);
             }),
           ]),
         ));

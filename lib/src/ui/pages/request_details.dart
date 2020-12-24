@@ -234,7 +234,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        data["aboutme"],
+                        data["aboutme"] == null ? "-" : data["aboutme"],
                         style: TextStyle(color: Colors.grey, fontSize: 16),
                       ),
                     ),

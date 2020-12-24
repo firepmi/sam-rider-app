@@ -61,6 +61,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   }
 
   void onRequestResults(dynamic data) {
+    print("get request results");
     Globals.isWaiting = false;
     Navigator.pushNamed(context, '/request_details', arguments: data);
   }
@@ -218,7 +219,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
             position: place.latLng, //LatLng(place.lat, place.lng),
             infoWindow: InfoWindow(title: mkId),
           );
-          _markers[0] = (marker);
+          if (_markers.isNotEmpty) _markers[0] = (marker);
           List mmmm = _markers;
           print(mmmm);
         } else if (mkId == "to_address") {
