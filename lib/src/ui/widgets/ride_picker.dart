@@ -17,87 +17,85 @@ class _RidePickerState extends State<RidePicker> {
   LocationResult toLocation;
 
   Widget secondLocation() {
-    if (Globals.stops == 2) {
-      return Column(
-        children: [
-          Divider(),
-          Container(
-            width: double.infinity,
-            height: 50,
-            child: FlatButton(
-              onPressed: () async {
-                print("to location init location:");
-                print(fromLocation.latLng);
-                toLocation = await showLocationPicker(
-                  context, AppConfig.apiKey,
-                  initialCenter: fromLocation == null
-                      ? widget._center
-                      : fromLocation.latLng,
-                  automaticallyAnimateToCurrentLocation: true,
+    // if (Globals.stops == 2) {
+    return Column(
+      children: [
+        Divider(),
+        Container(
+          width: double.infinity,
+          height: 50,
+          child: FlatButton(
+            onPressed: () async {
+              print("to location init location:");
+              print(fromLocation.latLng);
+              toLocation = await showLocationPicker(
+                context, AppConfig.apiKey,
+                initialCenter:
+                    fromLocation == null ? widget._center : fromLocation.latLng,
+                automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',
-                  myLocationButtonEnabled: true,
-                  layersButtonEnabled: true,
-                );
-                setState(() {
-                  print("refresh ui");
-                  widget.onSelected(toLocation, false);
-                });
-              },
-              child: SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: Stack(
-                  alignment: AlignmentDirectional.centerStart,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 40.0,
-                      width: 50.0,
-                      child: Center(
-                        child: Container(
-                            margin: EdgeInsets.only(top: 2),
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(color: AppColors.main)),
+                myLocationButtonEnabled: true,
+                layersButtonEnabled: true,
+              );
+              setState(() {
+                print("refresh ui");
+                widget.onSelected(toLocation, false);
+              });
+            },
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Stack(
+                alignment: AlignmentDirectional.centerStart,
+                children: <Widget>[
+                  SizedBox(
+                    height: 40.0,
+                    width: 50.0,
+                    child: Center(
+                      child: Container(
+                          margin: EdgeInsets.only(top: 2),
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(color: AppColors.main)),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    width: 40,
+                    height: 50,
+                    child: Center(
+                      child: Icon(
+                        Icons.close,
+                        size: 18,
                       ),
                     ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      width: 40,
-                      height: 50,
-                      child: Center(
-                        child: Icon(
-                          Icons.close,
-                          size: 18,
-                        ),
-                      ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 40.0, right: 50.0),
+                    child: Text(
+                      toLocation == null
+                          ? "Dropoff location"
+                          : (toLocation.address == null
+                              ? "Address not found"
+                              : toLocation.address),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color:
+                              toLocation == null ? Colors.grey : Colors.black),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 40.0, right: 50.0),
-                      child: Text(
-                        toLocation == null
-                            ? "Dropoff location"
-                            : (toLocation.address == null
-                                ? "Address not found"
-                                : toLocation.address),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: toLocation == null
-                                ? Colors.grey
-                                : Colors.black),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),
-        ],
-      );
-    } else {
-      return Container();
-    }
+        ),
+      ],
+    );
+    // } else {
+    //   return Container();
+    // }
   }
 
   @override

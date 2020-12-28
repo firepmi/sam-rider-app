@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:credit_card_input_form/constants/constanst.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 import 'package:credit_card_input_form/credit_card_input_form.dart';
 import 'package:stripe_payment/stripe_payment.dart';
+import 'dart:core';
 
 class CheckoutPage extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   PaymentMethod _paymentMethod;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   String _error;
+  var distance;
   var cardInformation;
 
   var publishableKey =
@@ -37,18 +41,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
     price = (Globals.weightPrices[Globals.weight.index] +
             Globals.carPrices[Globals.carSize.index])
         .toDouble();
-    var distance = getDistance();
+    distance = dp(getDistance(), 2);
+    if (distance < 5) distance = 5;
+    print(distance);
 
-    if (distance < 5)
-      price += 5;
-    else
-      price += distance;
+    price += distance;
+    print(price);
 
     StripePayment.setOptions(StripeOptions(
         publishableKey: publishableKey,
         merchantId:
             "SAM_rider${FirebaseAuth.instance.currentUser.uid}", //YOUR_MERCHANT_ID
         androidPayMode: 'production'));
+  }
+
+  double dp(double val, int places) {
+    double mod = pow(10.0, places);
+    return ((val * mod).round().toDouble() / mod);
   }
 
   double getDistance() {
@@ -116,20 +125,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
   void onMakePayment(BuildContext context) {
-    if (cardInformation == null) {
-      _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text('Incorrect card information')));
-      return;
-    }
-    String validate = cardInformation.validate;
-
-    if (validate.length != 5) {
-      _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text('Incorrect card information')));
-      return;
-    }
-    print(int.parse(validate.split("/")[0]));
-    print(int.parse(validate.split("/")[1]));
+    // if (cardInformation == null) {
+    //   _scaffoldKey.currentState
+    //       .showSnackBar(SnackBar(content: Text('Incorrect card information')));
+    //   return;
+    // }
+    // String validate = cardInformation.validate;
+    //
+    // if (validate.length != 5) {
+    //   _scaffoldKey.currentState
+    //       .showSnackBar(SnackBar(content: Text('Incorrect card information')));
+    //   return;
+    // }
+    // print(int.parse(validate.split("/")[0]));
+    // print(int.parse(validate.split("/")[1]));
     StripePayment.paymentRequestWithNativePay(
       androidPayOptions: AndroidPayPaymentRequest(
         totalPrice: "$price",
@@ -233,6 +242,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(children: [
+            AppStyle.titleLabel(context, "Price"),
+            Row(
+              children: [
+                AppStyle.label(context, "Weight Price: "),
+                AppStyle.titleLabel(
+                    context, "\$${Globals.weightPrices[Globals.weight.index]}"),
+              ],
+            ),
+            Row(
+              children: [
+                AppStyle.label(context, "Car Price: "),
+                AppStyle.titleLabel(
+                    context, "\$${Globals.carPrices[Globals.carSize.index]}"),
+              ],
+            ),
+            Row(
+              children: [
+                AppStyle.label(context, "Distance Price: "),
+                AppStyle.titleLabel(context, "\$$distance"),
+              ],
+            ),
+            Row(
+              children: [
+                AppStyle.label(context, "Total: "),
+                AppStyle.titleLabel(context, "$price"),
+              ],
+            ),
+            SizedBox(height: 20),
             AppStyle.titleLabel(context, "Project name"),
             Container(
               height: AppConfig.size(context, 44),
@@ -253,28 +290,28 @@ class _CheckoutPageState extends State<CheckoutPage> {
             SizedBox(
               height: AppConfig.size(context, 20),
             ),
-            AppStyle.titleLabel(context, "Billing Info:"),
-            SizedBox(height: 5),
-            CreditCardInputForm(
-              showResetButton: true,
-              onStateChange: (currentState, cardInfo) {
-                print(currentState);
-                cardInformation = cardInfo;
-              },
-              customCaptions: customCaptions,
-              // cardCVV: '222',
-              // cardName: 'Jeongtae Kim',
-              // cardNumber: '1111111111111111',
-              // cardValid: '12/12',
-              intialCardState: InputState.DONE,
-              frontCardDecoration: cardDecoration,
-              backCardDecoration: cardDecoration,
-              prevButtonDecoration: buttonStyle,
-              nextButtonDecoration: buttonStyle,
-              prevButtonTextStyle: buttonTextStyle,
-              nextButtonTextStyle: buttonTextStyle,
-              resetButtonTextStyle: buttonTextStyle,
-            ),
+            // AppStyle.titleLabel(context, "Billing Info:"),
+            // SizedBox(height: 5),
+            // CreditCardInputForm(
+            //   showResetButton: true,
+            //   onStateChange: (currentState, cardInfo) {
+            //     print(currentState);
+            //     cardInformation = cardInfo;
+            //   },
+            //   customCaptions: customCaptions,
+            //   // cardCVV: '222',
+            //   // cardName: 'Jeongtae Kim',
+            //   // cardNumber: '1111111111111111',
+            //   // cardValid: '12/12',
+            //   intialCardState: InputState.DONE,
+            //   frontCardDecoration: cardDecoration,
+            //   backCardDecoration: cardDecoration,
+            //   prevButtonDecoration: buttonStyle,
+            //   nextButtonDecoration: buttonStyle,
+            //   prevButtonTextStyle: buttonTextStyle,
+            //   nextButtonTextStyle: buttonTextStyle,
+            //   resetButtonTextStyle: buttonTextStyle,
+            // ),
             AppStyle.button(context, "Order", onPressed: () {
               onMakePayment(context);
             }),

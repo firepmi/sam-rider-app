@@ -1,7 +1,5 @@
 import 'dart:async';
 
-// ignore: avoid_web_libraries_in_flutter
-// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
@@ -30,7 +28,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   LatLng _center = LatLng(45.1975844, -122.9598339);
   PermissionStatus _permission = PermissionStatus.denied;
   List<Marker> _markers = List();
-  List<Polyline> routes = new List();
+  List<Polyline> routes = List();
   bool done = false;
   String error;
   DataBloc dataBloc = DataBloc();
@@ -50,7 +48,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   void checkMyRequests() {
     if (timer == null || !timer.isActive) {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-        print("is Waiting : ${Globals.isWaiting}");
+        // print("is Waiting : ${Globals.isWaiting}");
         if (!Globals.isWaiting)
           timer.cancel();
         else {
@@ -138,7 +136,8 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   }
 
   void request() {
-    if (fromLocation == null || (Globals.stops == 2 && toLocation == null)) {
+    if (fromLocation == null || toLocation == null) {
+      print("from location or to location is null");
       // MsgDialog.showMsgDialog(context, "Request",
       //     "Please select the starting place and the end place");
       return;
@@ -181,6 +180,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
 
   void onPlaceSelected(LocationResult place, bool fromAddress) {
     if (place == null) {
+      print("place is null");
       return;
     }
     var mkId = fromAddress ? "from_address" : "to_address";
@@ -219,7 +219,12 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
             position: place.latLng, //LatLng(place.lat, place.lng),
             infoWindow: InfoWindow(title: mkId),
           );
-          if (_markers.isNotEmpty) _markers[0] = (marker);
+          if (_markers.isNotEmpty)
+            _markers[0] = (marker);
+          else {
+            _markers = [];
+            _markers.add(marker);
+          }
           List mmmm = _markers;
           print(mmmm);
         } else if (mkId == "to_address") {
@@ -257,9 +262,9 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
 
   addPolyline() async {
     //routes.clear();
-    if (Globals.stops == 1) {
-      request();
-    }
+    // if (Globals.stops == 1) {
+    //   request();
+    // }
     if (_markers.length > 1) {
       mapUtil
           .getRoutePath(
@@ -270,9 +275,13 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
           .then((locations) {
         path = new List();
 
-        locations.forEach((location) {
-          path.add(new LatLng(location.latitude, location.longitude));
-        });
+        if (locations != null) {
+          locations.forEach((location) {
+            path.add(new LatLng(location.latitude, location.longitude));
+          });
+        } else {
+          print("location is null");
+        }
 
         final Polyline polyline = Polyline(
           polylineId: PolylineId(_markers[1].position.latitude.toString() +
@@ -291,6 +300,8 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
           });
         }
       });
+    } else {
+      print("makers length is ${_markers.length}");
     }
   }
 

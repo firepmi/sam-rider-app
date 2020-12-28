@@ -4,7 +4,6 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Globals {
-  static int stops = 2;
   static PriceOptional duration = PriceOptional.small;
   static CarSizeOptional carSize = CarSizeOptional.autoMobile;
   static WeightOptional weight = WeightOptional.option1;

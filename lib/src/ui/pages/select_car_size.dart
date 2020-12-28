@@ -11,7 +11,6 @@ class SelectCarSizePage extends StatefulWidget {
 
 class _SelectCarSizePageState extends State<SelectCarSizePage> {
   List<LatLng> path = List();
-  CarSizeOptional _car = CarSizeOptional.autoMobile;
 
   @override
   void initState() {
@@ -135,7 +134,6 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
                   borderRadius: BorderRadius.circular(0.0),
                   side: BorderSide(color: AppColors.main)),
               onPressed: () {
-                Globals.carSize = _car;
                 Navigator.pushNamed(context, '/select_weight');
               },
               color: AppColors.main,

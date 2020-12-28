@@ -138,7 +138,7 @@ class _DriverListPageState extends State<DriverListPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            element["name"],
+                            element["name"] == null ? "-" : element["name"],
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),

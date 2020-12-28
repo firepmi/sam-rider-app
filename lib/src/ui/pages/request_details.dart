@@ -1,6 +1,5 @@
 import 'dart:async';
 
-// ignore: avoid_web_libraries_in_flutter
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';

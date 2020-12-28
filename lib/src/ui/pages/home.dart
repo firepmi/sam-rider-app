@@ -53,6 +53,22 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Padding(
+              //   padding:
+              //       EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+              //   child: RaisedButton(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(5.0),
+              //         side: BorderSide(color: AppColors.main)),
+              //     onPressed: () {
+              //       Globals.stops = 1;
+              //       Navigator.pushNamed(context, '/joblocation');
+              //     },
+              //     color: AppColors.main,
+              //     textColor: Colors.white,
+              //     child: Text("1 Stop", style: TextStyle(fontSize: 16)),
+              //   ),
+              // ),
               Padding(
                 padding:
                     EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
@@ -61,23 +77,6 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(5.0),
                       side: BorderSide(color: AppColors.main)),
                   onPressed: () {
-                    Globals.stops = 1;
-                    Navigator.pushNamed(context, '/joblocation');
-                  },
-                  color: AppColors.main,
-                  textColor: Colors.white,
-                  child: Text("1 Stop", style: TextStyle(fontSize: 16)),
-                ),
-              ),
-              Padding(
-                padding:
-                    EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      side: BorderSide(color: AppColors.main)),
-                  onPressed: () {
-                    Globals.stops = 2;
                     Navigator.pushNamed(context, '/joblocation');
                   },
                   color: AppColors.main,
