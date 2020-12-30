@@ -125,20 +125,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
   void onMakePayment(BuildContext context) {
-    // if (cardInformation == null) {
-    //   _scaffoldKey.currentState
-    //       .showSnackBar(SnackBar(content: Text('Incorrect card information')));
-    //   return;
-    // }
-    // String validate = cardInformation.validate;
-    //
-    // if (validate.length != 5) {
-    //   _scaffoldKey.currentState
-    //       .showSnackBar(SnackBar(content: Text('Incorrect card information')));
-    //   return;
-    // }
-    // print(int.parse(validate.split("/")[0]));
-    // print(int.parse(validate.split("/")[1]));
     StripePayment.paymentRequestWithNativePay(
       androidPayOptions: AndroidPayPaymentRequest(
         totalPrice: "$price",
@@ -162,30 +148,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }).catchError((error) {
       setError(error, context);
     });
-    // StripePayment.createPaymentMethod(
-    //   PaymentMethodRequest(
-    //     card: CreditCard(
-    //       number: cardInformation.cardNumber,
-    //       expMonth: int.parse(validate.split("/")[0]),
-    //       expYear: int.parse(validate.split("/")[1]),
-    //     ),
-    //   ),
-    // ).then((paymentMethod) {
-    //   _scaffoldKey.currentState.showSnackBar(
-    //       SnackBar(content: Text('Received ${paymentMethod.id}')));
-    //   setState(() {
-    //     _paymentMethod = paymentMethod;
-    //   });
-    //   onMakeRequest(paymentMethod.id);
-    // }).catchError((error) {
-    //   setError(error, context);
-    // });
   }
 
   void setError(dynamic error, BuildContext context) {
     var err = Text(error.toString());
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: err));
-    // Scaffold.of(context).showSnackBar(SnackBar(content: err));
   }
 
   void onMakeRequest(paymentId) {
@@ -215,7 +182,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
         actions: <Widget>[
           FlatButton(
             onPressed: () {
-              // Navigator.of(context).pop("cancel");
               Navigator.pop(context);
             },
             child: Text("Ok"),
@@ -231,54 +197,133 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Colors.white70,
-          title: Text(
-            "Checkout",
-            style: TextStyle(color: Colors.black),
-          ),
-          iconTheme: IconThemeData(color: Colors.black),
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white70,
+        //   title: Text(
+        //     "Checkout",
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        //   iconTheme: IconThemeData(color: Colors.black),
+        // ),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(children: [
-            AppStyle.titleLabel(context, "Price"),
-            Row(
-              children: [
-                AppStyle.label(context, "Weight Price: "),
-                AppStyle.titleLabel(
-                    context, "\$${Globals.weightPrices[Globals.weight.index]}"),
-              ],
+            Container(
+              height: AppConfig.size(context, 60),
+              width: AppConfig.size(context, 200),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AvailableImages.appLogo1,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
-            Row(
-              children: [
-                AppStyle.label(context, "Car Price: "),
-                AppStyle.titleLabel(
-                    context, "\$${Globals.carPrices[Globals.carSize.index]}"),
-              ],
+            Center(
+              child: Text(
+                "Checkout",
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: AppConfig.size(context, 15),
+                  color: AppColors.main,
+                ),
+              ),
             ),
-            Row(
-              children: [
-                AppStyle.label(context, "Distance Price: "),
-                AppStyle.titleLabel(context, "\$$distance"),
-              ],
+            SizedBox(height: 40),
+            Container(
+                color: Color.fromRGBO(201, 237, 211, 1),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                  child: AppStyle.titleLabel(context, "PRICE",
+                      color: AppColors.main),
+                )),
+            SizedBox(height: 8),
+            Container(
+              color: Color.fromRGBO(201, 237, 211, 1),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppStyle.titleLabel(context, "WEIGHT PRICE ",
+                        color: AppColors.main),
+                    AppStyle.titleLabel(context,
+                        "\$${Globals.weightPrices[Globals.weight.index]}",
+                        color: AppColors.main),
+                  ],
+                ),
+              ),
             ),
-            Row(
-              children: [
-                AppStyle.label(context, "Total: "),
-                AppStyle.titleLabel(context, "$price"),
-              ],
+            SizedBox(height: 8),
+            Container(
+              color: Color.fromRGBO(201, 237, 211, 1),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppStyle.titleLabel(context, "CAR PRICE",
+                        color: AppColors.main),
+                    AppStyle.titleLabel(context,
+                        "\$${Globals.carPrices[Globals.carSize.index]}",
+                        color: AppColors.main),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Container(
+              color: Color.fromRGBO(201, 237, 211, 1),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppStyle.titleLabel(context, "DISTANCE PRICE",
+                        color: AppColors.main),
+                    AppStyle.titleLabel(context, "\$$distance",
+                        color: AppColors.main),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Container(
+              color: AppColors.main,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppStyle.titleLabel(context, "TOTAL", color: Colors.white),
+                    AppStyle.titleLabel(context, "\$$price",
+                        color: Colors.white),
+                  ],
+                ),
+              ),
             ),
             SizedBox(height: 20),
-            AppStyle.titleLabel(context, "Project name"),
+            Container(
+                color: Colors.black,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                  child: AppStyle.titleLabel(context, "PROJECT NAME",
+                      color: Colors.white),
+                )),
+            SizedBox(height: 8),
             Container(
               height: AppConfig.size(context, 44),
               child: TextField(
                 controller: nameController,
                 maxLength: 300,
                 maxLines: 10,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                    hintText: "Comments / Special Instructions"),
+                  hintText: "Comments / Special Instructions",
+                  filled: true,
+                  fillColor: Colors.grey[400],
+                ),
                 onChanged: (text) {
                   setState(() {});
                 },

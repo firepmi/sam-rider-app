@@ -43,12 +43,19 @@ class AppStyle {
     );
   }
 
-  static Widget titleLabel(BuildContext context, String text,
-      {double size = 8}) {
+  static Widget titleLabel(
+    BuildContext context,
+    String text, {
+    double size = 8,
+    Color color = Colors.black,
+  }) {
     return Text(
       text,
       style: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: AppConfig.size(context, size)),
+        fontWeight: FontWeight.bold,
+        fontSize: AppConfig.size(context, size),
+        color: color,
+      ),
     );
   }
 
