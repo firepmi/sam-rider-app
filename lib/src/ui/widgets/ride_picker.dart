@@ -5,9 +5,11 @@ import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
 class RidePicker extends StatefulWidget {
-  final Function(LocationResult, bool) onSelected;
+  final Function(LocationResult, int) onSelected;
   final LatLng _center;
-  RidePicker(this._center, this.onSelected);
+  final int stops;
+
+  RidePicker(this._center, this.onSelected, this.stops);
 
   _RidePickerState createState() => _RidePickerState();
 }
@@ -15,6 +17,7 @@ class RidePicker extends StatefulWidget {
 class _RidePickerState extends State<RidePicker> {
   LocationResult fromLocation;
   LocationResult toLocation;
+  List<LocationResult> middleLocations = [];
 
   Widget secondLocation() {
     // if (Globals.stops == 2) {
@@ -39,7 +42,7 @@ class _RidePickerState extends State<RidePicker> {
               );
               setState(() {
                 print("refresh ui");
-                widget.onSelected(toLocation, false);
+                widget.onSelected(toLocation, -1);
               });
             },
             child: SizedBox(
@@ -98,6 +101,89 @@ class _RidePickerState extends State<RidePicker> {
     // }
   }
 
+  List<Widget> middleLocationWidget() {
+    List<Widget> locations = [];
+    for (int i = 0; i < widget.stops - 2; i++) {
+      middleLocations.add(null);
+      locations.add(Column(
+        children: [
+          Divider(),
+          Container(
+            width: double.infinity,
+            height: 50,
+            child: FlatButton(
+              onPressed: () async {
+                middleLocations[i] = await showLocationPicker(
+                  context,
+                  AppConfig.apiKey,
+                  initialCenter: fromLocation == null
+                      ? widget._center
+                      : fromLocation.latLng,
+                  automaticallyAnimateToCurrentLocation: true,
+                  myLocationButtonEnabled: true,
+                  layersButtonEnabled: true,
+                );
+                setState(() {
+                  print("refresh ui");
+                  widget.onSelected(middleLocations[i], i + 1);
+                });
+              },
+              child: SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  alignment: AlignmentDirectional.centerStart,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 40.0,
+                      width: 50.0,
+                      child: Center(
+                        child: Container(
+                            margin: EdgeInsets.only(top: 2),
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(color: AppColors.main)),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      width: 40,
+                      height: 50,
+                      child: Center(
+                        child: Icon(
+                          Icons.close,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 40.0, right: 50.0),
+                      child: Text(
+                        middleLocations[i] == null
+                            ? "Stop ${i + 1}"
+                            : (middleLocations[i].address == null
+                                ? "Address not found"
+                                : middleLocations[i].address),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: middleLocations[i] == null
+                                ? Colors.grey
+                                : Colors.black),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ));
+    }
+    return locations;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -131,7 +217,7 @@ class _RidePickerState extends State<RidePicker> {
                 );
                 setState(() {
                   print("refresh ui");
-                  widget.onSelected(fromLocation, true);
+                  widget.onSelected(fromLocation, 0);
                 });
               },
               child: SizedBox(
@@ -182,7 +268,8 @@ class _RidePickerState extends State<RidePicker> {
               ),
             ),
           ),
-          secondLocation()
+          ...middleLocationWidget(),
+          secondLocation(),
         ],
       ),
     );

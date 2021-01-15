@@ -15,8 +15,8 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
 
   @override
   void initState() {
-    super.initState();
     Navigator.pushNamed(context, '/checkout', arguments: data);
+    super.initState();
   }
 
   Widget starRatingPercentItemView(int star) {

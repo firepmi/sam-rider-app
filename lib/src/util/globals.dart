@@ -9,6 +9,7 @@ class Globals {
   static WeightOptional weight = WeightOptional.option1;
   static LocationResult fromLocation;
   static LocationResult toLocation;
+  static int stops = 2;
   static List<LatLng> path = List();
 
   static double getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -42,7 +43,7 @@ class Globals {
     "Automobile",
     "SUV",
     "Pickup Truck",
-    "VAN",
+    "Box Truck",
     "Truck & Trailer",
   ];
   static final carImages = [

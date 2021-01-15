@@ -125,6 +125,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
   void onMakePayment(BuildContext context) {
+    // onMakeRequest("token.tokenId");
     StripePayment.paymentRequestWithNativePay(
       androidPayOptions: AndroidPayPaymentRequest(
         totalPrice: "$price",
@@ -144,7 +145,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       _scaffoldKey.currentState
           .showSnackBar(SnackBar(content: Text('Received ${token.tokenId}')));
       _paymentToken = token;
-      // onMakeRequest(token.tokenId);
+      onMakeRequest(token.tokenId);
     }).catchError((error) {
       setError(error, context);
     });

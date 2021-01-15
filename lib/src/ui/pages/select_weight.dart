@@ -96,7 +96,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
               padding:
                   EdgeInsets.only(top: 30, bottom: 30, right: 20, left: 20),
               child: Text(
-                "What is the Weight Lifting Requirements for this job?",
+                "What is the Loading Requirements for this job?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

@@ -33,6 +33,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
   String error;
   DataBloc dataBloc = DataBloc();
   LocationResult fromLocation, toLocation;
+  List<LocationResult> middleLocations = [];
   double cameraZoom = 13;
   var state = "select";
   List<LatLng> path = List();
@@ -126,11 +127,30 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                    child: RidePicker(_center, onPlaceSelected),
+                    child: RidePicker(_center, onPlaceSelected, Globals.stops),
                   )
                 ],
               ),
             ),
+            Positioned(
+                bottom: 40,
+                left: 20,
+                child: RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      Globals.stops++;
+                    });
+                    print(Globals.stops);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Icon(
+                    Icons.add,
+                    size: 35.0,
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ))
           ],
         ));
   }
@@ -178,16 +198,25 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
     Navigator.pushNamed(context, '/select_car_size');
   }
 
-  void onPlaceSelected(LocationResult place, bool fromAddress) {
+  void onPlaceSelected(LocationResult place, int locationIndex) {
     if (place == null) {
       print("place is null");
       return;
     }
-    var mkId = fromAddress ? "from_address" : "to_address";
-    if (fromAddress) {
+    var mkId = locationIndex == 0
+        ? "from_address"
+        : locationIndex == -1
+            ? "to_address"
+            : "middle_address$locationIndex";
+    if (locationIndex == 0) {
       fromLocation = place;
-    } else {
+    } else if (locationIndex == -1) {
       toLocation = place;
+    } else {
+      while (middleLocations.length < locationIndex) {
+        middleLocations.add(null);
+      }
+      middleLocations.add(place);
     }
     print("place selected $mkId");
     _center = place.latLng;
