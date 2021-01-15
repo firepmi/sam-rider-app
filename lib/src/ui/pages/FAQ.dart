@@ -102,29 +102,6 @@ class _FAQPageState extends State<FAQPage> {
         ),
       ),
       SizedBox(height: 20),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text("In-App Purchasing", style: boldStyle)),
-      SizedBox(height: 20),
-      RichText(
-        text: TextSpan(
-          // Note: Styles for TextSpans must be explicitly defined.
-          // Child text spans will inherit styles from parent
-          style: style,
-          children: <TextSpan>[
-            TextSpan(
-                text:
-                    'Using SAM, you can simply select the supplier of your choice - '),
-            TextSpan(text: 'Home Depot', style: boldStyle),
-            TextSpan(text: ' or '),
-            TextSpan(text: "Lowe's. ", style: boldStyle),
-            TextSpan(
-                text:
-                    'Browse a catalogue of materials or search for exactly what you need. Add materials to your cart and complete the order. SAM will retrieve the items for you from the chosen supplier. Pay for them at the store checkout and deliver them to you same-day. '),
-          ],
-        ),
-      ),
-      SizedBox(height: 20),
     ];
     List<Widget> content2 = [
       SizedBox(height: 20),

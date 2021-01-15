@@ -245,7 +245,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppStyle.titleLabel(context, "WEIGHT PRICE ",
+                    AppStyle.titleLabel(context, "LOADING PRICE ",
                         color: AppColors.main),
                     AppStyle.titleLabel(context,
                         "\$${Globals.weightPrices[Globals.weight.index]}",
@@ -262,7 +262,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppStyle.titleLabel(context, "CAR PRICE",
+                    AppStyle.titleLabel(context, "VEHICLE PRICE",
                         color: AppColors.main),
                     AppStyle.titleLabel(context,
                         "\$${Globals.carPrices[Globals.carSize.index]}",

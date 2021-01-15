@@ -37,11 +37,11 @@ class Globals {
     return deg * (pi / 180);
   }
 
-  static final carPrices = [0, 10, 35, 75, 150];
+  static final carPrices = [0, 10, 35, 80, 150];
   static final carNames = [
     "Automobile",
     "SUV",
-    "Pickup",
+    "Pickup Truck",
     "VAN",
     "Truck & Trailer",
   ];
@@ -56,8 +56,8 @@ class Globals {
     "1 Small item",
     "Multiple small items in car",
     "Truck loading",
-    "Trailer loading",
     "Box truck loading",
+    "Truck and Trailer loading",
   ];
   static final weightPrices = [0, 5, 25, 40, 150];
   static final weightImages = [

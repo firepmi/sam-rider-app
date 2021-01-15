@@ -12,6 +12,13 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
   dynamic data;
   List<num> percentData = [0.9, 0.1, 0.0, 0.0, 0.03];
   List<num> reviewData = [45, 3, 0, 0, 1];
+
+  @override
+  void initState() {
+    super.initState();
+    Navigator.pushNamed(context, '/checkout', arguments: data);
+  }
+
   Widget starRatingPercentItemView(int star) {
     return Row(
       children: [
