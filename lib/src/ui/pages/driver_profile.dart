@@ -15,10 +15,13 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
 
   @override
   void initState() {
-    Navigator.pushNamed(context, '/checkout', arguments: data);
+
     super.initState();
   }
 
+  void goNext(){
+    Navigator.pushNamed(context, '/checkout', arguments: data);
+  }
   Widget starRatingPercentItemView(int star) {
     return Row(
       children: [
@@ -119,6 +122,7 @@ class _DriverProfilePageState extends State<DriverProfilePage> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
+    // goNext();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white70,

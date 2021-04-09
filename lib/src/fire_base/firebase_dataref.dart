@@ -200,8 +200,14 @@ class FireDataRef {
     });
   }
 
+  void getDriverProfile(String uid, Function(dynamic) onSuccess) {
+    var ref = FirebaseDatabase.instance.reference().child("drivers").child(uid);
+    ref.once().then((DataSnapshot data) {
+      if (data.value != null) onSuccess(data.value);
+    });
+  }
+
   Future getProfileImage(String id) async {
-    final user = FirebaseAuth.instance.currentUser;
     final ref =
         FirebaseStorage.instance.ref().child("profile").child(id + ".jpg");
     var profileUrl = "";
@@ -223,7 +229,7 @@ class FireDataRef {
   void uploadImage(Uint8List data, Function onSuccess) async {
     var user = FirebaseAuth.instance.currentUser;
 
-    final Reference storageReference = FirebaseStorage.instance
+    final StorageReference storageReference = FirebaseStorage.instance
         .ref()
         .child("profile")
         .child(user.uid + ".jpg");
@@ -300,6 +306,60 @@ class FireDataRef {
           return;
         }
       });
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void getRequestsList(Function(dynamic) onSuccess) async {
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    try {
+      var data = await ref
+          .orderByChild("client_id")
+          .equalTo(uid)
+          // .orderByChild("status")
+          // .equalTo("waiting")
+          .once();
+      Map<String, dynamic> mapOfMaps = Map.from(data.value);
+      List<Map> maps = [];
+      mapOfMaps.forEach((key, value) {
+        if (value["status"] == "accepted") {
+          value["data_id"] = key;
+          maps.add(value);
+        }
+      });
+
+      onSuccess(maps);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void getCurrentRequest(Function(dynamic) onSuccess, Function onEmpty) async {
+    var ref = FirebaseDatabase.instance.reference().child("requests");
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    try {
+      var data = await ref
+          .orderByChild("client_id")
+          .equalTo(uid)
+          // .orderByChild("status")
+          // .equalTo("waiting")
+          .once();
+      Map<String, dynamic> mapOfMaps = Map.from(data.value);
+
+      var array = [];
+      mapOfMaps.forEach((key, value) {
+        if (value["status"] == "accepted") {
+          value["data_id"] = key;
+          array.add(value);
+        }
+      });
+
+      if (array.length != 0)
+        onSuccess(array[0]);
+      else
+        onEmpty;
     } catch (error) {
       print(error.toString());
     }

@@ -148,7 +148,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                   children: [
                     AppStyle.label(
                       context,
-                      "Status: ${data != null ? data['status'] : ''} ",
+                      "Status: ${data != null && data['status']!= null? data['status'] : ''} ",
                       top: 20,
                       bottom: 20,
                     ),
@@ -180,7 +180,7 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    data["name"],
+                                    data["name"]!= null? data["name"]:'',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
@@ -241,10 +241,10 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                     Divider(),
                     SizedBox(height: 10),
                     AppStyle.label(context,
-                        "Price: \$${oCcy.format((data != null ? data['price'] : 0).toDouble())} ",
+                        "Price: \$${oCcy.format((data != null && data['price']!= null? data['price'] : 0).toDouble())} ",
                         top: 0, bottom: 20, left: 20, right: 20),
                     AppStyle.label(context,
-                        "Car Size: ${Globals.carNames[data != null ? data['car_size'] : 0]} ",
+                        "Car Size: ${Globals.carNames[data != null && data['car_size']!= null ? data['car_size'] : 0]} ",
                         top: 0, bottom: 20, left: 20, right: 20),
                     SizedBox(height: 10),
                   ],

@@ -134,9 +134,10 @@ class _SelectCarSizePageState extends State<SelectCarSizePage> {
                   borderRadius: BorderRadius.circular(0.0),
                   side: BorderSide(color: AppColors.main)),
               onPressed: () {
-                if (Globals.carSize.index >= 2 && Globals.weight.index < 2) {
-                  Globals.weight = WeightOptional.option3;
-                }
+                // if (Globals.carSize.index >= 2 && Globals.weight.index < 2) {
+                //   Globals.weight = WeightOptional.option3;
+                // }
+                Globals.weight = WeightOptional.values[Globals.carSize.index];
                 Navigator.pushNamed(context, '/select_weight');
               },
               color: AppColors.main,

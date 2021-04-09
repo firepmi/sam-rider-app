@@ -10,6 +10,7 @@ class Globals {
   static LocationResult fromLocation;
   static LocationResult toLocation;
   static int stops = 2;
+  static bool isSelfLoading = false;
   static List<LatLng> path = List();
 
   static double getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -38,7 +39,7 @@ class Globals {
     return deg * (pi / 180);
   }
 
-  static final carPrices = [0, 10, 35, 80, 150];
+  static final carPrices = [0, 10, 35, 150, 80];
   static final carNames = [
     "Automobile",
     "SUV",
@@ -54,13 +55,13 @@ class Globals {
     'assets/images/car_option5.png',
   ];
   static final weightTitles = [
-    "1 Small item",
-    "Multiple small items in car",
-    "Truck loading",
-    "Box truck loading",
-    "Truck and Trailer loading",
+    "ONE SMALL ITEM",
+    "MULTIPLE SMALL ITEMS",
+    "TRUCK LOADING",
+    "BOX TRUCK LOADING",
+    "TRUCK & TRAILER LOADING",
   ];
-  static final weightPrices = [0, 5, 25, 40, 150];
+  static final weightPrices = [0, 5, 25, 200, 100];
   static final weightImages = [
     'assets/images/weight_option1.png',
     'assets/images/weight_option2.png',
@@ -69,6 +70,19 @@ class Globals {
     'assets/images/weight_option6.png',
   ];
   static bool isWaiting = true;
+
+  static int getDistance() {
+    if (path == null || path.length < 2) return 0;
+    var distance = 0.0;
+    for (int i = 0; i < path.length - 1; i++) {
+      distance += Globals.getDistanceFromLatLonInMi(path[i].latitude,
+          path[i].longitude, path[i + 1].latitude, path[i + 1].longitude);
+    }
+
+    var meter_dis = (1609.344 * distance).round();
+
+    return meter_dis;
+  }
 }
 
 enum PriceOptional { small, medium, large }

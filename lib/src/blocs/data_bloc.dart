@@ -17,6 +17,10 @@ class DataBloc {
     _fireData.getUserProfile(onSuccess);
   }
 
+  void getDriverProfile(String uid, Function(dynamic) onSuccess) {
+    _fireData.getDriverProfile(uid, onSuccess);
+  }
+
   void updateAddress(LocationResult location, String addressId) {
     _fireData.updateAddress(location, addressId);
   }
@@ -47,6 +51,14 @@ class DataBloc {
 
   void getRequests(Function(dynamic) onSuccess) async {
     _fireData.getRequests(onSuccess);
+  }
+
+  void getRequestsList(Function(dynamic) onSuccess) async {
+    _fireData.getRequestsList(onSuccess);
+  }
+
+  void getCurrentRequest(Function(dynamic) onSuccess, Function onEmpty) async {
+    _fireData.getCurrentRequest(onSuccess, onEmpty);
   }
 
   void getRequestStatus(String id, Function(dynamic) onSuccess) {

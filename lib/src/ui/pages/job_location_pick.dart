@@ -54,6 +54,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
           timer.cancel();
         else {
           dataBloc.getRequests(onRequestResults);
+          Globals.isWaiting = false;
         }
       });
     }
@@ -76,7 +77,7 @@ class _JobLocationPickPageState extends State<JobLocationPickPage> {
     CameraPosition initialCameraPosition =
         CameraPosition(zoom: cameraZoom, target: _center);
 
-    checkMyRequests();
+    // checkMyRequests();
 
     if (currentLocation != null && state == "running") {
       print("use current location on widget build");

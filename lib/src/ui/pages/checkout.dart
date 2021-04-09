@@ -2,14 +2,18 @@ import 'dart:math';
 
 import 'package:credit_card_input_form/constants/constanst.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/ui/pages/your_current_trip.dart';
 import 'package:sam_rider_app/src/util/globals.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 import 'package:credit_card_input_form/credit_card_input_form.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'dart:core';
+
+import 'chat.dart';
 
 class CheckoutPage extends StatefulWidget {
   @override
@@ -26,6 +30,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   String _error;
   var distance;
   var cardInformation;
+  var userImg;
 
   var publishableKey =
       "pk_live_51Hti88BEXyg0kPLy9gBfD4SjNZn860IGsafOdvEmnPmeuwQUQwhiXqDFGXN7NIeI3LItwWzbV6tuXyp90gJHtUBv00VUrNEItR";
@@ -38,8 +43,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
-    price = (Globals.weightPrices[Globals.weight.index] +
-            Globals.carPrices[Globals.carSize.index])
+    price = (Globals.isSelfLoading
+            ? 0
+            : Globals.weightPrices[Globals.weight.index] +
+                Globals.carPrices[Globals.carSize.index])
         .toDouble();
     distance = dp(getDistance(), 2);
     if (distance < 5) distance = 5;
@@ -125,30 +132,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
   void onMakePayment(BuildContext context) {
-    // onMakeRequest("token.tokenId");
-    StripePayment.paymentRequestWithNativePay(
-      androidPayOptions: AndroidPayPaymentRequest(
-        totalPrice: "$price",
-        currencyCode: "USD",
-      ),
-      applePayOptions: ApplePayPaymentOptions(
-        countryCode: 'US',
-        currencyCode: 'USD',
-        items: [
-          ApplePayItem(
-            label: 'SAM',
-            amount: '$price',
-          )
-        ],
-      ),
-    ).then((token) {
-      _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text('Received ${token.tokenId}')));
-      _paymentToken = token;
-      onMakeRequest(token.tokenId);
-    }).catchError((error) {
-      setError(error, context);
-    });
+    onMakeRequest("token.tokenId");
+    // StripePayment.paymentRequestWithNativePay(
+    //   androidPayOptions: AndroidPayPaymentRequest(
+    //     totalPrice: "$price",
+    //     currencyCode: "USD",
+    //   ),
+    //   applePayOptions: ApplePayPaymentOptions(
+    //     countryCode: 'US',
+    //     currencyCode: 'USD',
+    //     items: [
+    //       ApplePayItem(
+    //         label: 'SAM',
+    //         amount: '$price',
+    //       )
+    //     ],
+    //   ),
+    // ).then((token) {
+    //   _scaffoldKey.currentState
+    //       .showSnackBar(SnackBar(content: Text('Received ${token.tokenId}')));
+    //   _paymentToken = token;
+    //   onMakeRequest(token.tokenId);
+    // }).catchError((error) {
+    //   setError(error, context);
+    // });
   }
 
   void setError(dynamic error, BuildContext context) {
@@ -156,7 +163,28 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: err));
   }
 
+  // void getDriverImage() async {
+  //
+  //   userImg = await dataBloc.getProfileImage(data["driver_id"]);
+  //
+  //   // final user = FirebaseAuth.instance.currentUser;
+  //   // final ref = FirebaseStorage.instance
+  //   //     .ref()
+  //   //     .child("profile")
+  //   //     .child(user.uid + ".jpg");
+  //   // try {
+  //   //   userImg = (await ref.getDownloadURL()).toString();
+  //   // } catch (e) {
+  //   //   print(e.toString());
+  //   // }
+  //   // setState(() {
+  //   //   print("get image from firebase storage");
+  //   // });
+  // }
+
   void onMakeRequest(paymentId) {
+    // getDriverImage();
+
     data["weight"] = Globals.weight.index;
     data["car_size"] = Globals.carSize.index;
     data["stripe_id"] = paymentId;
@@ -167,7 +195,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     data["path"] = pathStr;
     data["price"] = price;
     data["client_id"] = FirebaseAuth.instance.currentUser.uid;
-    data["status"] = "waiting";
+    data["status"] = "accepted";
     data["from_lat"] = Globals.fromLocation.latLng.latitude;
     data["from_lon"] = Globals.fromLocation.latLng.longitude;
     data["to_lat"] = Globals.toLocation.latLng.latitude;
@@ -175,7 +203,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
     dataBloc.makeOrder(data, () {
       print("completion");
       Globals.isWaiting = true;
-      Navigator.popUntil(context, ModalRoute.withName('/joblocation'));
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => YourCurrentTripPage(
+                    data: data,
+                  )));
+
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => Chat(
+      //               peerId: data["driver_id"],
+      //               peerAvatar: data["profile"],
+      //             )));
+      // Navigator.popUntil(context, ModalRoute.withName('/joblocation'));
     }, (error) {
       AlertDialog(
         title: Text("Order Request Error"),
@@ -249,7 +292,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     AppStyle.titleLabel(context, "LOADING PRICE ",
                         color: AppColors.main),
                     AppStyle.titleLabel(context,
-                        "\$${Globals.weightPrices[Globals.weight.index]}",
+                        "\$${Globals.isSelfLoading ? 0 : Globals.weightPrices[Globals.weight.index]}",
                         color: AppColors.main),
                   ],
                 ),
@@ -359,6 +402,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             //   resetButtonTextStyle: buttonTextStyle,
             // ),
             AppStyle.button(context, "Order", onPressed: () {
+              Globals.isSelfLoading = false;
               onMakePayment(context);
             }),
           ]),

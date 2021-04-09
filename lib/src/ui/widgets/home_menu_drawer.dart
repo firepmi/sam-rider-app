@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/data_bloc.dart';
+import 'package:sam_rider_app/src/ui/pages/your_current_trip.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
 class HomeMenuDrawer extends StatefulWidget {
@@ -43,6 +44,22 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
       });
     }
   }
+
+  // void getCurrentRequestInfo() {
+  //   dataBloc.getCurrentRequest(getCurrentData, onEmpty);
+  // }
+  //
+  // void getCurrentData(dynamic data) {
+  //   // Navigator.pushNamed(context, '/your_current_trip', arguments: data);
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => YourCurrentTripPage(
+  //                 data: data,
+  //               )));
+  // }
+
+  void onEmpty() {}
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +103,9 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           linkMenuDrawer('Payment', () {
             Navigator.pushNamed(context, '/payment');
+          }),
+          linkMenuDrawer('Your current Job', () {
+            Navigator.pushNamed(context, '/your_trips_list');
           }),
           linkMenuDrawer('Your Past Jobs', () {
             Navigator.pushNamed(context, '/your_trip');

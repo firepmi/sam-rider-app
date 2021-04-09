@@ -16,7 +16,10 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
     // List<Widget> menu = [];
     // WeightOptional.values.forEach((weight) {
     var weight = WeightOptional.values[index];
-    var enabled = Globals.carSize.index < 2 || index >= 2;
+    var enabled = (Globals.carSize.index < 2 && index < 2) ||
+        (Globals.carSize.index == 2 && (index == 2 || index == 4)) ||
+        (Globals.carSize.index == 3 && index == 3) ||
+        (Globals.carSize.index == 4 && index == 4);
     return Center(
       child: GestureDetector(
         onTap: () {
@@ -95,13 +98,27 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
             child: Padding(
               padding:
                   EdgeInsets.only(top: 30, bottom: 30, right: 20, left: 20),
-              child: Text(
-                "What is the Loading Requirements for this job?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    "What is the Loading",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 27,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.main,
+                    ),
+                  ),
+                  Text(
+                    "requirements for this job?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -141,6 +158,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                     borderRadius: BorderRadius.circular(0.0),
                     side: BorderSide(color: AppColors.main)),
                 onPressed: () {
+                  Globals.isSelfLoading = true;
                   Navigator.pushNamed(context, '/driver_list');
                 },
                 color: AppColors.main,
@@ -159,6 +177,7 @@ class _SelectWeightPageState extends State<SelectWeightPage> {
                     borderRadius: BorderRadius.circular(0.0),
                     side: BorderSide(color: AppColors.main)),
                 onPressed: () {
+                  Globals.isSelfLoading = false;
                   Navigator.pushNamed(context, '/driver_list');
                 },
                 color: AppColors.main,

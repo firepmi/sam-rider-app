@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
 import 'package:sam_rider_app/src/fire_base/firebase_dataref.dart';
+import 'package:sam_rider_app/src/ui/pages/chat.dart';
 import 'package:sam_rider_app/src/ui/pages/checkout.dart';
 import 'package:sam_rider_app/src/ui/pages/faq.dart';
 import 'package:sam_rider_app/src/ui/pages/add_payment_method.dart';
@@ -25,7 +26,9 @@ import 'package:sam_rider_app/src/ui/pages/termsofservice.dart';
 import 'package:sam_rider_app/src/ui/pages/verify_number.dart';
 import 'package:sam_rider_app/src/ui/pages/welcome.dart';
 import 'package:sam_rider_app/src/ui/pages/home.dart';
+import 'package:sam_rider_app/src/ui/pages/your_current_trip.dart';
 import 'package:sam_rider_app/src/ui/pages/your_trips.dart';
+import 'package:sam_rider_app/src/ui/pages/your_trips_list.dart';
 import 'src/ui/pages/profile.dart';
 
 void main() async {
@@ -53,6 +56,8 @@ void main() async {
           '/payment': (context) => PaymentPage(),
           '/add_payment': (context) => AddPaymentMethodPage(),
           '/add_card': (context) => AddCardPage(),
+          '/your_current_trip': (context) => YourCurrentTripPage(),
+          '/your_trips_list': (context) => YourTripsList(),
           '/your_trip': (context) => YourTripPage(),
           '/select_issue': (context) => SelectIssuePage(),
           '/help': (context) => HelpPage(),
@@ -68,6 +73,7 @@ void main() async {
           '/request_details': (context) => RequestDetailsPage(),
           '/faq': (context) => FAQPage(),
           '/checkout': (context) => CheckoutPage(),
+          '/chat': (context) => Chat(),
         },
       )));
 }

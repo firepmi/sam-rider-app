@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sam_rider_app/src/util/globals.dart';
 
 class AppConfig {
   static const appName = "Sam Will Do It";
@@ -29,6 +30,7 @@ class AppStyle {
     double right = 0,
     double left = 0,
     Color color = Colors.black,
+    TextAlign align,
   }) {
     return Padding(
       padding:
@@ -39,6 +41,7 @@ class AppStyle {
           fontSize: AppConfig.size(context, size),
           color: color,
         ),
+        textAlign: align,
       ),
     );
   }
@@ -90,6 +93,161 @@ class AppStyle {
         fontWeight: FontWeight.w900,
         fontFamily: 'RobotoMono');
   }
+
+  static Widget borderButton(
+    BuildContext context,
+    String text,
+    double left,
+    double right,
+    double top,
+    double bottom, {
+    Function onPressed,
+    Color borderColor = AppColors.main,
+  }) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(left, top, right, bottom),
+      child: SizedBox(
+        width: double.infinity,
+        height: AppConfig.size(context, 15),
+        child: RawMaterialButton(
+          // fillColor: borderColor,
+          elevation: 5.0,
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: TextStyle(
+                color: borderColor, fontSize: AppConfig.size(context, 6)),
+          ),
+          shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  color: borderColor, width: 1, style: BorderStyle.solid),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(AppConfig.size(context, 10)))),
+        ),
+      ),
+    );
+  }
+
+  static Widget requestCard(BuildContext context, dynamic info,
+      {Function onMessage}) {
+    return Container(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        // color: Colors.pink,
+        elevation: 16,
+        child: Column(children: [
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: info != null && info["profile"] != null
+                  ? ClipOval(
+                      child: FadeInImage.assetNetwork(
+                        image: info["profile"],
+                        placeholder: 'assets/images/default_profile.png',
+                        // "assets/images/default_profile.png",
+                        width: AppConfig.size(context, 25),
+                        height: AppConfig.size(context, 25),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Image.asset(
+                      "assets/images/default_profile.png",
+                      width: AppConfig.size(context, 25),
+                      height: AppConfig.size(context, 25),
+                      fit: BoxFit.cover,
+                    ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        info["color"] == null ? "Boss" : info["color"],
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              info["name"] == null ? "Boss" : info["name"],
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ]),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            info["phone"] == null ? "123456" : info["phone"],
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                          ),
+                          Text(
+                            "${info["star"]}",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          Text(
+                            " (${info["reviews"]} reviews)",
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                Image.asset(
+                  Globals.carImages[info["car_size"]],
+                  width: 50,
+                  height: 50,
+                ),
+                label(
+                  context,
+                  "${Globals.carNames[info["car_size"]]} \nwith loading\n${Globals.weightTitles[info["weight"]]}",
+                  size: 3,
+                  align: TextAlign.center,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "\$ ${info["price"]}",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text("${Globals.getDistance()} m"),
+              ],
+            ),
+            SizedBox(width: 10),
+          ]),
+          Text(
+            info["tag"],
+            style: TextStyle(
+                fontSize: 27,
+                fontWeight: FontWeight.bold,
+                color: AppColors.main),
+          ),
+          AppStyle.borderButton(context, "Message", 30, 30, 10, 10,
+              onPressed: onMessage),
+        ]),
+      ),
+    );
+  }
 }
 
 class AvailableFonts {
@@ -98,6 +256,9 @@ class AvailableFonts {
 
 class AppColors {
   static const main = Color.fromRGBO(81, 175, 51, 1);
+  static const greyColor2 = Color(0xffE8E8E8);
+  static const themeColor = Color(0xfff5a623);
+  static const greyColor = Color(0xffaeaeae);
 }
 
 class AvailableImages {

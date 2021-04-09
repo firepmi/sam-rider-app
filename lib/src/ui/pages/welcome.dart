@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:sam_rider_app/src/blocs/auth_bloc.dart';
+import 'package:sam_rider_app/src/ui/pages/job_location_pick.dart';
 import 'package:sam_rider_app/src/ui/widgets/msg_dialog.dart';
 import 'package:sam_rider_app/src/util/utils.dart';
 
@@ -151,8 +152,10 @@ class WelcomePage extends StatelessWidget {
       if (result == "error") {
         Navigator.pushNamed(context, '/intro');
       } else if (result == "success") {
+        // Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(name: '/joblocation'), builder: (context) => JobLocationPickPage()));
         Navigator.pushNamed(context, '/joblocation');
       } else {
+        // Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(name: '/joblocation'), builder: (context) => JobLocationPickPage()));
         Navigator.pushNamed(context, '/joblocation');
         print("verifiy phone number");
         //TODO: should be configuration APN on apple developer

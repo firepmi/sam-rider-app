@@ -91,7 +91,7 @@ class _DriverListPageState extends State<DriverListPage> {
 
       if (!selected) {
         print("navigator auto select driver");
-        Navigator.pushNamed(context, '/driver_profile',
+        Navigator.pushNamed(context, '/checkout',
             arguments: driverData[0]);
         selected = true;
       }
@@ -110,26 +110,26 @@ class _DriverListPageState extends State<DriverListPage> {
           },
           child: Column(children: [
             Row(children: [
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: element["profile"] != null
-                    ? ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          image: element["profile"],
-                          placeholder: 'assets/images/default_profile.png',
-                          // "assets/images/default_profile.png",
-                          width: AppConfig.size(context, 35),
-                          height: AppConfig.size(context, 35),
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Image.asset(
-                        "assets/images/default_profile.png",
-                        width: AppConfig.size(context, 35),
-                        height: AppConfig.size(context, 35),
-                        fit: BoxFit.cover,
-                      ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.all(20),
+              //   child: element["profile"] != null
+              //       ? ClipOval(
+              //           child: FadeInImage.assetNetwork(
+              //             image: element["profile"],
+              //             placeholder: 'assets/images/default_profile.png',
+              //             // "assets/images/default_profile.png",
+              //             width: AppConfig.size(context, 35),
+              //             height: AppConfig.size(context, 35),
+              //             fit: BoxFit.cover,
+              //           ),
+              //         )
+              //       : Image.asset(
+              //           "assets/images/default_profile.png",
+              //           width: AppConfig.size(context, 35),
+              //           height: AppConfig.size(context, 35),
+              //           fit: BoxFit.cover,
+              //         ),
+              // ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.all(20),
