@@ -29,25 +29,17 @@ class _AddPaymentMethodViewState extends State<AddPaymentMethodView> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 40),
-                          child: Row(
+              child: Row(
                 children: <Widget>[
                   Icon(Icons.payment),
                   SizedBox(
                     width: 10,
                   ),
-                  GestureDetector(onTap: () {Navigator.pushNamed(context, "/add_card");}, child: Text("Credit or Debit Card")),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 30),
-                          child: Row(
-                children: <Widget>[
-                  Icon(Icons.payment),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Paypal"),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/add_card");
+                      },
+                      child: Text("Credit or Debit Card")),
                 ],
               ),
             ),

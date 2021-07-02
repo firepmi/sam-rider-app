@@ -34,8 +34,8 @@ import 'src/ui/pages/profile.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FireDataRef dataRef = FireDataRef();
-  dataRef.initConfig();
+  // FireDataRef dataRef = FireDataRef();
+  // dataRef.initConfig();
   runApp(MyApp(
       AuthBloc(),
       MaterialApp(

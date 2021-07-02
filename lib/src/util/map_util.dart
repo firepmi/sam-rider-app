@@ -20,7 +20,7 @@ class MapUtil {
       //print("Actual: ${resLocation.location.lat}, ${resLocation.location.lng}");
     } else {
       print("Get current location error:");
-      print(resLocation.errorMessage);
+      print(resLocation.error.message);
     }
     return currentLocation;
   }
@@ -29,8 +29,10 @@ class MapUtil {
     List<LatLng> locationsSteps = [];
     APIDirections.DirectionsResponse resDirections =
         await directions.directionsWithLocation(
-            new APIDirections.Location(origin.latitude, origin.longitude),
-            new APIDirections.Location(destin.latitude, destin.longitude),
+            new APIDirections.Location(
+                lat: origin.latitude, lng: origin.longitude),
+            new APIDirections.Location(
+                lat: destin.latitude, lng: destin.longitude),
             travelMode: APIDirections.TravelMode.driving);
     if (resDirections.isOkay) {
       for (var r in resDirections.routes) {

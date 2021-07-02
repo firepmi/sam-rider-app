@@ -25,7 +25,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   DataBloc dataBloc = DataBloc();
   double price = 0;
   Token _paymentToken;
-  PaymentMethod _paymentMethod;
+  PaymentMethod paymentMethod;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   String _error;
   var distance;
@@ -34,6 +34,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   var publishableKey =
       "pk_live_51Hti88BEXyg0kPLy9gBfD4SjNZn860IGsafOdvEmnPmeuwQUQwhiXqDFGXN7NIeI3LItwWzbV6tuXyp90gJHtUBv00VUrNEItR";
+  var clientSecret;
   //Test Key
   // var publishableKey = "pk_test_51Hti88BEXyg0kPLyuSSuAzmzTkPWfWfh83GEvXBC27nRN1NweUI6HNKESkLTbq1HA9iPqVMYcPLwMTUuw2kzqp3J005Du7q6dH";
   // var secretKey =
@@ -131,56 +132,46 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final buttonTextStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
-  void onMakePayment(BuildContext context) {
-    onMakeRequest("token.tokenId");
-    // StripePayment.paymentRequestWithNativePay(
-    //   androidPayOptions: AndroidPayPaymentRequest(
-    //     totalPrice: "$price",
-    //     currencyCode: "USD",
-    //   ),
-    //   applePayOptions: ApplePayPaymentOptions(
-    //     countryCode: 'US',
-    //     currencyCode: 'USD',
-    //     items: [
-    //       ApplePayItem(
-    //         label: 'SAM',
-    //         amount: '$price',
-    //       )
-    //     ],
-    //   ),
-    // ).then((token) {
-    //   _scaffoldKey.currentState
-    //       .showSnackBar(SnackBar(content: Text('Received ${token.tokenId}')));
-    //   _paymentToken = token;
-    //   onMakeRequest(token.tokenId);
-    // }).catchError((error) {
-    //   setError(error, context);
-    // });
+  Future<void> paymentCardForm() async {
+    try {
+      paymentMethod = await StripePayment.paymentRequestWithCardForm(
+          CardFormPaymentRequest());
+      confirmPayment();
+    } catch (error) {
+      if (error != null && error.message != null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error.message)));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${error.message}')));
+      }
+    }
   }
 
-  void setError(dynamic error, BuildContext context) {
-    var err = Text(error.toString());
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: err));
-  }
+  confirmPayment() async {
+    try {
+      var val = await StripePayment.confirmPaymentIntent(
+        PaymentIntent(
+            clientSecret: clientSecret, paymentMethodId: paymentMethod.id),
+      );
 
-  // void getDriverImage() async {
-  //
-  //   userImg = await dataBloc.getProfileImage(data["driver_id"]);
-  //
-  //   // final user = FirebaseAuth.instance.currentUser;
-  //   // final ref = FirebaseStorage.instance
-  //   //     .ref()
-  //   //     .child("profile")
-  //   //     .child(user.uid + ".jpg");
-  //   // try {
-  //   //   userImg = (await ref.getDownloadURL()).toString();
-  //   // } catch (e) {
-  //   //   print(e.toString());
-  //   // }
-  //   // setState(() {
-  //   //   print("get image from firebase storage");
-  //   // });
-  // }
+      if (val.status == "succeeded") {
+        onMakeRequest(val.paymentIntentId);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Thank you! payment is done successfully")));
+      } else {
+        return;
+      }
+    } catch (error) {
+      if (error != null && error.message != null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error.message)));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${error.message}')));
+      }
+    }
+  }
 
   void onMakeRequest(paymentId) {
     // getDriverImage();
@@ -224,7 +215,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         title: Text("Order Request Error"),
         content: Text(error),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
@@ -234,6 +225,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
       );
     });
   }
+
+  Future<void> onMakePayment(BuildContext context) async {
+    await paymentCardForm();
+  }
+
+  void setError(dynamic error, BuildContext context) {
+    var err = Text(error.toString());
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: err));
+  }
+
+  // void getDriverImage() async {
+  //
+  //   userImg = await dataBloc.getProfileImage(data["driver_id"]);
+  //
+  //   // final user = FirebaseAuth.instance.currentUser;
+  //   // final ref = FirebaseStorage.instance
+  //   //     .ref()
+  //   //     .child("profile")
+  //   //     .child(user.uid + ".jpg");
+  //   // try {
+  //   //   userImg = (await ref.getDownloadURL()).toString();
+  //   // } catch (e) {
+  //   //   print(e.toString());
+  //   // }
+  //   // setState(() {
+  //   //   print("get image from firebase storage");
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {

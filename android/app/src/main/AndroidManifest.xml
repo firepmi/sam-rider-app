@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".Application"
+        android:name="io.flutter.app.FlutterApplication"
         android:label="sam_rider_app"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"

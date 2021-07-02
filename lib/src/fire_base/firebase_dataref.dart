@@ -13,26 +13,26 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 class FireDataRef {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  void initConfig() {
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        // _showItemDialog(message);
-      },
-      onBackgroundMessage:
-          Platform.isAndroid ? myBackgroundMessageHandler : null,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // _navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        // _navigateToItemDetail(message);
-      },
-    );
-  }
+  // void initConfig() {
+  //   _firebaseMessaging.configure(
+  //     onMessage: (Map<String, dynamic> message) async {
+  //       print("onMessage: $message");
+  //       // _showItemDialog(message);
+  //     },
+  //     onBackgroundMessage:
+  //         Platform.isAndroid ? myBackgroundMessageHandler : null,
+  //     onLaunch: (Map<String, dynamic> message) async {
+  //       print("onLaunch: $message");
+  //       // _navigateToItemDetail(message);
+  //     },
+  //     onResume: (Map<String, dynamic> message) async {
+  //       print("onResume: $message");
+  //       // _navigateToItemDetail(message);
+  //     },
+  //   );
+  // }
 
   static Future<dynamic> myBackgroundMessageHandler(
       Map<String, dynamic> message) async {
@@ -229,7 +229,7 @@ class FireDataRef {
   void uploadImage(Uint8List data, Function onSuccess) async {
     var user = FirebaseAuth.instance.currentUser;
 
-    final StorageReference storageReference = FirebaseStorage.instance
+    final Reference storageReference = FirebaseStorage.instance
         .ref()
         .child("profile")
         .child(user.uid + ".jpg");
