@@ -101,9 +101,6 @@ class _HomeMenuDrawerState extends State<HomeMenuDrawer> {
           },
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          linkMenuDrawer('Payment', () {
-            Navigator.pushNamed(context, '/payment');
-          }),
           linkMenuDrawer('Your current Job', () {
             Navigator.pushNamed(context, '/your_trips_list');
           }),

@@ -394,7 +394,7 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - Stripe (19.4.0)
+  - Stripe (19.4.1)
   - stripe_payment (1.0.0):
     - Flutter
     - Stripe (~> 19.4.0)
@@ -533,7 +533,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  Stripe: 92f1c73a9dbd3c54277ed06a1fea6e08f20414c6
+  Stripe: 5914399ac5878056b985d56b409cb4bb1e7fc7e8
   stripe_payment: 1cbe9c339c21b5ecf01035e80eea351067c67c56
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
